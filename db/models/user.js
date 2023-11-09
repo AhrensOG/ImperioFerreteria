@@ -14,6 +14,11 @@ const userInit = (sequelize, DataTypes) => {
     }
   }
   User.init({
+    id: {
+      type: DataTypes.TEXT,
+      autoIncrement: false,
+      primaryKey: true
+    },
     name: DataTypes.STRING,
     email: DataTypes.STRING,
     profileImage: DataTypes.TEXT
