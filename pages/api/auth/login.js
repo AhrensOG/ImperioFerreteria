@@ -1,24 +1,8 @@
-import { User } from "@/db/models/models"
+import { Cart, User } from "@/db/models/models"
 
 
 export default async function handler(req, res) {
-  if (req.method === 'GET') {
-    try {
-      const { id } = req.params;
-      if(!id) {
-        return res.status(400).json('An ID is required');
-      };
-      const user = await User.findByPk(id);
-      if (!user) {
-        return res.status(400).json('User not found');
-      };
-
-      return res.status(200).json(user);
-
-    } catch (error) {
-      return res.status(400).json(error)
-    };
-  } else if (req.method === 'POST') {
+  if (req.method === 'POST') {
     try {
       const credentials = req.body;
       
@@ -31,7 +15,7 @@ export default async function handler(req, res) {
         return res.status(400).json('Missing data')
       };
 
-      const user = await User.findByPk(id);
+      const user = await User.findOne({ where: { id }, include: { model: Cart } });
 
       if(user) {
         return res.status(200).json({data: user, userAlreadyExists: true})
@@ -43,7 +27,7 @@ export default async function handler(req, res) {
           profileImage
         })
   
-        const created = await User.findByPk(id);
+        const created = await User.findOne({ where: { id }, include: { model: Cart } });
   
         return res.status(200).json({data: created, userAlreadyExists: false})
       };
