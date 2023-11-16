@@ -12,6 +12,10 @@ export default async function handler(req, res) {
           { model: Cart }
         ] })
 
+        if ( !product ) {
+          return res.status(400).send('Product doesnt exists')
+        }
+
         return res.status(200).send(product)
       };
 
