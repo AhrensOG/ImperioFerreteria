@@ -5,7 +5,6 @@ import { deleteSearchByNameFilter } from "@/context/actions";
 
 const ProductsPage = () => {
   const { state, dispatch } = useContext(Context);
-  console.log(state);
 
   const handleDeleteFilters = () => {
     deleteSearchByNameFilter(dispatch)
