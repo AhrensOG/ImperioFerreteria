@@ -5,9 +5,22 @@ export const reducer = (state, action) => {
         ...state,
         products: action.payload
       }
-      break;
+    case 'GET_PRODUCTS_BY_NAME':
+      return {
+        ...state,
+        searchedProducts: action.payload.data,
+        searchedTitle: action.payload.title
+      }
+    case 'DELETE_PRODUCTS_BY_NAME':
+      return {
+        ...state,
+        searchedProducts: null,
+        searchedTitle: null
+      }
   
     default:
-      break;
+      return {
+        ...state
+      }
   }
 }
