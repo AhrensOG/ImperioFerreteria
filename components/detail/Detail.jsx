@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import CarouselDetail from "../hero/auxiliarComponents/CarouselDetail";
+import ChocolateSection from "./auxiliarComponents/ChocolateSection";
 
 const Detail = ({
     title,
@@ -17,7 +18,6 @@ const Detail = ({
 
     const [items, setItems] = useState(0);
     const onHandleChangeInput = (e) => {
-        console.log(typeof e.target.value);
         const inputValue = parseInt(e.target.value) || null;
         if (inputValue <= quantity) {
             setItems(inputValue);
@@ -49,22 +49,25 @@ const Detail = ({
             {title ? (
                 <div className="m-3">
                     <div className="pl-[5%] text-3xl font-bold">{title}</div>
+                    <div>
+                        <ChocolateSection img={imagesArray} />
+                    </div>
                     <CarouselDetail slides={imagesArray} />
                     <div className="space-y-2">
                         <span className="flex justify-start text-4xl">
                             {" "}
                             ${price}{" "}
                         </span>
-                        <div className=" flex space-x-7">
+                        <div className=" flex space-x-7 md:justify-center md:items-center md:h-14 ">
                             {/* Left Arrow */}
-                            <div className=" text-sm rounded-full  bg-black/20 text-white cursor-pointer">
+                            <div className="text-sm rounded-full  bg-black/20 text-white cursor-pointer md:my-[8%] ">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
                                     viewBox="0 0 24 24"
-                                    strokeWidth={1.5}
+                                    strokeWidth={5}
                                     stroke="currentColor"
-                                    className="w-6 h-6 -rotate-90"
+                                    className="w-6 h-full -rotate-90"
                                     onClick={(e) => changeQuantity(e)}
                                     name="Down"
                                     id="Down"
@@ -78,28 +81,28 @@ const Detail = ({
                                 </svg>
                             </div>
                             <div className="flex justify-center items-center space-x-2">
-                                <span className=" flex justify-start items-end ">
+                                <span className=" flex justify-start items-end  md:text-2xl">
                                     Cantidad:
                                 </span>
                                 <input
                                     type="number"
                                     name="items"
                                     id="item"
-                                    className="h-5 w-12 border-2"
+                                    className="h-5 w-12 border-2 md:h-10 md:w-20 md:text-2xl"
                                     placeholder={items}
                                     value={items}
                                     onChange={onHandleChangeInput}
                                 />
                             </div>
                             {/* Right Arrow */}
-                            <div className=" text-sm rounded-full  bg-black/20 text-white cursor-pointer">
+                            <div className=" text-sm rounded-full  bg-black/20 text-white cursor-pointer md:my-[8%]">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
                                     viewBox="0 0 24 24"
-                                    strokeWidth={1.5}
+                                    strokeWidth={5}
                                     stroke="currentColor"
-                                    className="w-6 h-6 -rotate-90"
+                                    className="w-6 h-full -rotate-90"
                                     onClick={(e) => changeQuantity(e)}
                                     name="Up"
                                     id="Up"
@@ -112,15 +115,17 @@ const Detail = ({
                                     />
                                 </svg>
                             </div>
-                            <p>({quantity} disponibles)</p>
+                            <p className="md:text-2xl">
+                                ({quantity} disponibles)
+                            </p>
                         </div>
-                        <div>
-                            <div className="flex justify-center items-center border-2  bg-[#e26928] h-full py-3 ">
+                        <div className="md:flex md:space-x-44 md:justify-center">
+                            <div className="flex justify-center items-center border-2  bg-[#e26928] h-full py-3 w-full">
                                 <button className="flex justify-center items-center w-full h-full">
                                     <h3>COMPRAR AHORA</h3>
                                 </button>
                             </div>
-                            <div className="flex justify-center items-center border-2  bg-[#e26928]/70 h-full py-3 ">
+                            <div className="flex justify-center items-center border-2  bg-[#e26928]/70 h-full py-3 w-full">
                                 <button className="flex justify-center items-center w-full h-full">
                                     <h3>AÑADIR AL CARRITO</h3>
                                 </button>
