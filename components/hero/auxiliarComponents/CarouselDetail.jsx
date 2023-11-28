@@ -23,7 +23,7 @@ const CarouselDetail = ({
 
     return (
         <div
-            className={`h-[350px] sm:h-[500px] md:h-[650px] bg-cover bg-no-repeat bg-center bg-origin-border`}
+            className={`h-[350px] sm:h-[500px] md:h-[650px] bg-cover bg-no-repeat bg-center bg-origin-border md:hidden`}
         >
             <div
                 className={`h-[300px] sm:h-[500px] md:h-[650px] w-full m-auto relative group`}
