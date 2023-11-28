@@ -8,7 +8,7 @@ export default async function handler(req, res) {
       if(!id) {
         return res.status(400).json('An ID is required');
       };
-      const user = await User.findAll({ where: { id }, include: { model: Cart } });
+      const user = await User.findOne({ where: { id }, include: { model: Cart } });
       if (!user) {
         return res.status(400).json('User not found');
       };
