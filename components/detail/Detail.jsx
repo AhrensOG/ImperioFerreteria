@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React, { useState } from "react";
-import CarouselDetail from "../hero/auxiliarComponents/CarouselDetail";
+import CarouselDetail from "./auxiliarComponents/CarouselDetail";
 import ChocolateSection from "./auxiliarComponents/ChocolateSection";
 
 const Detail = ({

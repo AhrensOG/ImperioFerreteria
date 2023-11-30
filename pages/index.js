@@ -6,9 +6,20 @@ import LowerSection from '@/components/lowerSection/LowerSection'
 import Header from '@/components/navbar/Header'
 import HomeNavbar from '@/components/navbar/HomeNavbar'
 import Slider from '@/components/productsSlider/Slider'
+import { Context } from '@/context/GlobalContext'
+import { isUserLogged } from '@/context/actions/isUserLogged'
+import { useContext, useEffect } from 'react'
 
 export default function Home() {
 
+  const { dispatch } = useContext(Context)
+
+  useEffect(() => {
+    const userStatus = async () => {
+      await isUserLogged(dispatch)
+    }
+    userStatus()
+  }, [])
   return (
     <main>
       <Header/>
