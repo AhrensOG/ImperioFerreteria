@@ -21,7 +21,15 @@ const userInit = (sequelize, DataTypes) => {
     },
     name: DataTypes.STRING,
     email: DataTypes.STRING,
-    profileImage: DataTypes.TEXT
+    profileImage: DataTypes.TEXT,
+    phone: {
+      type: DataTypes.BIGINT,
+      allowNull: true
+    },
+    address: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
   }, {
     sequelize,
     modelName: 'User',
