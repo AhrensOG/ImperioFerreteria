@@ -28,3 +28,7 @@ export const updateUser = async (data, dispatch) => {
     const res = await axios.put(`/api/auth/${data.id}`, data)
     return dispatch({ type: "UPDATE_USER", payload: res.data })
 }
+
+export const addProductToCart = async (data, dispatch) => {
+    return dispatch({ type: "ADD_PRODUCT_TO_CART", payload: data })
+}

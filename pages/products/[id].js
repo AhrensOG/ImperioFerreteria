@@ -22,6 +22,7 @@ const ProductDetail = () => {
             <div className="  md:flex justify-center">
                 {state?.product?.title ? (
                     <Detail
+                        id={id}
                         title={state.product.title}
                         description={state.product.description}
                         price={state.product.price}

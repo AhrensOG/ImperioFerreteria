@@ -39,6 +39,37 @@ export const reducer = (state, action) => {
         ...state,
         user: action.payload
       }
+    case "ADD_PRODUCT_TO_CART":
+      if (!state.productsCart) {
+        return {
+          ...state,
+          productsCart : [action.payload]
+        }
+      } else {
+        const products = state.productsCart
+        const index = products.findIndex( product => product.id === action.payload.id )
+        if (index !== -1) {
+          products[index] = action.payload
+        } else {
+          products.push(action.payload)
+        }
+
+        let totalPrice = 0
+        products.forEach(p => {
+          const total = parseFloat(p.price) * p.items
+
+          totalPrice += total
+        });
+
+        const user = state.user
+        user.Cart.totalPrice = totalPrice;
+
+        return {
+          ...state,
+          productsCart : products,
+          user : user
+        }
+      }
     default:
       return {
         ...state
