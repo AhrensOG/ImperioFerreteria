@@ -1,11 +1,12 @@
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import CarouselDetail from "./auxiliarComponents/CarouselDetail";
 import ChocolateSection from "./auxiliarComponents/ChocolateSection";
-import { getOneProduct } from "@/context/actions";
-import { useRouter } from "next/router";
+import { addProductToCart } from "@/context/actions";
+import { Context } from "@/context/GlobalContext";
 
 const Detail = ({
+    id,
     title,
     description,
     price,
@@ -13,6 +14,7 @@ const Detail = ({
     firstImage,
     moreImages,
 }) => {
+    const { dispatch } = useContext(Context)
     const imagesArray = moreImages.map((e) => {
         return e.url;
     });
@@ -45,11 +47,24 @@ const Detail = ({
         }
     };
 
+    const handleAddProductToCart = () => {
+        const productData = {
+            id,
+            title,
+            description,
+            price,
+            items,
+            firstImage,
+            moreImages
+        }
+        addProductToCart(productData, dispatch)
+    }
+
     return (
         <div className="max-w-screen-lg flex flex-col pb-4">
-            <Link href="/">
+            <Link href="/products">
                 <p className="text-gray-400  cursor-pointer hover:underline">
-                    volver al inicio {">"}
+                    volver a productos {">"}
                 </p>
             </Link>
             {title ? (
@@ -130,7 +145,7 @@ const Detail = ({
                                 </button>
                             </div>
                             <div className="flex justify-center items-center border-2  bg-[#e26928]/70 h-full py-3 w-full">
-                                <button className="flex justify-center items-center w-full h-full">
+                                <button disabled={items === "" || items === 0} onClick={handleAddProductToCart} className="flex justify-center items-center w-full h-full">
                                     <h3>AÑADIR AL CARRITO</h3>
                                 </button>
                             </div>
