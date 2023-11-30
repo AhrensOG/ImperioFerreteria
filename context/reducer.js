@@ -17,6 +17,11 @@ export const reducer = (state, action) => {
         searchedProducts: null,
         searchedTitle: null
       }
+    case "GET_ONE_PRODUCT":
+      return {
+          ...state,
+          product: action.payload,
+      };
     case "LOGGED_IN_USER":
       return {
         ...state,
@@ -29,7 +34,6 @@ export const reducer = (state, action) => {
         user: null,
         userIsLogged: false
       }
-  
     default:
       return {
         ...state

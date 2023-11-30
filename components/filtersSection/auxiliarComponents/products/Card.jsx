@@ -4,13 +4,13 @@ import React from "react";
 const Card = ({
   title = "Tuerca",
   url = "https://newmaq.com.ar/wp-content/uploads/2021/09/TAD10.png",
+  id,
 }) => {
   return (
-    <div className="w-auto h-full flex flex-row items-center justify-start gap-4 cursor-pointer hover:bg-slate-200 duration-500 p-2">
-      <Link href={'/'}>
+    <Link href={`/products/${id}`}>
+      <div className="w-auto h-full flex flex-row items-center justify-start gap-4 cursor-pointer hover:bg-slate-200 duration-500 p-2">
         <img src={url} alt="img" className="w-16 h-16 sm:w-20 sm:h-20" />
-      </Link>
-      <Link href={'/'}>
+
         <span className="w-full h-full sm:text-lg flex flex-row items-center">
           {title}
           <svg
@@ -28,8 +28,8 @@ const Card = ({
             />
           </svg>
         </span>
-      </Link>
-    </div>
+      </div>
+    </Link>
   );
 };
 

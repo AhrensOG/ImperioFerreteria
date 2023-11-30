@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import Card from "./auxiliarComponents/Card";
 import { Context } from "@/context/GlobalContext";
+import Link from "next/link";
 import { deleteSearchByNameFilter } from "@/context/actions";
 
 const ProductsPage = () => {
@@ -23,33 +24,38 @@ const ProductsPage = () => {
       ) : (
         <span className="hidden"></span>
       )}
-      <div className="flex flex-col sm:flex-row sm:flex-wrap justify-evenly gap-8 items-center">
+      <div className="flex flex-col sm:flex-row sm:flex-wrap justify-evenly gap-8 items-center p-4 sm:px-12">
         {state?.searchedProducts?.length > 0
           ? state.searchedProducts.map((p) => {
               return (
-                <Card
-                  key={p.id}
-                  id={p.id}
-                  title={p.title}
-                  url={p.firstImage}
-                  description={p.description}
-                />
+                <Link href={`/products/${p.id}`}>
+                  <Card
+                    key={p.id}
+                    id={p.id}
+                    title={p.title}
+                    url={p.firstImage}
+                    description={p.description}
+                  />
+                </Link>
               );
             })
           : state?.products?.map((p) => {
               return (
-                <Card
-                  key={p.id}
-                  id={p.id}
-                  title={p.title}
-                  url={p.firstImage}
-                  description={p.description}
-                />
+                <Link href={`/products/${p.id}`}>
+                  <Card
+                    key={p.id}
+                    id={p.id}
+                    title={p.title}
+                    url={p.firstImage}
+                    description={p.description}
+                  />
+                </Link>
               );
-            })}
+          })
+        }
       </div>
     </div>
-  );
+    );
 };
 
 export default ProductsPage;
