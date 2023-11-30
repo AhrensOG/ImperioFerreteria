@@ -1,35 +1,49 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ImageSection from "./ImageSection";
 
 const ChocolateSection = ({ img }) => {
     const [firstImage, setFirstImage] = useState(img[0]);
+    const imageArray = [
+        "https://www.bloginstrumentacion.com/files/2021/01/metal-nuts_shutterstock_138477023.jpg",
+        "https://www.bloginstrumentacion.com/files/2021/01/metal-nuts_shutterstock_138477023.jpg",
+        "https://www.bloginstrumentacion.com/files/2021/01/metal-nuts_shutterstock_138477023.jpg",
+        "https://www.bloginstrumentacion.com/files/2021/01/metal-nuts_shutterstock_138477023.jpg",
+        "https://www.bloginstrumentacion.com/files/2021/01/metal-nuts_shutterstock_138477023.jpg",
+        "https://www.bloginstrumentacion.com/files/2021/01/metal-nuts_shutterstock_138477023.jpg",
+        "https://www.bloginstrumentacion.com/files/2021/01/metal-nuts_shutterstock_138477023.jpg",
+        "https://www.bloginstrumentacion.com/files/2021/01/metal-nuts_shutterstock_138477023.jpg",
+        "https://www.bloginstrumentacion.com/files/2021/01/metal-nuts_shutterstock_138477023.jpg",
+        "https://www.bloginstrumentacion.com/files/2021/01/metal-nuts_shutterstock_138477023.jpg",
+        "https://www.bloginstrumentacion.com/files/2021/01/metal-nuts_shutterstock_138477023.jpg",
+        "https://www.bloginstrumentacion.com/files/2021/01/metal-nuts_shutterstock_138477023.jpg",
+    ];
 
     const setImage = (e) => {
-        console.log(e.target.name);
         setFirstImage(e.target.name);
     };
 
     return (
-        <div className="hidden md:flex md:space-x-2 md:justify-between md:px-7 lg:mx-[10%] xl:mx-[15%] 2xl:mx-[20%] ">
-            <div className="grid grid-cols-2 place-content-betweens gap-x-8">
-                {img.map((e) => {
-                    return (
-                        <div
-                            className="h-28 w-28"
-                            id={e}
-                            onClick={(e) => setImage(e)}
-                        >
-                            <img
-                                src={e}
-                                alt={e}
-                                className="h-full w-full"
-                                name={e}
-                            />
-                        </div>
-                    );
-                })}
+        <div className="hidden md:flex h-[700px]">
+            <div className="grid grid-cols-1 place-content-start gap-3 h-[450px] pr-10 snap-y  snap-mandatory overflow-y-scroll">
+                {img.map((e) => (
+                    <div
+                        key={e}
+                        className="h-[100px] w-[100px] border-2 p-4 snap-center"
+                        id={e}
+                        onClick={(e) => setImage(e)}
+                    >
+                        <img
+                            src={e}
+                            alt={e}
+                            className="h-full w-full"
+                            name={e}
+                        />
+                    </div>
+                ))}
             </div>
-            <ImageSection image={firstImage} />
+            <div className="w-full self-center justify-self-center">
+                <ImageSection image={firstImage} />
+            </div>
         </div>
     );
 };

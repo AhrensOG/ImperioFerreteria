@@ -1,7 +1,9 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CarouselDetail from "../hero/auxiliarComponents/CarouselDetail";
 import ChocolateSection from "./auxiliarComponents/ChocolateSection";
+import { getOneProduct } from "@/context/actions";
+import { useRouter } from "next/router";
 
 const Detail = ({
     title,
@@ -16,42 +18,44 @@ const Detail = ({
     });
     imagesArray.push(firstImage);
 
-    const [items, setItems] = useState(0);
+    const [items, setItems] = useState("");
     const onHandleChangeInput = (e) => {
-        const inputValue = parseInt(e.target.value) || null;
+        const inputValue = parseInt(e.target.value) || "";
         if (inputValue <= quantity) {
+            if (inputValue === 0 || inputValue === "0") {
+                setItems("");
+                setItems(inputValue);
+            }
             setItems(inputValue);
         }
     };
     const changeQuantity = (e) => {
         if (e.target.id === "Up") {
-            if (typeof items === "string") {
+            if (typeof items == "string") {
                 setItems(0);
             }
             if (items < quantity) {
                 setItems(items + 1);
             }
-        } else {
+        }
+        if (e.target.id === "Down") {
             if (items > 0) {
                 setItems(items - 1);
-            } else {
-                setItems("");
             }
         }
     };
+
     return (
-        <div>
+        <div className="max-w-screen-lg flex flex-col pb-4">
             <Link href="/">
-                <p className="text-gray-400 pl-[5%] cursor-pointer hover:underline">
+                <p className="text-gray-400  cursor-pointer hover:underline">
                     volver al inicio {">"}
                 </p>
             </Link>
             {title ? (
-                <div className="m-3">
-                    <div className="pl-[5%] text-3xl font-bold">{title}</div>
-                    <div>
-                        <ChocolateSection img={imagesArray} />
-                    </div>
+                <div>
+                    <div className=" text-5xl font-bold pb-12">{title}</div>
+                    <ChocolateSection img={imagesArray} />
                     <CarouselDetail slides={imagesArray} />
                     <div className="space-y-2">
                         <span className="flex justify-start text-4xl">
@@ -132,9 +136,14 @@ const Detail = ({
                             </div>
                         </div>
                     </div>
-                    <div className="py-[10%] pl-[10%] space-y-4">
-                        <h3>DETALLES DEL PRODUCTO</h3>
-                        <div className=" indent-8 mr-4"> {description} </div>
+                    <div className="py-[10%] space-y-10">
+                        <h3 className="text-left text-2xl">
+                            DETALLES DEL PRODUCTO
+                        </h3>
+                        <div className="indent-8 text-left ml-[5%] mr-[10%] text-xl ">
+                            {" "}
+                            {description}{" "}
+                        </div>
                     </div>
                 </div>
             ) : (

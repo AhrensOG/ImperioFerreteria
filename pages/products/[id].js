@@ -9,27 +9,30 @@ import Footer from "@/components/footer/Footer";
 const ProductDetail = () => {
     const router = useRouter();
     const { state, dispatch } = useContext(Context);
+    const user = state?.user;
     let id = router.query.id;
     useEffect(() => {
         if (id) {
             getOneProduct(id, dispatch);
         }
-    }, []);
+    }, [id, user]);
     return (
         <section>
             <HomeNavbar />
-            {state?.product?.title ? (
-                <Detail
-                    title={state.product.title}
-                    description={state.product.description}
-                    price={state.product.price}
-                    quantity={state.product.quantity}
-                    firstImage={state.product.firstImage}
-                    moreImages={state.product.ProductsImages}
-                />
-            ) : (
-                <div> cargando...</div>
-            )}
+            <div className="  md:flex justify-center">
+                {state?.product?.title ? (
+                    <Detail
+                        title={state.product.title}
+                        description={state.product.description}
+                        price={state.product.price}
+                        quantity={state.product.quantity}
+                        firstImage={state.product.firstImage}
+                        moreImages={state.product.ProductsImages}
+                    />
+                ) : (
+                    <div className="h-screen"> cargando...</div>
+                )}
+            </div>
             <Footer />
         </section>
     );
