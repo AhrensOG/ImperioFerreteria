@@ -5,7 +5,6 @@ import { onAuthStateChanged } from "firebase/auth"
 export const isUserLogged = async (dispatch) => {
   onAuthStateChanged(auth, async (user) => {
     if (user) {
-      console.log(user)
       const data = await axios.get(`/api/auth/${user.uid}`)
       return dispatch({ type: "LOGGED_IN_USER", payload: data.data });
     } else {
