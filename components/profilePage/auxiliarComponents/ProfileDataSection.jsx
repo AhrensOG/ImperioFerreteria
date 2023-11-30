@@ -1,7 +1,10 @@
+import { Context } from "@/context/GlobalContext";
+import { updateUser } from "@/context/actions";
 import { useFormik } from "formik";
-import React from "react";
+import React, { useContext, useState } from "react";
 
-const ProfileDataSection = ({ state }) => {
+const ProfileDataSection = ({ state, handleProfileButton }) => {
+  const { dispatch } = useContext(Context)
   const formik = useFormik({
     initialValues: {
       name: state?.user?.name,
@@ -10,7 +13,13 @@ const ProfileDataSection = ({ state }) => {
       address: state?.user?.address || '',
     },
     onSubmit: (values) => {
-      console.log(values);
+      const data = {
+        id: state.user.id,
+        phone: values.phone,
+        address: values.address
+      }
+      updateUser(data, dispatch)
+      handleProfileButton()
     },
   });
 
@@ -53,7 +62,7 @@ const ProfileDataSection = ({ state }) => {
           onChange={formik.handleChange}
           value={formik.values.address}
         />
-        <button type="submit" className="p-2 border border-[#e26928] bg-[#e26928] text-white text-lg font-semibold w-full">Actualizar</button>
+        <button disabled={ state?.user?.id ? false : true } type="submit" className={`p-2 border border-[#e26928] bg-[#e26928] text-white text-lg font-semibold w-full`} >Actualizar</button>
       </form>
     </div>
   );

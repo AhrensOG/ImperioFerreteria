@@ -23,3 +23,8 @@ export const searchProductsByName = async (title, dispatch) => {
 export const deleteSearchByNameFilter = async (dispatch) => {
     return dispatch({ type: "DELETE_PRODUCTS_BY_NAME" });
 };
+
+export const updateUser = async (data, dispatch) => {
+    const res = await axios.put(`/api/auth/${data.id}`, data)
+    return dispatch({ type: "UPDATE_USER", payload: res.data })
+}

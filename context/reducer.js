@@ -34,6 +34,11 @@ export const reducer = (state, action) => {
         user: null,
         userIsLogged: false
       }
+    case "UPDATE_USER":
+      return {
+        ...state,
+        user: action.payload
+      }
     default:
       return {
         ...state
