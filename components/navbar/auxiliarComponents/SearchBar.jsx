@@ -16,7 +16,7 @@ const SearchBar = () => {
     onSubmit: values => {
       searchProductsByName(values.searchedTitle, dispatch)
       document.getElementById('form').reset();
-      router.asPath === '/' ? router.push('/products') : null
+      router.asPath !== '/products' ? router.push('/products') : null
     }
   })
 
