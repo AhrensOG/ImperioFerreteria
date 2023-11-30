@@ -12,7 +12,7 @@ const ProfileSection = ({ state }) => {
         </span>
         <span>Nombre: {state.user.name}</span>
         <span>Email: {state.user.email}</span>
-        <span>Telefono: {state.user.tel ? state.user.tel : "-"}</span>
+        <span>Telefono: {state.user.phone ? state.user.phone : "-"}</span>
         <span>Direccion: {state.user.address ? state.user.address : "-"}</span>
       </div>
     </div>

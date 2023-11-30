@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
-import CarouselDetail from "../hero/auxiliarComponents/CarouselDetail";
+import CarouselDetail from "./auxiliarComponents/CarouselDetail";
 import ChocolateSection from "./auxiliarComponents/ChocolateSection";
 import { getOneProduct } from "@/context/actions";
 import { useRouter } from "next/router";
