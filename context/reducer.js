@@ -41,9 +41,11 @@ export const reducer = (state, action) => {
       }
     case "ADD_PRODUCT_TO_CART":
       if (!state.productsCart) {
+        const total = action.payload.price * action.payload.items 
         return {
           ...state,
-          productsCart : [action.payload]
+          productsCart : [action.payload],
+          cartTotalPrice: total
         }
       } else {
         const products = state.productsCart
@@ -61,14 +63,30 @@ export const reducer = (state, action) => {
           totalPrice += total
         });
 
-        const user = state.user
-        user.Cart.totalPrice = totalPrice;
-
         return {
           ...state,
           productsCart : products,
-          user : user
+          cartTotalPrice : totalPrice
         }
+      }
+    case "DELETE_PRODUCT_TO_CART":
+      const products = state.productsCart
+      const index = products.findIndex( product => product.id === action.payload.id )
+      if (index !== -1) {
+        products.splice(index, 1)
+      }
+
+      let totalPrice = 0
+      products.forEach(p => {
+        const total = parseFloat(p.price) * p.items
+
+        totalPrice += total
+      });
+
+      return {
+        ...state,
+        productsCart : products,
+        cartTotalPrice : totalPrice
       }
     default:
       return {

@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import ProfileSection from "./auxiliarComponents/ProfileSection";
 import ProfileDataSection from "./auxiliarComponents/ProfileDataSection";
 import LogOut from "./auxiliarComponents/LogOut";
+import CartSection from "./auxiliarComponents/cartSection/CartSection";
 
 const Profile = () => {
   const { state } = useContext(Context);
@@ -69,7 +70,12 @@ const Profile = () => {
               <ProfileDataSection state={state} handleProfileButton={handleProfileButton} />
           </div> 
         }
-
+        {
+          cartButton && state?.user?.id
+          && <div className="flex flex-row justify-center">
+            <CartSection state={state} />
+          </div> 
+        }
         {
           !state?.user?.id 
           && <div className="my-[30%] sm:my-[15%] md:my-[10%] flex flex-col items-center justify-center">Cargando</div>
