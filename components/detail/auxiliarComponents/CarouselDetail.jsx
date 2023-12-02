@@ -28,13 +28,13 @@ const CarouselDetail = ({
             <div
                 className={`h-[300px] sm:h-[500px] md:h-[650px] w-full m-auto relative group`}
             >
-                <div className="relative w-[70%] h-[70%] bg-center bg-cover bg-origin-border duration-500 pl-[15%] pt-[15%] ">
+                <div className="flex justify-center items-center relative w-full h-full bg-center bg-cover bg-origin-border duration-500  ">
                     <img
                         onMouseDown={() => setStopAutoSlide(true)}
                         onMouseUp={() => setStopAutoSlide(false)}
                         src={slides[currentIndex]}
                         alt=""
-                        className="absolute hover:cursor-pointer w-full h-full object-center ease-in duration-500"
+                        className="absolute hover:cursor-pointer w-[70%] h-[70%] object-center ease-in duration-500"
                     />
                 </div>
                 {/* Left Arrow */}
