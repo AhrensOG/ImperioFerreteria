@@ -32,3 +32,7 @@ export const updateUser = async (data, dispatch) => {
 export const addProductToCart = async (data, dispatch) => {
     return dispatch({ type: "ADD_PRODUCT_TO_CART", payload: data })
 }
+
+export const deleteProductToCart = async (data, dispatch) => {
+    return dispatch({ type: "DELETE_PRODUCT_TO_CART", payload: data })
+}
