@@ -23,12 +23,12 @@ const ChocolateSection = ({ img }) => {
     };
 
     return (
-        <div className="hidden md:flex h-[700px]">
-            <div className="grid grid-cols-1 place-content-start gap-3 h-[450px] pr-10 snap-y  snap-mandatory overflow-y-scroll">
+        <div className="hidden md:flex h-[500px]">
+            <div className="grid grid-cols-1 place-content-start gap-3 h-[400px]  snap-y  snap-mandatory overflow-y-scroll">
                 {img.map((e) => (
                     <div
                         key={e}
-                        className="h-[100px] w-[100px] border-2 p-4 snap-center"
+                        className="h-[70px] w-[60px] mr-4 snap-center justify-self-center"
                         id={e}
                         onClick={(e) => setImage(e)}
                     >
@@ -41,7 +41,7 @@ const ChocolateSection = ({ img }) => {
                     </div>
                 ))}
             </div>
-            <div className="w-full self-center justify-self-center">
+            <div className="w-full justify-self-center">
                 <ImageSection image={firstImage} />
             </div>
         </div>
