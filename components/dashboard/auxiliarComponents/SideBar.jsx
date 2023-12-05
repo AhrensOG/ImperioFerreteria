@@ -12,7 +12,7 @@ const SideBar = () => {
     return (
         <div className="relative">
             <div
-                className={bool ? "hidden" : "flex w-[10%] pl-4 pt-4"}
+                className={bool ? "hidden" : "flex w-[20%] pl-4 pt-4"}
                 onClick={handleChangeBool}
             >
                 <svg
@@ -31,7 +31,7 @@ const SideBar = () => {
             <div
                 className={
                     bool
-                        ? "flex flex-col h-screen w-[20%] border-r shadow-2xl border-r-[#e26928] absolute transition duration-1000 ease-in"
+                        ? "flex flex-col h-screen w-[200px] border-r shadow-2xl border-r-[#e26928] absolute transition duration-1000 ease-in"
                         : "left-[-300px] absolute transition duration-1000 ease-in-out"
                 }
             >

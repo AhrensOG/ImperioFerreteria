@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import SideBar from "./auxiliarComponents/SideBar";
+import User from "../user/User";
 
 const Dashboard = () => {
-    const [bool, setBool] = useState(false);
-
-    const handleChangeBool = () => {
-        setBool(!bool);
-    };
-
     return (
-        <div>
-            <SideBar />
+        <div className="flex flex-row">
+            <div className="basis-[20%]">
+                <SideBar />
+            </div>
+            <div className="basis-[40%]">
+                <User />
+            </div>
         </div>
     );
 };
