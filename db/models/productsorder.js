@@ -2,8 +2,8 @@
 const { Model, DataTypes } = require('sequelize');
 const connection = require('./index')
 
-const cartInit = (sequelize, DataTypes) => {
-  class Cart extends Model {
+const initProductsOrder = (sequelize, DataTypes) => {
+  class ProductsOrder extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,19 +13,19 @@ const cartInit = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Cart.init({
-    status: DataTypes.ENUM('Shopping', 'Pending', 'Paid', 'Cancel'),
-    totalPrice: DataTypes.DECIMAL(10, 2),
-    lifeTime: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
+  ProductsOrder.init({
+    productName: DataTypes.STRING,
+    quantity: DataTypes.INTEGER,
+    status: {
+      type: DataTypes.ENUM('Shopping', 'Pending', 'Paid', 'Cancel'),
+      defaultValue: "Shopping"
+    }
   }, {
     sequelize,
-    modelName: 'Cart',
+    modelName: 'ProductsOrder',
     freezeTableName: true
   });
-  return Cart;
+  return ProductsOrder;
 };
 
-module.exports = cartInit(connection, DataTypes)
+module.exports = initProductsOrder(connection, DataTypes)

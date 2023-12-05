@@ -1,4 +1,4 @@
-import { Cart, User } from "@/db/models/models"
+import { User } from "@/db/models/models"
 
 
 export default async function handler(req, res) {
@@ -15,7 +15,7 @@ export default async function handler(req, res) {
         return res.status(400).json('Missing data')
       };
 
-      const user = await User.findOne({ where: { id }, include: { model: Cart } });
+      const user = await User.findOne({ where: { id } });
 
       if(user) {
         return res.status(200).json({data: user, userAlreadyExists: true})
@@ -27,7 +27,7 @@ export default async function handler(req, res) {
           profileImage
         })
   
-        const created = await User.findOne({ where: { id }, include: { model: Cart } });
+        const created = await User.findOne({ where: { id } });
   
         return res.status(200).json({data: created, userAlreadyExists: false})
       };
