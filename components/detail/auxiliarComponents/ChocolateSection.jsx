@@ -3,20 +3,6 @@ import ImageSection from "./ImageSection";
 
 const ChocolateSection = ({ img }) => {
     const [firstImage, setFirstImage] = useState(img[0]);
-    const imageArray = [
-        "https://www.bloginstrumentacion.com/files/2021/01/metal-nuts_shutterstock_138477023.jpg",
-        "https://www.bloginstrumentacion.com/files/2021/01/metal-nuts_shutterstock_138477023.jpg",
-        "https://www.bloginstrumentacion.com/files/2021/01/metal-nuts_shutterstock_138477023.jpg",
-        "https://www.bloginstrumentacion.com/files/2021/01/metal-nuts_shutterstock_138477023.jpg",
-        "https://www.bloginstrumentacion.com/files/2021/01/metal-nuts_shutterstock_138477023.jpg",
-        "https://www.bloginstrumentacion.com/files/2021/01/metal-nuts_shutterstock_138477023.jpg",
-        "https://www.bloginstrumentacion.com/files/2021/01/metal-nuts_shutterstock_138477023.jpg",
-        "https://www.bloginstrumentacion.com/files/2021/01/metal-nuts_shutterstock_138477023.jpg",
-        "https://www.bloginstrumentacion.com/files/2021/01/metal-nuts_shutterstock_138477023.jpg",
-        "https://www.bloginstrumentacion.com/files/2021/01/metal-nuts_shutterstock_138477023.jpg",
-        "https://www.bloginstrumentacion.com/files/2021/01/metal-nuts_shutterstock_138477023.jpg",
-        "https://www.bloginstrumentacion.com/files/2021/01/metal-nuts_shutterstock_138477023.jpg",
-    ];
 
     const setImage = (e) => {
         setFirstImage(e.target.name);
