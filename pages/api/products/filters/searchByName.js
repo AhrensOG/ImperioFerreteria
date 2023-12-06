@@ -1,4 +1,4 @@
-import { Cart, Products, ProductsImages } from "@/db/models/models"
+import { Order, Products, ProductsImages } from "@/db/models/models"
 import { Op } from "sequelize";
 
 
@@ -9,7 +9,7 @@ export default async function handler(req, res) {
       
       const products = await Products.findAll({ include: [
         { model: ProductsImages },
-        { model: Cart }
+        { model: Order }
       ] });
 
       let filteredProducts = [];
