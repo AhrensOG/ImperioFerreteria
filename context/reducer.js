@@ -88,6 +88,16 @@ export const reducer = (state, action) => {
         productsCart : products,
         cartTotalPrice : totalPrice
       }
+    case "INIT_POINT":
+      return {
+        ...state,
+        init_point: action.payload
+      }
+    case "DELETE_INIT_POINT":
+      return {
+        ...state,
+        init_point: null
+      }
     default:
       return {
         ...state

@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Card from "./Card";
+import { createAndPayOrder, deleteInit_Point } from "@/context/actions";
+import { Context } from "@/context/GlobalContext";
+import Link from "next/link";
 
 const CartSection = ({ state }) => {
   const [style] =
@@ -7,11 +10,30 @@ const CartSection = ({ state }) => {
       ? useState(true)
       : useState(false);
 
+  const [processPay, setProcess] = useState(false)
+
+  const { dispatch } = useContext(Context)
+
+  const handlePayCart = async () => {
+    try {
+      setProcess(true)
+      createAndPayOrder(state?.user, state?.productsCart, dispatch)
+
+    } catch (error) {
+      console.log(error)
+    }
+  }  
+
+  const deleteInitPoint = () => {
+    setProcess(false)
+    deleteInit_Point(dispatch)
+  }
+  
   useEffect(() => {}, [state]);
 
   return (
     <div className="w-full">
-      {state.productsCart?.length && (
+      {state.productsCart?.length ? (
         <div className="flex flex-col w-full">
           <div className="text-center bg-white border border-x-[#e26928] p-3">
             <span className="text-xl font-semibold text-[#e26928]">
@@ -20,8 +42,11 @@ const CartSection = ({ state }) => {
           </div>
           <button
             className={`bg-[#e26928] text-xl font-semibold text-white w-full p-3 flex gap-2 justify-center items-center`}
+            onClick={handlePayCart}
           >
-            Comprar
+            {
+              processPay ? 'Procesando...' : 'Comprar'
+            }
             <svg
               stroke="currentColor"
               fill="currentColor"
@@ -34,14 +59,29 @@ const CartSection = ({ state }) => {
               <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path>
             </svg>
           </button>
+          {
+            state?.init_point 
+            ? <div className="mt-1">
+              <Link href={state?.init_point}
+                target="_blank"
+              >
+                <button className={`bg-[#e26928] text-xl font-semibold text-white w-full p-3 flex gap-2 justify-center items-center`}
+                onClick={deleteInitPoint}>
+                  Ir al Pago
+                </button>
+              </Link>
+            </div>
+            : <div className="hidden"></div>
+          }
         </div>
-      )}
+        ) : <div className="hidden"></div>
+      }
       <div
         className={`px-1 lg:px-0 py-10 flex flex-col sm:flex-row sm:flex-wrap sm:justify-evenly ${
           style ? "lg:justify-evenly" : "lg:justify-start"
         } gap-5 overflow-y-scroll max-h-96 sm:max-h-[28rem] scrollbar-thin`}
       >
-        {state?.productsCart?.length ? (
+        {state?.productsCart?.length > 0 ? (
           state.productsCart.map((p) => {
             return <Card product={p} />;
           })
@@ -53,7 +93,7 @@ const CartSection = ({ state }) => {
             <svg
               stroke="currentColor"
               fill="gray"
-              stroke-width="0"
+              strokeWidth="0"
               viewBox="0 0 16 16"
               xmlns="http://www.w3.org/2000/svg"
               className="w-40 h-40 sm:w-48 sm:h-48"

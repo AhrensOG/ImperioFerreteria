@@ -1,4 +1,5 @@
 import { Order, Products, ProductsOrder, User } from "@/db/models/models"
+import { Op } from "sequelize";
 
 
 export default async function handler(req, res) {
@@ -24,7 +25,7 @@ export default async function handler(req, res) {
         return res.status(400).send('An UserID is required')
       };
 
-      const foundOrder = await Order.findOne({ where: { UserId: userId }, include: [
+      const foundOrder = await Order.findOne({ where: { [Op.and]: { UserId: userId, status: 'Shopping' } }, include: [
         {model: User},
         {model: Products}
       ] })
@@ -40,7 +41,7 @@ export default async function handler(req, res) {
 
       const userOrder = await User.findOne({where: { id: userId }})
 
-      await userOrder.setOrder(newOrder)
+      await userOrder.addOrder(newOrder)
 
       const createdOrder = await Order.findOne({ where: { UserId: userId }, include: [
         {model: User},

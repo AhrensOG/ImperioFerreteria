@@ -1,4 +1,5 @@
 import { Order, Products, ProductsOrder } from "@/db/models/models";
+import { Op } from "sequelize";
 
 
 export default async function handler(req, res) {
@@ -10,7 +11,7 @@ export default async function handler(req, res) {
         return res.status(400).send('A OrderID is required')
       }
 
-      const found = await ProductsOrder.findAll({ where: { OrderId: OrderId } });
+      const found = await ProductsOrder.findAll({ where: { [Op.and]: { OrderId: OrderId, status: 'Shopping' } } });
 
       return res.status(200).send(found)
 
@@ -25,9 +26,9 @@ export default async function handler(req, res) {
         return res.status(400).send('A OrderId or Products list are required')
       }
 
-      const Order = await Order.findByPk(OrderId);
+      const order = await Order.findByPk(OrderId);
 
-      if ( !Order ) {
+      if ( !order ) {
         return res.status(400).send('Order not found')
       }
 
@@ -41,10 +42,10 @@ export default async function handler(req, res) {
 
       for (let i = 0; i < productsList.length; i++) {
         const product = await Products.findByPk(productsList[i].id)
-        await Order.addProducts(product, { through: { productName: productsList[i].title, quantity: productsList[i].items } })
+        await order.addProducts(product, { through: { productName: productsList[i].title, quantity: productsList[i].items, status: 'Shopping' } })
       }
 
-      const productsOrder = await ProductsOrder.findAll({ where: { OrderId: OrderId } });
+      const productsOrder = await ProductsOrder.findAll({ where: { [Op.and]: { OrderId: OrderId, status: 'Shopping' } } });
       
       return res.status(200).send(productsOrder)
 
