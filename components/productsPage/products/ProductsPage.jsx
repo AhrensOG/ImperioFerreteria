@@ -28,7 +28,7 @@ const ProductsPage = () => {
         {state?.searchedProducts?.length > 0
           ? state.searchedProducts.map((p) => {
               return (
-                <Link href={`/products/${p.id}`}>
+                <Link key={p.id} href={`/products/${p.id}`}>
                   <Card
                     key={p.id}
                     id={p.id}
@@ -41,7 +41,7 @@ const ProductsPage = () => {
             })
           : state?.products?.map((p) => {
               return (
-                <Link href={`/products/${p.id}`}>
+                <Link key={p.id} href={`/products/${p.id}`}>
                   <Card
                     key={p.id}
                     id={p.id}
