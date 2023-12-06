@@ -9,10 +9,18 @@ const Footer = () => {
         <Link href={'/'}>
           <Image src={'/LogoMobile.png'} width={1000} height={1000} alt='Logo' className='w-[60px] h-[28px] sm:w-[100px] sm:h-[48px] md:w-[140px] md:h-[68px] lg:w-[180px] lg:h-[88px] cursor-pointer'/>
         </Link>
-        <span className='text-[0.60rem] text-white/70 sm:text-sm md:text-base lg:text-lg uppercase cursor-pointer'>Productos</span>
-        <span className='text-[0.60rem] text-white/70 sm:text-sm md:text-base lg:text-lg uppercase cursor-pointer'>Catalogo</span>
-        <span className='text-[0.60rem] text-white/70 sm:text-sm md:text-base lg:text-lg uppercase cursor-pointer'>Categorias</span>
-        <span className='text-[0.60rem] text-white/70 sm:text-sm md:text-base lg:text-lg uppercase cursor-pointer'>Noticias</span>
+        <Link href={'/products'}>
+          <span className='text-[0.60rem] text-white/70 sm:text-sm md:text-base lg:text-lg uppercase cursor-pointer'>Productos</span>
+        </Link>
+        <Link href={'/'}>
+          <span className='text-[0.60rem] text-white/70 sm:text-sm md:text-base lg:text-lg uppercase cursor-pointer'>Catalogo</span>
+        </Link>
+        <Link href={'/'}>
+          <span className='text-[0.60rem] text-white/70 sm:text-sm md:text-base lg:text-lg uppercase cursor-pointer'>Categorias</span>
+        </Link>
+        <Link href={'/'}>
+          <span className='text-[0.60rem] text-white/70 sm:text-sm md:text-base lg:text-lg uppercase cursor-pointer'>Noticias</span>
+        </Link>
       </div>
       <div className='flex flex-row justify-center items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10 sm:justify-start'>
         <Link
