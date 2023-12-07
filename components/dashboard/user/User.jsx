@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "./AuxiliarComponents/Card";
+import Card from "./auxiliarComponents/Card";
 
 const User = () => {
     return (

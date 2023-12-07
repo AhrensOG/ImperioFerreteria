@@ -1,60 +1,33 @@
-import React, { useState } from "react";
+import React from "react";
 import Logo from "./Logo";
-import List from "./List";
-import EndSession from "./EndSession";
 
-const SideBar = () => {
-    const [bool, setBool] = useState(false);
+const SideBar = ({ setShowProducts, showProducts, setShowCategories, showCategories, setShowUsers, showUsers }) => {
 
-    const handleChangeBool = () => {
-        setBool(!bool);
-    };
-    return (
-        <div className="relative">
-            <div
-                className={bool ? "hidden" : "flex w-[20%] pl-4 pt-4"}
-                onClick={handleChangeBool}
-            >
-                <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    stroke-width="0"
-                    version="1.1"
-                    viewBox="0 0 17 17"
-                    height="2em"
-                    width="2em"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path d="M17 2v1h-17v-1h17zM0 7h17v-1h-17v1zM0 11h17v-1h-17v1zM0 15h17v-1h-17v1z"></path>
-                </svg>
-            </div>{" "}
-            <div
-                className={
-                    bool
-                        ? "flex flex-col h-screen w-[200px] border-r shadow-2xl border-r-[#e26928] absolute transition duration-1000 ease-in"
-                        : "left-[-300px] absolute transition duration-1000 ease-in-out"
-                }
-            >
-                <div className="flex pl-4 pt-4" onClick={handleChangeBool}>
-                    <svg
-                        stroke="currentColor"
-                        fill="currentColor"
-                        stroke-width="0"
-                        version="1.1"
-                        viewBox="0 0 17 17"
-                        height="2em"
-                        width="2em"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path d="M9.207 8.5l6.646 6.646-0.707 0.707-6.646-6.646-6.646 6.646-0.707-0.707 6.646-6.646-6.647-6.646 0.707-0.707 6.647 6.646 6.646-6.646 0.707 0.707-6.646 6.646z"></path>
-                    </svg>
-                </div>
-                <Logo />
-                <List />
-                <EndSession />
-            </div>
+  const handleShow = (show, setShow) => {
+    setShowProducts(false)
+    setShowCategories(false)
+    setShowUsers(false)
+
+    return setShow(!show)
+  }
+
+  return (
+    <div className="relative">
+      <div className="flex flex-col h-screen w-[200px] shadow-2xl px-6 gap-4">
+        <Logo />
+        <div className="flex flex-col items-start gap-6">
+          <button onClick={() => handleShow(showProducts, setShowProducts)} className="text-2xl">Productos</button>
+          <button onClick={() => handleShow(showCategories, setShowCategories)} className="text-2xl">Categorías</button>
+          <button onClick={() => handleShow(showUsers, setShowUsers)} className="text-2xl">Usuarios</button>
         </div>
-    );
+        <div className="flex justify-center h-full items-end">
+          <button className="pb-16 text-2xl text-[#e26928] font-bold">
+            Cerrar Sesión
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default SideBar;
