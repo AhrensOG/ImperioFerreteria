@@ -98,6 +98,11 @@ export const reducer = (state, action) => {
         ...state,
         init_point: null
       }
+    case "EDIT_PRODUCT":
+      return {
+        ...state,
+        editProduct: action.payload
+      }
     default:
       return {
         ...state

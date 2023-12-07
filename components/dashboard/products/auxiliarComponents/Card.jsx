@@ -1,7 +1,14 @@
-import React from "react";
+import { Context } from "@/context/GlobalContext";
+import { editProduct } from "@/context/actions";
+import React, { useContext } from "react";
 
 const Card = ({ product }) => {
-  console.log(product);
+  const { dispatch } = useContext(Context)
+  
+  const handleEdit = () => {
+    editProduct(product, dispatch)
+  }
+
   return (
     <div className="max-w-xs w-80 border border-[#e26928] p-2">
       <div className="flex flex-row justify-center items-center gap-2 w-full">
@@ -30,7 +37,7 @@ const Card = ({ product }) => {
               />
             </svg>
           </button>
-          <button>
+          <button onClick={() => handleEdit()}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

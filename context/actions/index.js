@@ -76,3 +76,7 @@ export const createAndPayOrder = async (user, productsCart, dispatch) => {
 export const deleteInit_Point = (dispatch) => {
 	return dispatch({ type: "DELETE_INIT_POINT" });
 }
+
+export const editProduct = (data, dispatch) => {
+	return dispatch({ type: "EDIT_PRODUCT", payload: data })
+}

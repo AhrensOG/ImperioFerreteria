@@ -4,21 +4,22 @@ import User from "./user/User";
 import Products from "./products/Products";
 import { Context } from "@/context/GlobalContext";
 import { getAllProducts } from "@/context/actions";
+import Form from "./products/Form";
 
 const Dashboard = () => {
   const [showProducts, setShowProducts] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
   const [showUsers, setShowUsers] = useState(false);
 
-  const { state, dispatch } = useContext(Context)
+  const { state, dispatch } = useContext(Context);
 
   useEffect(() => {
-    getAllProducts(dispatch)
-  }, []);
+    getAllProducts(dispatch);
+  }, [state.editProduct]);
 
   return (
     <div className="flex flex-row">
-      <div className="">
+      <div>
         <SideBar
           setShowProducts={setShowProducts}
           showProducts={showProducts}
@@ -28,9 +29,24 @@ const Dashboard = () => {
           showUsers={showUsers}
         />
       </div>
-      <div className="">
-        {showUsers ? <User /> : <div className="hidden"></div>}
-        {showProducts ? <Products products={state.products} /> : <div className="hidden"></div>}
+      <div className="w-full">
+        {
+          showUsers 
+          ? <User /> 
+          : <div className="hidden"></div>
+        }
+        {
+          showProducts 
+          ? <div className="flex flex-row w-full">
+              <Products products={state.products} />
+              {
+                state.editProduct 
+                ? <Form data={state.editProduct}/> 
+                : <Form/>
+              }
+            </div>
+          : <div className="hidden"></div>
+        }
       </div>
     </div>
   );
