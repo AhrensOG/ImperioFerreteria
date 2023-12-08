@@ -3,18 +3,19 @@ import SideBar from "./auxiliarComponents/SideBar";
 import User from "./user/User";
 import Products from "./products/Products";
 import { Context } from "@/context/GlobalContext";
-import { getAllProducts } from "@/context/actions";
+import { getAllProducts, getAllUsers } from "@/context/actions";
 import Form from "./products/Form";
 
 const Dashboard = () => {
-  const [showProducts, setShowProducts] = useState(false);
-  const [showCategories, setShowCategories] = useState(false);
-  const [showUsers, setShowUsers] = useState(false);
+    const [showProducts, setShowProducts] = useState(false);
+    const [showCategories, setShowCategories] = useState(false);
+    const [showUsers, setShowUsers] = useState(false);
 
   const { state, dispatch } = useContext(Context);
 
   useEffect(() => {
     getAllProducts(dispatch);
+    getAllUsers(dispatch);
   }, [state.editProduct]);
 
   return (
@@ -29,10 +30,10 @@ const Dashboard = () => {
           showUsers={showUsers}
         />
       </div>
-      <div className="w-full">
+      <div className="w-full flex flex-row">
         {
           showUsers 
-          ? <User /> 
+          ? <User  users={state.users} /> 
           : <div className="hidden"></div>
         }
         {

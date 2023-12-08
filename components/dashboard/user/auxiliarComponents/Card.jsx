@@ -1,6 +1,6 @@
 import React from "react";
 
-const Card = ({ name, phone, mail, address }) => {
+const Card = ({ user }) => {
     return (
         <div className="flex border-2 border-[#e26928] bg-black space-x-14 px-2">
             <div>
@@ -20,10 +20,10 @@ const Card = ({ name, phone, mail, address }) => {
                 </svg>
             </div>
             <div className="text-white text-xl">
-                <p>Ivo Maydana</p>
-                <p>ivo09maydana@gmail.com</p>
-                <p>tel: 3704013565</p>
-                <p>Dirección: Lorenzo Winter 1860</p>
+                <p>{user.name}</p>
+                <p>{user.email}</p>
+                <p>tel: {user.phone}</p>
+                <p>Dirección: {user.address}</p>
             </div>
         </div>
     );
