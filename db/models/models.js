@@ -4,6 +4,8 @@ import Products from "./products";
 import ProductsOrder from "./productsorder";
 import ProductsImages from "./productsimages";
 import User from "./user";
+import Categories from "./categories";
+import ProductsCategories from "./productscategories";
 
 User.hasMany(Order)
 Order.belongsTo(User)
@@ -14,6 +16,9 @@ ProductsImages.belongsTo(Products)
 Order.belongsToMany(Products, { through: ProductsOrder })
 Products.belongsToMany(Order, { through: ProductsOrder })
 
+Products.belongsToMany(Categories, { through: ProductsCategories })
+Categories.belongsToMany(Products, { through: ProductsCategories })
+
 connection.sync({ alter: true })
 
 export {
@@ -21,5 +26,7 @@ export {
   Order,
   Products,
   ProductsImages,
-  ProductsOrder
+  ProductsOrder,
+  Categories,
+  ProductsCategories
 }
