@@ -26,7 +26,6 @@ export default async function handler(req, res) {
       };
 
       const product = await Products.findByPk(productId)
-      console.log(product)
 
       if ( !product ) {
         return res.status(400).send('Product doesnt exists')
