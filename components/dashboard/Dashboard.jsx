@@ -3,7 +3,7 @@ import SideBar from "./auxiliarComponents/SideBar";
 import User from "./user/User";
 import Products from "./products/Products";
 import { Context } from "@/context/GlobalContext";
-import { getAllProducts, getAllUsers } from "@/context/actions";
+import { getAllCategories, getAllProducts, getAllUsers } from "@/context/actions";
 import Form from "./products/Form";
 
 const Dashboard = () => {
@@ -16,7 +16,8 @@ const Dashboard = () => {
   useEffect(() => {
     getAllProducts(dispatch);
     getAllUsers(dispatch);
-  }, [state.editProduct]);
+    getAllCategories(dispatch);
+  }, [state.editProduct, state.products]);
 
   return (
     <div className="flex flex-row">

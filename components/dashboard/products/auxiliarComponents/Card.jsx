@@ -1,5 +1,5 @@
 import { Context } from "@/context/GlobalContext";
-import { editProduct } from "@/context/actions";
+import { deleteProduct, editProduct } from "@/context/actions";
 import React, { useContext } from "react";
 
 const Card = ({ product }) => {
@@ -7,6 +7,10 @@ const Card = ({ product }) => {
   
   const handleEdit = () => {
     editProduct(product, dispatch)
+  }
+
+  const handleDelete = () => {
+    deleteProduct(product.id)
   }
 
   return (
@@ -21,7 +25,7 @@ const Card = ({ product }) => {
           <span className="text-base">Cantidad: {product.quantity}</span>
         </div>
         <div className="flex flex-col items-center gap-6 px-2  w-full basis-[10%]">
-          <button>
+          <button onClick={() => handleDelete()}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
