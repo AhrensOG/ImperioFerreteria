@@ -54,28 +54,5 @@ export default async function handler(req, res) {
     } catch (error) {
       return res.status(400).send(error.message)
     }
-  } else if (req.method === 'DELETE') {
-    try {
-      const { id } = req.body;
-
-      if ( !id ) {
-        return res.status(200).send('An ID is required')
-      };
-
-      const exist = await ProductsImages.findByPk(id);
-
-      if ( !exist ) {
-        return res.status(200).send('Image doesnt exists')
-      }
-
-      await ProductsImages.destroy({ where: { id } });
-
-      const destroyed = await ProductsImages.findByPk(id);
-
-      return !destroyed ? res.status(200).send('Image successfully destroyed') : res.status(200).send('Image wasnt destroyed')
-
-    } catch (error) {
-      return res.status(400).send(error)
-    }
-  };
+  }
 };
