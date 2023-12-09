@@ -1,4 +1,10 @@
+import { uploadFile } from "@/firebase/uploadFile";
 import axios from "axios";
+
+export const getAllCategories = async (dispatch) => {
+  const res = await axios.get("/api/categories/controller");
+  return dispatch({ type: "GET_ALL_CATEGORIES", payload: res.data });
+};
 
 export const getAllUsers = async (dispatch) => {
   const res = await axios.get("/api/user/controller");
@@ -89,3 +95,92 @@ export const deleteInit_Point = (dispatch) => {
 export const editProduct = (data, dispatch) => {
   return dispatch({ type: "EDIT_PRODUCT", payload: data });
 };
+
+export const backToCreateProduct = (dispatch) => {
+  return dispatch({ type: "EDIT_PRODUCT", payload: null });
+};
+
+export const createProduct = async (data) => {
+  try {
+    const res = await axios.post("/api/products/controller", data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const addCategoriesToProduct = async (categoriesList, productId) => {
+  try {
+    const body = {
+      categoriesList,
+      productId,
+    };
+    await axios.post("/api/productsCategories/controller", body);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const addImagesToProduct = async (filesList, productId) => {
+  try {
+    const imagesList = [];
+    for (let i = 0; i < filesList.length; i++) {
+      const image = await uploadFile(filesList[i]);
+      imagesList.push(image);
+    }
+    const body = {
+      imagesList,
+      productId,
+    };
+    await axios.post("/api/productsImages/controller", body);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const addFirstImage = async (file) => {
+  const image = await uploadFile(file)
+  return image.url
+}
+
+export const updateProduct = async (data) => {
+  try {
+    const body = {
+      ...data,
+      productId: data.id,
+    };
+    const res = await axios.put("/api/products/controller", body);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const removeCategoriesToProduct = async (categoriesList, productId) => {
+  try {
+    const body = {
+      productId,
+      categoriesList
+    }
+    await axios.post(`/api/productsCategories/delete`, body);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const removeImagesToProduct = async (idList) => {
+  try {
+    await axios.post(`/api/productsImages/delete`, { idList })
+  } catch (error) {
+    console.log(error.message)
+  }
+}
+
+export const deleteProduct = async (id) => {
+  try {
+    const res = await axios.delete(`/api/products/controller?productId=${id}`)
+    return res.data
+  } catch (error) {
+    console.log(error)
+  }
+}

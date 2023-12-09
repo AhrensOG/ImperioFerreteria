@@ -1,5 +1,10 @@
 export const reducer = (state, action) => {
   switch (action.type) {
+    case "GET_ALL_CATEGORIES":
+      return {
+        ...state,
+        categories: action.payload,
+      };
     case "GET_ALL_USERS":
       return {
         ...state,
@@ -75,7 +80,7 @@ export const reducer = (state, action) => {
           productsCart: products,
           cartTotalPrice: totalPrice,
         };
-      }
+      };
     case "DELETE_PRODUCT_TO_CART":
       const products = state.productsCart;
       const index = products.findIndex(
