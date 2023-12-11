@@ -37,9 +37,29 @@ export default async function handler(req, res) {
     } catch (error) {
       return res.status(400).send(error.message);
     }
+  } else if (req.method === "PUT") {
+    try {
+      const { name, id } = req.body;
+
+      if (!id) {
+        return res.status(400).send('An ID is required')
+      }
+
+      if (name) {
+        await Categories.update({ name }, { where: { id } })
+      }
+
+      const updated = await Categories.findOne({ where: { id } });
+
+      return updated
+        ? res.status(200).send(updated)
+        : res.status(400).send("Error during category update");
+    } catch (error) {
+      return res.status(400).send(error.message);
+    }
   } else if (req.method === "DELETE") {
     try {
-      const { id } = req.body;
+      const { id } = req.query;
       if (!id) {
         return res.status(400).send('An ID is required')
       }

@@ -1,5 +1,7 @@
 import React from "react";
 import Logo from "./Logo";
+import { signOut } from "firebase/auth";
+import { auth } from "@/firebase/config";
 
 const SideBar = ({ setShowProducts, showProducts, setShowCategories, showCategories, setShowUsers, showUsers }) => {
 
@@ -21,7 +23,7 @@ const SideBar = ({ setShowProducts, showProducts, setShowCategories, showCategor
           <button onClick={() => handleShow(showUsers, setShowUsers)} className="text-2xl">Usuarios</button>
         </div>
         <div className="flex justify-center h-full items-end">
-          <button className="pb-16 text-2xl text-[#e26928] font-bold">
+          <button className="pb-16 text-2xl text-[#e26928] font-bold" onClick={() => signOut(auth)}>
             Cerrar Sesión
           </button>
         </div>

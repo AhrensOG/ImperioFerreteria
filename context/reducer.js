@@ -117,6 +117,11 @@ export const reducer = (state, action) => {
         ...state,
         editProduct: action.payload,
       };
+    case "EDIT_CATEGORY":
+      return {
+        ...state,
+        editCategory: action.payload,
+      }
     default:
       return {
         ...state,
