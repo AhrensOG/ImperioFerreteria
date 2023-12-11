@@ -1,31 +1,24 @@
 import { Context } from "@/context/GlobalContext";
-import { deleteProduct, editProduct, getAllProducts } from "@/context/actions";
+import { deleteCategory, editCategory, getAllCategories } from "@/context/actions";
 import React, { useContext } from "react";
 
-const Card = ({ product }) => {
-  const { dispatch } = useContext(Context)
-  
+const Card = ({ category }) => {
+  const { dispatch } = useContext(Context);
+
   const handleEdit = () => {
-    editProduct(product, dispatch)
-  }
+    editCategory(category, dispatch);
+  };
 
   const handleDelete = () => {
-    deleteProduct(product.id)
-    getAllProducts(dispatch)
-  }
+    deleteCategory(category.id);
+    getAllCategories(dispatch)
+  };
 
   return (
     <div className="max-w-xs w-80 border border-[#e26928] p-2">
-      <div className="flex flex-row justify-center items-center gap-2 w-full">
-        <div className="basis-[30%] w-full">
-          <img src={product.firstImage} alt="img" className="w-24 h-24" />
-        </div>
-        <div className="flex flex-col items-start w-full basis-[60%] gap-2">
-          <span className="text-xl">{product.title}</span>
-          <span className="text-base">Precio: ${product.price}</span>
-          <span className="text-base">Cantidad: {product.quantity}</span>
-        </div>
-        <div className="flex flex-col items-center gap-6 px-2  w-full basis-[10%]">
+      <div className="flex flex-row justify-between items-center w-full">
+        <span className="text-xl p-2">{category.name}</span>
+        <div className="flex flex-col items-center gap-6 px-2  w-full basis-[20%]">
           <button onClick={() => handleDelete()}>
             <svg
               xmlns="http://www.w3.org/2000/svg"

@@ -184,3 +184,36 @@ export const deleteProduct = async (id) => {
     console.log(error)
   }
 }
+
+export const editCategory = (data, dispatch) => {
+  return dispatch({ type: "EDIT_CATEGORY", payload: data });
+}
+
+export const backToCreateCategory = (dispatch) => {
+  return dispatch({ type: "EDIT_CATEGORY", payload: null });
+}
+
+export const createCategory = async (data) => {
+  try {
+    await axios.post("/api/categories/controller", data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateCategory = async (data) => {
+  try {
+    await axios.put("/api/categories/controller", data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+export const deleteCategory = async (id) => {
+  try {
+    await axios.delete(`/api/categories/controller?id=${id}`);
+  } catch (error) {
+    console.log(error);
+  }
+}
