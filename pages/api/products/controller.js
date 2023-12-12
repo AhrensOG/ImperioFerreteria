@@ -1,4 +1,4 @@
-import { Cart, Products, ProductsImages } from "@/db/models/models"
+import { Categories, Order, Products, ProductsImages } from "@/db/models/models"
 
 
 export default async function handler(req, res) {
@@ -9,7 +9,7 @@ export default async function handler(req, res) {
       if( productId ) {
         const product = await Products.findOne({ where: { id: productId }, include: [
           { model: ProductsImages },
-          { model: Cart }
+          { model: Order }
         ] })
 
         if ( !product ) {
@@ -21,7 +21,8 @@ export default async function handler(req, res) {
 
       const products = await Products.findAll({ include: [
         { model: ProductsImages },
-        { model: Cart }
+        { model: Order },
+        { model: Categories }
       ] });
 
       return res.status(200).send(products)
@@ -52,7 +53,8 @@ export default async function handler(req, res) {
 
       const newProduct = await Products.findOne({ where: { title }, include: [
         { model: ProductsImages },
-        { model: Cart }
+        { model: Order },
+        { model: Categories }
       ] })
 
       return res.status(200).send(newProduct)
@@ -88,7 +90,8 @@ export default async function handler(req, res) {
 
       const updated = await Products.findOne({ where: { id: productId }, include: [
         { model: ProductsImages },
-        { model: Cart }
+        { model: Order },
+        { model: Categories }
       ] })
 
       return res.status(200).send(updated)
@@ -98,7 +101,7 @@ export default async function handler(req, res) {
     }
   } else if (req.method === 'DELETE') {
     try {
-      const { productId } = req.body;
+      const { productId } = req.query;
 
       const product = await Products.findByPk(productId);
 

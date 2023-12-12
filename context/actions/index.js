@@ -1,37 +1,48 @@
+import { uploadFile } from "@/firebase/uploadFile";
 import axios from "axios";
 
+export const getAllCategories = async (dispatch) => {
+  const res = await axios.get("/api/categories/controller");
+  return dispatch({ type: "GET_ALL_CATEGORIES", payload: res.data });
+};
+
+export const getAllUsers = async (dispatch) => {
+  const res = await axios.get("/api/user/controller");
+  return dispatch({ type: "GET_ALL_USERS", payload: res.data });
+};
+
 export const getAllProducts = async (dispatch) => {
-    const res = await axios.get("/api/products/controller");
-    return dispatch({ type: "GET_ALL_PRODUCTS", payload: res.data });
+  const res = await axios.get("/api/products/controller");
+  return dispatch({ type: "GET_ALL_PRODUCTS", payload: res.data });
 };
 
 export const getOneProduct = async (id, dispatch) => {
-    const res = await axios.get(`/api/products/controller?productId=${id}`);
-    return dispatch({ type: "GET_ONE_PRODUCT", payload: res.data });
+  const res = await axios.get(`/api/products/controller?productId=${id}`);
+  return dispatch({ type: "GET_ONE_PRODUCT", payload: res.data });
 };
 
 export const searchProductsByName = async (title, dispatch) => {
-    const res = await axios.get(
-        `/api/products/filters/searchByName?productName=${title}`
-    );
-    return dispatch({
-        type: "GET_PRODUCTS_BY_NAME",
-        payload: { data: res.data, title },
-    });
+  const res = await axios.get(
+    `/api/products/filters/searchByName?productName=${title}`
+  );
+  return dispatch({
+    type: "GET_PRODUCTS_BY_NAME",
+    payload: { data: res.data, title },
+  });
 };
 
 export const deleteSearchByNameFilter = async (dispatch) => {
-    return dispatch({ type: "DELETE_PRODUCTS_BY_NAME" });
+  return dispatch({ type: "DELETE_PRODUCTS_BY_NAME" });
 };
 
 export const updateUser = async (data, dispatch) => {
-    const res = await axios.put(`/api/auth/${data.id}`, data)
-    return dispatch({ type: "UPDATE_USER", payload: res.data })
-}
+  const res = await axios.put(`/api/auth/${data.id}`, data);
+  return dispatch({ type: "UPDATE_USER", payload: res.data });
+};
 
 export const addProductToCart = async (data, dispatch) => {
-    return dispatch({ type: "ADD_PRODUCT_TO_CART", payload: data })
-}
+  return dispatch({ type: "ADD_PRODUCT_TO_CART", payload: data });
+};
 
 export const deleteProductToCart = async (data, dispatch) => {
   return dispatch({ type: "DELETE_PRODUCT_TO_CART", payload: data });
@@ -205,8 +216,12 @@ export const deleteCategory = async (id) => {
   } catch (error) {
     console.log(error);
   }
+<<<<<<< HEAD
 }
 
 export const openCart = (data, dispatch) => {
   return dispatch({ type: "OPEN_CART", payload: data  });
 } 
+=======
+}
+>>>>>>> b709d2e8222f7ba6ada7e44cb6ad4e366291aac7

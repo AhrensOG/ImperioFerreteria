@@ -7,15 +7,16 @@ import { Context } from "@/context/GlobalContext";
 import { openCart } from "@/context/actions";
 
 const HomeNavbar = () => {
+    const { state, dispatch } = useContext(Context);
 
-  const { state, dispatch } = useContext(Context)
+    useEffect(() => {
+        const userStatus = async () => {
+            await isUserLogged(dispatch);
+        };
+        userStatus();
+    }, []);
 
-  useEffect(() => {
-    const userStatus = async () => {
-      await isUserLogged(dispatch)
-    }
-    userStatus()
-  }, [])
+    const href = state?.userIsLogged ? "/user/profile" : "/user/signIn";
 
     return (
         <div className="w-full h-full flex sm:flex-row flex-col gap-8 items-center p-4 sm:px-12">

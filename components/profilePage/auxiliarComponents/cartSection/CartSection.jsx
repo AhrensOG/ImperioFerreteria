@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Card from "./Card";
-<<<<<<< Updated upstream
-=======
 import { createAndPayOrder } from "@/context/actions";
 import { Context } from "@/context/GlobalContext";
->>>>>>> Stashed changes
 
 const CartSection = ({ state }) => {
   const [style] =
@@ -12,9 +9,6 @@ const CartSection = ({ state }) => {
       ? useState(true)
       : useState(false);
 
-<<<<<<< Updated upstream
-  useEffect(() => {}, [state]);
-=======
   const [processPay, setProcess] = useState(false)
 
   const { dispatch } = useContext(Context)
@@ -34,11 +28,10 @@ const CartSection = ({ state }) => {
       setProcess(false)
     }
   }, [state, state?.init_point]);
->>>>>>> Stashed changes
 
   return (
     <div className="w-full">
-      {state.productsCart?.length && (
+      {state.productsCart?.length ? (
         <div className="flex flex-col w-full">
           <div className="text-center bg-white border border-x-[#e26928] p-3">
             <span className="text-xl font-semibold text-[#e26928]">
@@ -47,8 +40,11 @@ const CartSection = ({ state }) => {
           </div>
           <button
             className={`bg-[#e26928] text-xl font-semibold text-white w-full p-3 flex gap-2 justify-center items-center`}
+            onClick={handlePayCart}
           >
-            Comprar
+            {
+              processPay ? 'Procesando...' : 'Comprar'
+            }
             <svg
               stroke="currentColor"
               fill="currentColor"
@@ -62,13 +58,14 @@ const CartSection = ({ state }) => {
             </svg>
           </button>
         </div>
-      )}
+        ) : <div className="hidden"></div>
+      }
       <div
         className={`px-1 lg:px-0 py-10 flex flex-col sm:flex-row sm:flex-wrap sm:justify-evenly ${
           style ? "lg:justify-evenly" : "lg:justify-start"
         } gap-5 overflow-y-scroll max-h-96 sm:max-h-[28rem] scrollbar-thin`}
       >
-        {state?.productsCart?.length ? (
+        {state?.productsCart?.length > 0 ? (
           state.productsCart.map((p) => {
             return <Card key={p.id} product={p} />;
           })
@@ -80,7 +77,7 @@ const CartSection = ({ state }) => {
             <svg
               stroke="currentColor"
               fill="gray"
-              stroke-width="0"
+              strokeWidth="0"
               viewBox="0 0 16 16"
               xmlns="http://www.w3.org/2000/svg"
               className="w-40 h-40 sm:w-48 sm:h-48"

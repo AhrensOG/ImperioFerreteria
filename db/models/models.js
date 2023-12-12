@@ -1,25 +1,32 @@
 import connection from ".";
-import Cart from "./cart";
+import Order from "./order";
 import Products from "./products";
-import ProductsCart from "./productscart";
+import ProductsOrder from "./productsorder";
 import ProductsImages from "./productsimages";
 import User from "./user";
+import Categories from "./categories";
+import ProductsCategories from "./productscategories";
 
-User.hasOne(Cart)
-Cart.belongsTo(User)
+User.hasMany(Order)
+Order.belongsTo(User)
 
 Products.hasMany(ProductsImages)
 ProductsImages.belongsTo(Products)
 
-Cart.belongsToMany(Products, { through: ProductsCart })
-Products.belongsToMany(Cart, { through: ProductsCart })
+Order.belongsToMany(Products, { through: ProductsOrder })
+Products.belongsToMany(Order, { through: ProductsOrder })
+
+Products.belongsToMany(Categories, { through: ProductsCategories })
+Categories.belongsToMany(Products, { through: ProductsCategories })
 
 connection.sync({ alter: true })
 
 export {
   User,
-  Cart,
+  Order,
   Products,
   ProductsImages,
-  ProductsCart
+  ProductsOrder,
+  Categories,
+  ProductsCategories
 }

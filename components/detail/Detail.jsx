@@ -147,7 +147,7 @@ const Detail = ({
                             <button
                                 disabled={items === "" || items === 0}
                                 onClick={handleAddProductToCart}
-                                className="  w-full h-full border hover:bg-[#e26928] hover:text-white   border-[#e26928] py-2 text-[#e26928] font-semibold "
+                                className="  w-full h-full border hover:bg-[#e26928] hover:text-white border-[#e26928] py-2 text-[#e26928] font-semibold "
                             >
                                 AÑADIR AL CARRITO
                             </button>
