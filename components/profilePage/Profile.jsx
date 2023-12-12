@@ -1,5 +1,5 @@
 import { Context } from "@/context/GlobalContext";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ProfileSection from "./auxiliarComponents/ProfileSection";
 import ProfileDataSection from "./auxiliarComponents/ProfileDataSection";
 import LogOut from "./auxiliarComponents/LogOut";
@@ -26,6 +26,13 @@ const Profile = () => {
     setProfileButton(false);
     setProfileDataButton(false);
   };
+
+  useEffect(() => {
+    if (state?.openCart) {
+      handleCartButton()
+    }
+  }, [state.openCart])
+  
 
   return (
     <div className="w-full h-full flex flex-col pt-8 max-w-screen-lg">

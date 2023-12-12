@@ -4,6 +4,7 @@ import SearchBar from "./auxiliarComponents/SearchBar";
 import Link from "next/link";
 import { isUserLogged } from "@/context/actions/isUserLogged";
 import { Context } from "@/context/GlobalContext";
+import { openCart } from "@/context/actions";
 
 const HomeNavbar = () => {
     const { state, dispatch } = useContext(Context);
@@ -46,6 +47,7 @@ const HomeNavbar = () => {
                         strokeWidth={0.8}
                         stroke="currentColor"
                         className="w-12 h-12 cursor-pointer"
+                        onClick={() => openCart(false, dispatch)}
                     >
                         <path
                             strokeLinecap="round"
@@ -62,6 +64,7 @@ const HomeNavbar = () => {
                         strokeWidth={0.8}
                         stroke="currentColor"
                         className="w-12 h-12 cursor-pointer"
+                        onClick={() => openCart(true, dispatch)}
                     >
                         <path
                             strokeLinecap="round"

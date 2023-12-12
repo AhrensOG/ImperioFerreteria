@@ -28,7 +28,7 @@ export default async function handler(req, res) {
             pending: '',
             failure: ''
           },
-          notification_url: "https://2b01-2803-9800-94c2-8ab6-88e8-5612-8d79-2e.ngrok-free.app/api/payment/webhook"
+          notification_url: "https://991f-2803-9800-94c2-8ab6-7909-8143-b3db-e6fd.ngrok-free.app/api/payment/webhook"
         }
       })
       return res.status(200).send(response)
