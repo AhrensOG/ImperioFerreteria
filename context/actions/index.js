@@ -216,12 +216,8 @@ export const deleteCategory = async (id) => {
   } catch (error) {
     console.log(error);
   }
-<<<<<<< HEAD
 }
 
 export const openCart = (data, dispatch) => {
   return dispatch({ type: "OPEN_CART", payload: data  });
 } 
-=======
-}
->>>>>>> b709d2e8222f7ba6ada7e44cb6ad4e366291aac7
