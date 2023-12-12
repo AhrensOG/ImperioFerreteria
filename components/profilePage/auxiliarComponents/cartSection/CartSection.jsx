@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Card from "./Card";
+<<<<<<< Updated upstream
+=======
+import { createAndPayOrder } from "@/context/actions";
+import { Context } from "@/context/GlobalContext";
+>>>>>>> Stashed changes
 
 const CartSection = ({ state }) => {
   const [style] =
@@ -7,7 +12,29 @@ const CartSection = ({ state }) => {
       ? useState(true)
       : useState(false);
 
+<<<<<<< Updated upstream
   useEffect(() => {}, [state]);
+=======
+  const [processPay, setProcess] = useState(false)
+
+  const { dispatch } = useContext(Context)
+
+  const handlePayCart = async () => {
+    try {
+      setProcess(true)
+      createAndPayOrder(state?.user, state?.productsCart, dispatch)
+
+    } catch (error) {
+      console.log(error)
+    }
+  }  
+  
+  useEffect(() => {
+    if (processPay) {
+      setProcess(false)
+    }
+  }, [state, state?.init_point]);
+>>>>>>> Stashed changes
 
   return (
     <div className="w-full">
@@ -25,7 +52,7 @@ const CartSection = ({ state }) => {
             <svg
               stroke="currentColor"
               fill="currentColor"
-              stroke-width="0.5"
+              strokeWidth="0.5"
               viewBox="0 0 16 16"
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -43,7 +70,7 @@ const CartSection = ({ state }) => {
       >
         {state?.productsCart?.length ? (
           state.productsCart.map((p) => {
-            return <Card product={p} />;
+            return <Card key={p.id} product={p} />;
           })
         ) : (
           <div className="flex flex-col items-center justify-center">

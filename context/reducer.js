@@ -88,6 +88,11 @@ export const reducer = (state, action) => {
         productsCart : products,
         cartTotalPrice : totalPrice
       }
+    case "OPEN_CART":
+      return {
+        ...state,
+        openCart: action.payload
+      }
     default:
       return {
         ...state
