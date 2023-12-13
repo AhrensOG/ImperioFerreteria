@@ -4,6 +4,7 @@ import CarouselDetail from "./auxiliarComponents/CarouselDetail";
 import ChocolateSection from "./auxiliarComponents/ChocolateSection";
 import { addProductToCart } from "@/context/actions";
 import { Context } from "@/context/GlobalContext";
+import SliderTablet from "./auxiliarComponents/SliderTablet";
 
 const Detail = ({
     id,
@@ -68,9 +69,10 @@ const Detail = ({
                     <div className=" text-3xl sm:text-4xl px-4 font-bold pb-12">
                         {title}
                     </div>
-                    <div className="h-[400px]">
+                    <div className="h-[400px] md:h-[600px] ">
                         <ChocolateSection img={imagesArray} />
                         <CarouselDetail slides={imagesArray} />
+                        <SliderTablet slides={imagesArray} />
                     </div>
                     <div className="space-y-2 py-5 px-4">
                         <span className="flex justify-start text-4xl">
@@ -140,7 +142,7 @@ const Detail = ({
                                 </p>
                             </div>
                         </div>
-                        <div className="flex flex-col md:flex-row  md:space-x-44 md:justify-center gap-2">
+                        <div className="flex flex-col md:flex-row  md:space-x-10 lg:space-x-44 md:justify-center gap-2">
                             <button className=" bg-[#e26928] text-white font-semibold  w-full h-full py-2">
                                 COMPRAR AHORA
                             </button>
@@ -157,7 +159,7 @@ const Detail = ({
                         <h3 className="text-left text-2xl">
                             DETALLES DEL PRODUCTO
                         </h3>
-                        <div className="indent-8 text-left ml-[5%] mr-[10%] text-xl ">
+                        <div className="indent-8 text-left ml-[5%] mr-[10%] text-xl">
                             {" "}
                             {description}{" "}
                         </div>
