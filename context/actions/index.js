@@ -22,14 +22,36 @@ export const getOneProduct = async (id, dispatch) => {
 };
 
 export const searchProductsByName = async (title, dispatch) => {
-  const res = await axios.get(
-    `/api/products/filters/searchByName?productName=${title}`
-  );
-  return dispatch({
-    type: "GET_PRODUCTS_BY_NAME",
-    payload: { data: res.data, title },
-  });
+  try {
+    const res = await axios.get(
+      `/api/products/filters/searchByName?productName=${title}`
+    );
+    return dispatch({
+      type: "GET_PRODUCTS_BY_NAME",
+      payload: { data: res.data, title },
+    });
+  } catch (error) {
+    return error
+  }
 };
+
+export const searchProductsByCategory = async (category, dispatch) => {
+  try {
+    const res = await axios.get(
+      `/api/products/filters/searchByCategory?categoryName=${category}`
+    );
+    return dispatch({
+      type: "GET_PRODUCTS_BY_CATEGORY",
+      payload: res.data.length ? res.data : null,
+    });
+  } catch (error) {
+    return error
+  }
+}
+
+export const deleteSearchByCategoryFilter = (dispatch) => {
+  return dispatch({ type: "DELETE_PRODUCTS_BY_CATEGORY" });
+}
 
 export const deleteSearchByNameFilter = async (dispatch) => {
   return dispatch({ type: "DELETE_PRODUCTS_BY_NAME" });

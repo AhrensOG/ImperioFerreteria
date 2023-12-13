@@ -27,6 +27,16 @@ export const reducer = (state, action) => {
         searchedProducts: null,
         searchedTitle: null,
       };
+    case "GET_PRODUCTS_BY_CATEGORY":
+      return {
+        ...state,
+        productsByCategory: action.payload 
+      }
+    case "DELETE_PRODUCTS_BY_CATEGORY":
+      return {
+        ...state,
+        productsByCategory: null
+      }
     case "GET_ONE_PRODUCT":
       return {
         ...state,

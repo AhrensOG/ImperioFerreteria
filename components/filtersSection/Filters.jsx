@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Card from './auxiliarComponents/products/Card'
 import { Context } from '@/context/GlobalContext'
-import { getAllProducts } from '@/context/actions'
+import { getAllCategories, getAllProducts } from '@/context/actions'
 import ProductsSection from './auxiliarComponents/products/ProductsSection'
 import CatalogSection from './auxiliarComponents/catalog/CatalogSection'
 import Link from 'next/link'
@@ -14,6 +14,7 @@ const Filters = () => {
 
   useEffect(() => {
     getAllProducts(dispatch)
+    getAllCategories(dispatch)
   }, [])
 
   const displayList = (list, setList) => {
@@ -33,7 +34,6 @@ const Filters = () => {
         <Link href={'/'}>
           <span onMouseEnter={() => displayList(listCatalog, setListCatalog)}  className='text-sm sm:text-lg cursor-pointer'>Catalogo</span>
         </Link>
-        <span className='text-sm sm:text-lg cursor-pointer'>Categorias</span>
         <span className='text-sm sm:text-lg cursor-pointer'>Noticias</span>
       </div>
       {
@@ -43,7 +43,7 @@ const Filters = () => {
       }
       {
         listCatalog ? 
-        <CatalogSection listCatalog={listCatalog} setListCatalog={setListCatalog} />
+        <CatalogSection listCatalog={listCatalog} setListCatalog={setListCatalog} state={state} />
         : <div className='hidden'></div>
       }
     </div>
