@@ -3,7 +3,7 @@ import Header from '@/components/navbar/Header'
 import HomeNavbar from '@/components/navbar/HomeNavbar'
 import ProductsPage from '@/components/productsPage/products/ProductsPage'
 import { Context } from '@/context/GlobalContext'
-import { getAllProducts } from '@/context/actions'
+import { getAllCategories, getAllProducts } from '@/context/actions'
 import React, { useContext, useEffect } from 'react'
 
 const Products = () => {
@@ -11,6 +11,7 @@ const Products = () => {
 
   useEffect(() => {
     getAllProducts(dispatch)
+    getAllCategories(dispatch)
   }, [])
   
 
