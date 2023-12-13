@@ -9,7 +9,7 @@ const ChocolateSection = ({ img }) => {
     };
 
     return (
-        <div className="hidden md:flex h-[500px]">
+        <div className="hidden lg:flex h-[500px]">
             <div className="grid grid-cols-1 place-content-start gap-3 h-[400px]  snap-y  snap-mandatory overflow-y-scroll">
                 {img.map((e) => (
                     <div
