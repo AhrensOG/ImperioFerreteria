@@ -7,12 +7,12 @@ const Card = ({
   description = "Tuerca de excelente calidad Tuerca de excelente calidad Tuerca de excelente calidad Tuerca de excelente calidad",
 }) => {
   return (
-    <div className="flex flex-col items-center text-start max-w-[300px] w-full divide-y divide-slate-400 border border-[#e26928] hover:-translate-y-2 duration-500 hover:shadow-lg hover:shadow-black/60">
-      <img src={url} alt="img" className="w-full h-full" />
-      <div className="flex flex-col w-full h-full items-center justify-center p-4 gap-4">
-        <span className="text-2xl">{title}</span>
-        <span>{description}</span>
-        <button className="w-[80%] bg-black text-white py-2 hover:text-[#e26928] duration-200">
+    <div className="grid grid-cols-1 justify-items-stretch content-between max-w-[300px] w-[300px] h-[500px] divide-y divide-slate-400 border border-[#e26928] hover:-translate-y-2 duration-500 hover:shadow-lg hover:shadow-black/60">
+      <img src={url} alt="img" className="w-[300px] h-[250px]" />
+      <div className="flex flex-col w-full h-[250px] items-center justify-end px-4 py-6 gap-4">
+        <span className="text-xl">{title}</span>
+        <span>{ description.length > 95 ? description.substring(0, 95) + `...` : description }</span>
+        <button className="w-full bg-black text-white py-2 hover:text-[#e26928] duration-200">
           Ver Producto
         </button>
       </div>
