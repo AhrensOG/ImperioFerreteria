@@ -19,7 +19,7 @@ const ProductDetail = () => {
     return (
         <section>
             <HomeNavbar />
-            <div className="  md:flex justify-center">
+            <div className=" mx-[20px] md:flex justify-center">
                 {state?.product?.title ? (
                     <Detail
                         id={id}
