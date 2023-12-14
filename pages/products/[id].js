@@ -2,7 +2,7 @@ import Detail from "@/components/detail/Detail";
 import HomeNavbar from "@/components/navbar/HomeNavbar";
 import React, { useEffect, useContext } from "react";
 import { Context } from "@/context/GlobalContext";
-import { getOneProduct } from "@/context/actions";
+import { deleteProductDetail, getOneProduct } from "@/context/actions";
 import { useRouter } from "next/router";
 import Footer from "@/components/footer/Footer";
 
@@ -15,6 +15,9 @@ const ProductDetail = () => {
         if (id) {
             getOneProduct(id, dispatch);
         }
+        return () => {
+            deleteProductDetail(dispatch)
+        } 
     }, [id, user]);
     return (
         <section>

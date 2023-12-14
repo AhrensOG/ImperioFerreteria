@@ -9,7 +9,7 @@ const CatalogSection = ({ listCatalog, setListCatalog, state }) => {
     >
       {
         state?.categories?.map((c) => {
-          return <Card title={c.name} url=""/>
+          return <Card key={c.name} title={c.name} url=""/>
         })
       }
     </div>

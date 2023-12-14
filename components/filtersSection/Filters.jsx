@@ -31,7 +31,7 @@ const Filters = () => {
         <Link href={'/products'}>
           <span onMouseEnter={() => displayList(listProducts, setListProducts)} className='text-sm sm:text-lg cursor-pointer'>Productos</span>
         </Link>
-        <Link href={'/'}>
+        <Link href={'/products'}>
           <span onMouseEnter={() => displayList(listCatalog, setListCatalog)}  className='text-sm sm:text-lg cursor-pointer'>Catalogo</span>
         </Link>
         <span className='text-sm sm:text-lg cursor-pointer'>Noticias</span>

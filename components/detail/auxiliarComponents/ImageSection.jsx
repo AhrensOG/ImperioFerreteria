@@ -6,7 +6,7 @@ const ImageSection = ({ image }) => {
             <img
                 src={image}
                 alt={image}
-                className="h-[400px] w-[600px] lg:w-[800px] "
+                className="h-[400px] w-[600px] lg:w-[800px]"
             />
         </div>
     );

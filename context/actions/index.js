@@ -21,6 +21,10 @@ export const getOneProduct = async (id, dispatch) => {
   return dispatch({ type: "GET_ONE_PRODUCT", payload: res.data });
 };
 
+export const deleteProductDetail = (dispatch) => {
+  return dispatch({ type: "GET_ONE_PRODUCT", payload: null });
+}
+
 export const searchProductsByName = async (title, dispatch) => {
   try {
     const res = await axios.get(

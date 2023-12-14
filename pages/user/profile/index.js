@@ -28,7 +28,7 @@ const ProfilePage = () => {
       <div className='flex flex-row justify-center'>
         <Profile />
       </div>
-      <Footer />
+      <Footer marginTop={0}/>
     </div>
   )
 }

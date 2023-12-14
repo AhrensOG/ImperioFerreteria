@@ -38,7 +38,7 @@ const PaymentSection = () => {
             </span>
             <span className="font-semibold text-[#e26928]  text-xs pl-1">Recorda llevar el comprobante</span>
             <Link href={state?.init_point} target="_blank">
-              <button className="border border-[#e26928] py-3 w-full rounded-lg text-xl font-semibold text-[#e26928]">
+              <button onClick={() => deleteInitPoint()} className="border border-[#e26928] py-3 w-full rounded-lg text-xl font-semibold text-[#e26928]">
                 Retirar en sucursal
               </button>
             </Link>
