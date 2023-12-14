@@ -64,7 +64,7 @@ const Profile = () => {
       </div>
       <div>
         {profileButton && state?.user?.id 
-          && <div className="flex flex-col gap-10">
+          && <div className="flex flex-col gap-10 py-12 px-4 md:px-0">
             <ProfileSection state={state}/>
             <div className="text-center">
               <LogOut/>
@@ -85,7 +85,7 @@ const Profile = () => {
         }
         {
           !state?.user?.id 
-          && <div className="my-[30%] sm:my-[15%] md:my-[10%] flex flex-col items-center justify-center">Cargando</div>
+          && <div className="my-[40%] sm:my-[15%] md:my-[10%] flex flex-col items-center justify-center">Cargando</div>
         }
       </div>
     </div>

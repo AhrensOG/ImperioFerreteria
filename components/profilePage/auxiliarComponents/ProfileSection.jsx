@@ -1,8 +1,9 @@
 import React from "react";
 
 const ProfileSection = ({ state }) => {
+  console.log(state)
   return (
-    <div className="flex flex-col pt-14 gap-5 px-4">
+    <div className="flex flex-col gap-6">
       <span className="uppercase text-xl font-semibold tracking-tight">
         Informacion de la cuenta
       </span>
@@ -14,6 +15,9 @@ const ProfileSection = ({ state }) => {
         <span>Email: {state.user.email}</span>
         <span>Telefono: {state.user.phone ? state.user.phone : "-"}</span>
         <span>Direccion: {state.user.address ? state.user.address : "-"}</span>
+      </div>
+      <div>
+        <span className="uppercase text-xl font-semibold tracking-tight">Tus compras</span>
       </div>
     </div>
   );

@@ -62,7 +62,7 @@ const ProfileDataSection = ({ state, handleProfileButton }) => {
           onChange={formik.handleChange}
           value={formik.values.address}
         />
-        <button disabled={ state?.user?.id ? false : true } type="submit" className={`p-2 border border-[#e26928] bg-[#e26928] text-white text-lg font-semibold w-full`} >Actualizar</button>
+        <button disabled={ state?.user?.id ? false : true } type="submit" className={`p-2 border border-[#e26928] bg-[#e26928] text-white text-lg font-semibold w-full`} >Actualizar Datos</button>
       </form>
     </div>
   );

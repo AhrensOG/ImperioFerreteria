@@ -6,7 +6,6 @@ const SliderTablet = ({ slides }) => {
     const [firstImage, setFirstImage] = useState(slides[0]);
 
     const setImage = (e) => {
-        console.log(e.target.alt);
         setFirstImage(e.target.alt);
     };
 
@@ -30,7 +29,7 @@ const SliderTablet = ({ slides }) => {
             </div>
             <div
                 id="content"
-                className="carousel flex flex-row gap-24 items-center  overflow-x-auto  scroll-smooth scrollbar-thin scrollbar-thumb-[#e26928] scrollbar-track-[#e26928]/30 max-w-[700px] "
+                className="carousel flex flex-row gap-4 items-center  overflow-x-auto  scroll-smooth scrollbar-thin scrollbar-thumb-[#e26928] scrollbar-track-[#e26928]/30 max-w-[700px] "
             >
                 {slides2?.map((e) => (
                     <div
