@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import Card from "./auxiliarComponents/Card";
+import { Context } from "@/context/GlobalContext";
+import Loader from "../loader/Loader";
 
 const Slider = () => {
+  const { state } = useContext(Context);
 
   const scrollLeft = () => {
-    document.getElementById('content').scrollLeft -= 305;
-  }
+    document.getElementById("content").scrollLeft -= 305;
+  };
 
   const scrollRight = () => {
-    document.getElementById('content').scrollLeft += 305;
-  }
+    document.getElementById("content").scrollLeft += 305;
+  };
 
   return (
     <div className="relative group">
@@ -49,15 +52,21 @@ const Slider = () => {
           />
         </svg>
       </div>
-      <div id="content" className="px-12 py-14 carousel flex flex-row gap-24 items-center justify-start overflow-x-auto w-full scroll-smooth scrollbar-thin scrollbar-thumb-[#e26928] scrollbar-track-[#e26928]/30">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-      </div>
+
+      {state?.products?.length ? (
+        <div
+          id="content"
+          className="px-12 py-14 carousel flex flex-row gap-24 items-center justify-start overflow-x-auto w-full scroll-smooth scrollbar-thin scrollbar-thumb-[#e26928] scrollbar-track-[#e26928]/30"
+        >
+          {state.products.map((p) => {
+            return <Card key={p.id} product={p} />;
+          })}
+        </div>
+      ) : (
+        <div className="px-12 py-60 carousel flex flex-row items-center justify-center">
+          <Loader />
+        </div>
+      )}
     </div>
   );
 };
