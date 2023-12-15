@@ -16,6 +16,7 @@ const SliderTablet = ({ slides }) => {
         id="content"
         className="carousel flex flex-row gap-4 items-center  overflow-x-auto  scroll-smooth scrollbar-thin scrollbar-thumb-[#e26928] scrollbar-track-[#e26928]/30"
       >
+        {console.log(slides)}
         {slides?.length ? (
           slides.map((e) => (
             <div
@@ -23,7 +24,7 @@ const SliderTablet = ({ slides }) => {
               id={e}
               key={e}
               name={e}
-              className="h-[25%] w-[25%] py-1"
+              className="py-1"
             >
               <CardTablet img={e} />
             </div>
