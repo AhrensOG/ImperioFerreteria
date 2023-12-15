@@ -43,7 +43,7 @@ export default async function handler(req, res) {
 
       await userOrder.addOrder(newOrder)
 
-      const createdOrder = await Order.findOne({ where: { UserId: userId }, include: [
+      const createdOrder = await Order.findOne({ where: { id: newOrder.dataValues.id }, include: [
         {model: User},
         {model: Products}
       ] })

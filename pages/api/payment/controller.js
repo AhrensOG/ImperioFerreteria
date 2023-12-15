@@ -2,12 +2,7 @@ import { preference } from "@/payment/mp";
 
 
 export default async function handler(req, res) {
-  if (req.method === "GET") {
-    try {
-    } catch (error) {
-      return res.status(400).send(error);
-    }
-  } else if (req.method === "POST") {
+  if (req.method === "POST") {
     try {
       const { items, payer } = req.body; 
       const response = await preference.create({
@@ -28,20 +23,10 @@ export default async function handler(req, res) {
             pending: '',
             failure: ''
           },
-          notification_url: "https://991f-2803-9800-94c2-8ab6-7909-8143-b3db-e6fd.ngrok-free.app/api/payment/webhook"
+          notification_url: "https://9f84-2803-9800-94c2-8ab6-846-468d-656a-a46.ngrok-free.app/api/payment/webhook"
         }
       })
       return res.status(200).send(response)
-    } catch (error) {
-      res.status(400).send(error);
-    }
-  } else if (req.method === "PUT") {
-    try {
-    } catch (error) {
-      res.status(400).send(error);
-    }
-  } else if (req.method === "DELETE") {
-    try {
     } catch (error) {
       res.status(400).send(error);
     }
