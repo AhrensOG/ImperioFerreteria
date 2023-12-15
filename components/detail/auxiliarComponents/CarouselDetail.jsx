@@ -23,7 +23,7 @@ const CarouselDetail = ({
 
     return (
         <div
-            className={`h-[350px] sm:h-[500px] md:h-[650px] bg-cover bg-no-repeat bg-center bg-origin-border md:hidden`}
+            className={`h-[300px] sm:h-[500px] md:h-[650px] bg-cover bg-no-repeat bg-center bg-origin-border md:hidden`}
         >
             <div
                 className={`h-[300px] sm:h-[500px] md:h-[650px] w-full m-auto relative group`}
@@ -34,7 +34,7 @@ const CarouselDetail = ({
                         onMouseUp={() => setStopAutoSlide(false)}
                         src={slides[currentIndex]}
                         alt=""
-                        className="absolute hover:cursor-pointer w-[70%] h-[70%] object-center ease-in duration-500"
+                        className="absolute hover:cursor-pointer w-full h-full object-center ease-in duration-500"
                     />
                 </div>
                 {/* Left Arrow */}

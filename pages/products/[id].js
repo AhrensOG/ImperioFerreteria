@@ -5,6 +5,7 @@ import { Context } from "@/context/GlobalContext";
 import { deleteProductDetail, getOneProduct } from "@/context/actions";
 import { useRouter } from "next/router";
 import Footer from "@/components/footer/Footer";
+import Loader from "@/components/loader/Loader";
 
 const ProductDetail = () => {
     const router = useRouter();
@@ -34,7 +35,7 @@ const ProductDetail = () => {
                         moreImages={state.product.ProductsImages}
                     />
                 ) : (
-                    <div className="h-screen"> cargando...</div>
+                    <div className="h-[50vh] flex flex-row justify-center items-center"> <Loader/></div>
                 )}
             </div>
             <Footer />

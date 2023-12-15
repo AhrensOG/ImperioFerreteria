@@ -2,11 +2,11 @@ import React from "react";
 
 const CardTablet = ({ img }) => {
     return (
-        <div className="flex flex-col border-2 border-[#e26928] divide-y divide-gray-300 justify-center items-center">
+        <div>
             <img
                 src={img}
                 alt={img}
-                className="max-w-[240px] max-h-[280px] h-32 w-32"
+                className="max-w-[240px] max-h-[280px] h-32 w-32 border-2 border-[#e26928] rounded-xl"
             />
         </div>
     );
