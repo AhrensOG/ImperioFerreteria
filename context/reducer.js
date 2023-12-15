@@ -30,13 +30,15 @@ export const reducer = (state, action) => {
     case "GET_PRODUCTS_BY_CATEGORY":
       return {
         ...state,
-        productsByCategory: action.payload 
-      }
+        productsByCategory: action.payload.data,
+        filteredCategory: action.payload.category,
+      };
     case "DELETE_PRODUCTS_BY_CATEGORY":
       return {
         ...state,
-        productsByCategory: null
-      }
+        productsByCategory: null,
+        filteredCategory: null,
+      };
     case "GET_ONE_PRODUCT":
       return {
         ...state,
@@ -90,7 +92,7 @@ export const reducer = (state, action) => {
           productsCart: products,
           cartTotalPrice: totalPrice,
         };
-      };
+      }
     case "DELETE_PRODUCT_TO_CART":
       const products = state.productsCart;
       const index = products.findIndex(
@@ -131,12 +133,12 @@ export const reducer = (state, action) => {
       return {
         ...state,
         editCategory: action.payload,
-      }
+      };
     case "OPEN_CART":
       return {
         ...state,
-        openCart: action.payload
-      }
+        openCart: action.payload,
+      };
     default:
       return {
         ...state,

@@ -2,28 +2,44 @@ import { uploadFile } from "@/firebase/uploadFile";
 import axios from "axios";
 
 export const getAllCategories = async (dispatch) => {
-  const res = await axios.get("/api/categories/controller");
-  return dispatch({ type: "GET_ALL_CATEGORIES", payload: res.data });
+  try {
+    const res = await axios.get("/api/categories/controller");
+    return dispatch({ type: "GET_ALL_CATEGORIES", payload: res.data });
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 export const getAllUsers = async (dispatch) => {
-  const res = await axios.get("/api/user/controller");
-  return dispatch({ type: "GET_ALL_USERS", payload: res.data });
+  try {
+    const res = await axios.get("/api/user/controller");
+    return dispatch({ type: "GET_ALL_USERS", payload: res.data });
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 export const getAllProducts = async (dispatch) => {
-  const res = await axios.get("/api/products/controller");
-  return dispatch({ type: "GET_ALL_PRODUCTS", payload: res.data });
+  try {
+    const res = await axios.get("/api/products/controller");
+    return dispatch({ type: "GET_ALL_PRODUCTS", payload: res.data });
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 export const getOneProduct = async (id, dispatch) => {
-  const res = await axios.get(`/api/products/controller?productId=${id}`);
-  return dispatch({ type: "GET_ONE_PRODUCT", payload: res.data });
+  try {
+    const res = await axios.get(`/api/products/controller?productId=${id}`);
+    return dispatch({ type: "GET_ONE_PRODUCT", payload: res.data });
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 export const deleteProductDetail = (dispatch) => {
   return dispatch({ type: "GET_ONE_PRODUCT", payload: null });
-}
+};
 
 export const searchProductsByName = async (title, dispatch) => {
   try {
@@ -35,7 +51,7 @@ export const searchProductsByName = async (title, dispatch) => {
       payload: { data: res.data, title },
     });
   } catch (error) {
-    return error
+    return error;
   }
 };
 
@@ -44,26 +60,34 @@ export const searchProductsByCategory = async (category, dispatch) => {
     const res = await axios.get(
       `/api/products/filters/searchByCategory?categoryName=${category}`
     );
+    const data = {
+      category,
+      data: res.data.length ? res.data : null,
+    };
     return dispatch({
       type: "GET_PRODUCTS_BY_CATEGORY",
-      payload: res.data.length ? res.data : null,
+      payload: data,
     });
   } catch (error) {
-    return error
+    return error;
   }
-}
+};
 
 export const deleteSearchByCategoryFilter = (dispatch) => {
   return dispatch({ type: "DELETE_PRODUCTS_BY_CATEGORY" });
-}
+};
 
 export const deleteSearchByNameFilter = async (dispatch) => {
   return dispatch({ type: "DELETE_PRODUCTS_BY_NAME" });
 };
 
 export const updateUser = async (data, dispatch) => {
-  const res = await axios.put(`/api/auth/${data.id}`, data);
-  return dispatch({ type: "UPDATE_USER", payload: res.data });
+  try {
+    const res = await axios.put(`/api/auth/${data.id}`, data);
+    return dispatch({ type: "UPDATE_USER", payload: res.data });
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 export const addProductToCart = async (data, dispatch) => {
@@ -80,15 +104,17 @@ export const createAndPayOrder = async (user, productsCart, dispatch) => {
       userId: user.id,
     });
 
-    console.log(res.data)
+    console.log(res.data);
 
     const productsOrderData = {
       OrderId: res.data.Order.id,
       productsList: productsCart,
     };
-    
+
     //Delete previous unpaid products
-    await axios.delete(`/api/productsOrder/controller?OrderId=${res.data.Order.id}`)
+    await axios.delete(
+      `/api/productsOrder/controller?OrderId=${res.data.Order.id}`
+    );
 
     await axios.post(`/api/productsOrder/controller`, productsOrderData);
 
@@ -170,9 +196,13 @@ export const addImagesToProduct = async (filesList, productId) => {
 };
 
 export const addFirstImage = async (file) => {
-  const image = await uploadFile(file)
-  return image.url
-}
+  try {
+    const image = await uploadFile(file);
+    return image.url;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const updateProduct = async (data) => {
   try {
@@ -191,8 +221,8 @@ export const removeCategoriesToProduct = async (categoriesList, productId) => {
   try {
     const body = {
       productId,
-      categoriesList
-    }
+      categoriesList,
+    };
     await axios.post(`/api/productsCategories/delete`, body);
   } catch (error) {
     console.log(error);
@@ -201,28 +231,28 @@ export const removeCategoriesToProduct = async (categoriesList, productId) => {
 
 export const removeImagesToProduct = async (idList) => {
   try {
-    await axios.post(`/api/productsImages/delete`, { idList })
+    await axios.post(`/api/productsImages/delete`, { idList });
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
   }
-}
+};
 
 export const deleteProduct = async (id) => {
   try {
-    const res = await axios.delete(`/api/products/controller?productId=${id}`)
-    return res.data
+    const res = await axios.delete(`/api/products/controller?productId=${id}`);
+    return res.data;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 export const editCategory = (data, dispatch) => {
   return dispatch({ type: "EDIT_CATEGORY", payload: data });
-}
+};
 
 export const backToCreateCategory = (dispatch) => {
   return dispatch({ type: "EDIT_CATEGORY", payload: null });
-}
+};
 
 export const createCategory = async (data) => {
   try {
@@ -240,24 +270,25 @@ export const updateCategory = async (data) => {
   }
 };
 
-
 export const deleteCategory = async (id) => {
   try {
     await axios.delete(`/api/categories/controller?id=${id}`);
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const openCart = (data, dispatch) => {
-  return dispatch({ type: "OPEN_CART", payload: data  });
-} 
+  return dispatch({ type: "OPEN_CART", payload: data });
+};
 
 export const getOrderProducts = async (OrderId) => {
   try {
-    const res = await axios.get(`/api/productsOrder/controller?OrderId=${OrderId}`)
-    return res.data
+    const res = await axios.get(
+      `/api/productsOrder/controller?OrderId=${OrderId}`
+    );
+    return res.data;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
