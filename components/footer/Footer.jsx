@@ -4,7 +4,7 @@ import React from 'react'
 
 const Footer = ({ marginTop = 10 }) => {
   return (
-    <div className={`w-full h-full bg-black py-4 flex flex-col gap-4 sm:gap-6 md:gap-8 lg:gap-10 sm:px-10 sm:py-6 md:py-8 lg:py-10 mt-${marginTop}`}>
+    <div className={`w-full h-full bg-black py-4 flex flex-col gap-4 sm:gap-6 md:gap-8 lg:gap-10 sm:px-10 sm:py-6 md:py-8 lg:py-10 ${marginTop ? 'mt-10' : '' }`}>
       <div className='flex flex-row w-full h-full items-center justify-evenly sm:justify-start sm:gap-10'>
         <Link href={'/'}>
           <Image src={'/LogoMobile.png'} width={1000} height={1000} alt='Logo' className='w-[60px] h-[28px] sm:w-[100px] sm:h-[48px] md:w-[140px] md:h-[68px] lg:w-[180px] lg:h-[88px] cursor-pointer'/>

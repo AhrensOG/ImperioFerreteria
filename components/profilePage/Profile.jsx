@@ -4,6 +4,7 @@ import ProfileSection from "./auxiliarComponents/ProfileSection";
 import ProfileDataSection from "./auxiliarComponents/ProfileDataSection";
 import LogOut from "./auxiliarComponents/LogOut";
 import CartSection from "./auxiliarComponents/cartSection/CartSection";
+import Loader from "../loader/Loader";
 
 const Profile = () => {
   const { state } = useContext(Context);
@@ -85,7 +86,9 @@ const Profile = () => {
         }
         {
           !state?.user?.id 
-          && <div className="my-[40%] sm:my-[15%] md:my-[10%] flex flex-col items-center justify-center">Cargando</div>
+          && <div className="my-[40%] sm:my-[15%] md:my-[10%] flex flex-col items-center justify-center">
+            <Loader/>
+          </div>
         }
       </div>
     </div>

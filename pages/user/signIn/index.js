@@ -10,7 +10,7 @@ const SignIn = () => {
       <Header />
       <HomeNavbar />
       <LogIn/>
-      <Footer />
+      <Footer marginTop={10}/>
     </div>
   );
 };

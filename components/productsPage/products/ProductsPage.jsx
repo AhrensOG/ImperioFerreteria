@@ -7,6 +7,7 @@ import {
   deleteSearchByNameFilter,
 } from "@/context/actions";
 import CategoryCard from "./auxiliarComponents/CategoryCard";
+import Loader from "@/components/loader/Loader";
 
 const ProductsPage = () => {
   const { state, dispatch } = useContext(Context);
@@ -19,7 +20,7 @@ const ProductsPage = () => {
   const handleDeleteFilterByCategory = () => {
     deleteSearchByCategoryFilter(dispatch);
   };
-
+  console.log(state);
   return (
     <div className="p-4 sm:px-12 flex flex-col gap-8">
       {state?.searchedProducts?.length > 0 && state?.searchedTitle ? (
@@ -110,47 +111,51 @@ const ProductsPage = () => {
         </div>
       )}
       <div className="flex flex-col sm:flex-row sm:flex-wrap justify-evenly gap-8 items-center p-4 sm:px-12">
-        {state?.searchedProducts?.length > 0
-          ? state.searchedProducts.map((p) => {
-              return (
-                <Link key={p.id} href={`/products/${p.id}`}>
-                  <Card
-                    key={p.id}
-                    id={p.id}
-                    title={p.title}
-                    url={p.firstImage}
-                    description={p.description}
-                  />
-                </Link>
-              );
-            })
-          : state?.productsByCategory
-          ? state.productsByCategory.map((p) => {
-              return (
-                <Link key={p.id} href={`/products/${p.id}`}>
-                  <Card
-                    key={p.id}
-                    id={p.id}
-                    title={p.title}
-                    url={p.firstImage}
-                    description={p.description}
-                  />
-                </Link>
-              );
-            })
-          : state?.products?.map((p) => {
-              return (
-                <Link key={p.id} href={`/products/${p.id}`}>
-                  <Card
-                    key={p.id}
-                    id={p.id}
-                    title={p.title}
-                    url={p.firstImage}
-                    description={p.description}
-                  />
-                </Link>
-              );
-            })}
+        {state?.searchedProducts?.length > 0 ? (
+          state.searchedProducts.map((p) => {
+            return (
+              <Link key={p.id} href={`/products/${p.id}`}>
+                <Card
+                  key={p.id}
+                  id={p.id}
+                  title={p.title}
+                  url={p.firstImage}
+                  description={p.description}
+                />
+              </Link>
+            );
+          })
+        ) : state?.productsByCategory ? (
+          state.productsByCategory.map((p) => {
+            return (
+              <Link key={p.id} href={`/products/${p.id}`}>
+                <Card
+                  key={p.id}
+                  id={p.id}
+                  title={p.title}
+                  url={p.firstImage}
+                  description={p.description}
+                />
+              </Link>
+            );
+          })
+        ) : state?.products?.length ? (
+          state.products.map((p) => {
+            return (
+              <Link key={p.id} href={`/products/${p.id}`}>
+                <Card
+                  key={p.id}
+                  id={p.id}
+                  title={p.title}
+                  url={p.firstImage}
+                  description={p.description}
+                />
+              </Link>
+            );
+          })
+        ) : (
+          <div className="py-20"><Loader/></div>
+        )}
       </div>
     </div>
   );
