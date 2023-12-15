@@ -80,10 +80,15 @@ export const createAndPayOrder = async (user, productsCart, dispatch) => {
       userId: user.id,
     });
 
+    console.log(res.data)
+
     const productsOrderData = {
       OrderId: res.data.Order.id,
       productsList: productsCart,
     };
+    
+    //Delete previous unpaid products
+    await axios.delete(`/api/productsOrder/controller?OrderId=${res.data.Order.id}`)
 
     await axios.post(`/api/productsOrder/controller`, productsOrderData);
 
@@ -247,3 +252,12 @@ export const deleteCategory = async (id) => {
 export const openCart = (data, dispatch) => {
   return dispatch({ type: "OPEN_CART", payload: data  });
 } 
+
+export const getOrderProducts = async (OrderId) => {
+  try {
+    const res = await axios.get(`/api/productsOrder/controller?OrderId=${OrderId}`)
+    return res.data
+  } catch (error) {
+    console.log(error)
+  }
+}

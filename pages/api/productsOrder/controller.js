@@ -5,13 +5,12 @@ import { Op } from "sequelize";
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     try {
-      const { OrderId } = req.body;
-
+      const { OrderId } = req.query;
       if ( !OrderId ) {
         return res.status(400).send('A OrderID is required')
       }
 
-      const found = await ProductsOrder.findAll({ where: { [Op.and]: { OrderId: OrderId, status: 'Shopping' } } });
+      const found = await ProductsOrder.findAll({ where: { [Op.and]: { OrderId: OrderId} } });
 
       return res.status(200).send(found)
 
@@ -55,17 +54,15 @@ export default async function handler(req, res) {
     }
   } else if (req.method === 'DELETE') {
     try {
-      const { OrderId } = req.body;
+      const { OrderId } = req.query;
 
       if ( !OrderId ) {
         return res.status(400).send('A OrderId is required')
       }
 
-      await ProductsOrder.destroy({ where: { OrderId: OrderId } })
+      await ProductsOrder.destroy({ where: { [Op.and]: {  OrderId: OrderId, status: 'Shopping'  } } })
 
-      const deleted = await ProductsOrder.findAll({ where: { OrderId: OrderId } })
-
-      return deleted.length === 0 ? res.status(200).send('Order items successfully deleted') : res.status(200).send('An error has ocurred')
+      return res.status(200).send('Order items successfully deleted')
 
     } catch (error) {
       return res.status(400).send(error)
