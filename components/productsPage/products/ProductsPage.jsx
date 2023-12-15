@@ -20,7 +20,7 @@ const ProductsPage = () => {
   const handleDeleteFilterByCategory = () => {
     deleteSearchByCategoryFilter(dispatch);
   };
-  console.log(state);
+
   return (
     <div className="p-4 sm:px-12 flex flex-col gap-8">
       {state?.searchedProducts?.length > 0 && state?.searchedTitle ? (

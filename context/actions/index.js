@@ -104,8 +104,6 @@ export const createAndPayOrder = async (user, productsCart, dispatch) => {
       userId: user.id,
     });
 
-    console.log(res.data);
-
     const productsOrderData = {
       OrderId: res.data.Order.id,
       productsList: productsCart,
