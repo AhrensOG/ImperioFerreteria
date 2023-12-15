@@ -9,25 +9,19 @@ const ChocolateSection = ({ img }) => {
     };
 
     return (
-        <div className="hidden lg:flex h-[500px]">
-            <div className="grid grid-cols-1 place-content-start gap-3 h-[400px]  snap-y  snap-mandatory overflow-y-scroll">
+        <div className="hidden lg:flex h-full">
+            <div className="flex flex-col gap-2 p-1 overflow-y-scroll scrollbar-none max-h-[400px]">
                 {img.map((e) => (
-                    <div
-                        key={e}
-                        className="h-[70px] w-[60px] mr-4 snap-center justify-self-center"
-                        id={e}
+                    <img
+                        src={e}
+                        alt={e}
+                        className="h-20 w-20 rounded-xl"
+                        name={e}
                         onClick={(e) => setImage(e)}
-                    >
-                        <img
-                            src={e}
-                            alt={e}
-                            className="h-full w-full"
-                            name={e}
-                        />
-                    </div>
+                    />
                 ))}
             </div>
-            <div className="w-full justify-self-center">
+            <div className="w-full h-full justify-self-center">
                 <ImageSection image={firstImage} />
             </div>
         </div>
