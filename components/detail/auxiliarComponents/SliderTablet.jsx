@@ -16,7 +16,6 @@ const SliderTablet = ({ slides }) => {
         id="content"
         className="carousel flex flex-row gap-4 items-center  overflow-x-auto  scroll-smooth scrollbar-thin scrollbar-thumb-[#e26928] scrollbar-track-[#e26928]/30"
       >
-        {console.log(slides)}
         {slides?.length ? (
           slides.map((e) => (
             <div

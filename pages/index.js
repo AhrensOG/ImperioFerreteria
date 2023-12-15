@@ -21,14 +21,16 @@ export default function Home() {
     userStatus()
   }, [])
   return (
-    <main>
+    <main className='2xl:flex 2xl:flex-col 2xl:items-center'>
       <Header/>
       <HomeNavbar/>
-      <Filters/>
-      <Hero/>
-      <Slider/>
-      <Location/>
-      <LowerSection/>
+      <div className='2xl:flex 2xl:flex-col 2xl:max-w-screen-2xl '>
+        <Filters/>
+        <Hero/>
+        <Slider/>
+        <Location/>
+        <LowerSection/>
+      </div>
       <Footer/>
     </main>
   )
