@@ -2,8 +2,8 @@
 const { Model, DataTypes } = require("sequelize");
 const connection = require("./index");
 
-const productsImagesInit = (sequelize, DataTypes) => {
-    class ProductsImages extends Model {
+const businessInit = (sequelize, DataTypes) => {
+    class Business extends Model {
         /**
          * Helper method for defining associations.
          * This method is not a part of Sequelize lifecycle.
@@ -13,18 +13,22 @@ const productsImagesInit = (sequelize, DataTypes) => {
             // define association here
         }
     }
-    ProductsImages.init(
+    Business.init(
         {
-            url: DataTypes.TEXT,
-            name: DataTypes.STRING,
+            name: { type: DataTypes.STRING, allowNull: false },
+            url: { type: DataTypes.TEXT, allowNull: false },
+            whatsAppLink: DataTypes.TEXT,
+            instagramLink: DataTypes.TEXT,
+            facebookLink: DataTypes.TEXT,
+            locationLink: DataTypes.TEXT,
         },
         {
             sequelize,
-            modelName: "ProductsImages",
+            modelName: "Business",
             freezeTableName: true,
         }
     );
-    return ProductsImages;
+    return Business;
 };
 
-module.exports = productsImagesInit(connection, DataTypes);
+module.exports = businessInit(connection, DataTypes);
