@@ -17,6 +17,7 @@ const ChocolateSection = ({ img }) => {
                         alt={e}
                         className="h-20 w-20 rounded-xl"
                         name={e}
+                        key={e}
                         onClick={(e) => setImage(e)}
                     />
                 ))}

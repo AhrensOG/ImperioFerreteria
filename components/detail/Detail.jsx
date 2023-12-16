@@ -2,9 +2,11 @@ import Link from "next/link";
 import React, { useState, useContext } from "react";
 import CarouselDetail from "./auxiliarComponents/CarouselDetail";
 import ChocolateSection from "./auxiliarComponents/ChocolateSection";
-import { addProductToCart } from "@/context/actions";
+import { addProductToCart, openCart } from "@/context/actions";
 import { Context } from "@/context/GlobalContext";
 import SliderTablet from "./auxiliarComponents/SliderTablet";
+import { toast } from "sonner";
+import { useRouter } from "next/router";
 
 const Detail = ({
   id,
@@ -16,6 +18,7 @@ const Detail = ({
   moreImages,
 }) => {
   const { dispatch } = useContext(Context);
+  const router = useRouter()
   const imagesArray = moreImages.map((e) => {
     return e.url;
   });
@@ -45,6 +48,10 @@ const Detail = ({
   };
 
   const handleAddProductToCart = () => {
+    toast.success('Añadido correctamente!',{
+      duration: 2000,
+      className: 'bg-[#e26928]'
+    })
     const productData = {
       id,
       title,
@@ -56,6 +63,21 @@ const Detail = ({
     };
     addProductToCart(productData, dispatch);
   };
+
+  const handleBuyProduct = () => {
+    const productData = {
+      id,
+      title,
+      description,
+      price,
+      items,
+      firstImage,
+      moreImages,
+    };
+    addProductToCart(productData, dispatch);
+    openCart(true, dispatch)
+    router.push('/user/profile')
+  }
 
   return (
     <div>
@@ -139,7 +161,7 @@ const Detail = ({
                     </div>
                   </div>
                   <div className="flex flex-col md:flex-row lg:flex-col md:justify-center gap-2">
-                    <button className=" bg-[#e26928] text-white font-semibold  w-full h-full py-2">
+                    <button onClick={handleBuyProduct} className=" bg-[#e26928] text-white font-semibold  w-full h-full py-2">
                       COMPRAR AHORA
                     </button>
                     <button
