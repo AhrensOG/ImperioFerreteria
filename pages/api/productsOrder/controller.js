@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     }
   } else if (req.method === 'POST') {
     try {
-      const { OrderId, productsList } = req.body;
+      const { OrderId, productsList, delivery } = req.body;
 
       if ( !OrderId || !productsList || productsList.length === 0 ) {
         return res.status(400).send('A OrderId or Products list are required')
@@ -38,10 +38,16 @@ export default async function handler(req, res) {
           return res.status(400).send(`Product with ID ${productsList[i].id} doesn't exists`)
         }
       }
-
-      for (let i = 0; i < productsList.length; i++) {
-        const product = await Products.findByPk(productsList[i].id)
-        await order.addProducts(product, { through: { productName: productsList[i].title, quantity: productsList[i].items, status: 'Shopping' } })
+      if (delivery) {
+        for (let i = 0; i < productsList.length; i++) {
+          const product = await Products.findByPk(productsList[i].id)
+          await order.addProducts(product, { through: { productName: productsList[i].title, quantity: productsList[i].items, status: 'Pending' } })
+        }  
+      } else {
+        for (let i = 0; i < productsList.length; i++) {
+          const product = await Products.findByPk(productsList[i].id)
+          await order.addProducts(product, { through: { productName: productsList[i].title, quantity: productsList[i].items, status: 'Shopping' } })
+        }  
       }
 
       const productsOrder = await ProductsOrder.findAll({ where: { [Op.and]: { OrderId: OrderId, status: 'Shopping' } } });

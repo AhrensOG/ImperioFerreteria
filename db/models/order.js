@@ -1,5 +1,5 @@
 'use strict';
-const { Model, DataTypes } = require('sequelize');
+const { Model, DataTypes, BOOLEAN } = require('sequelize');
 const connection = require('./index')
 
 const orderInit = (sequelize, DataTypes) => {
@@ -19,7 +19,16 @@ const orderInit = (sequelize, DataTypes) => {
       allowNull: true
     },
     status: DataTypes.ENUM('Shopping', 'Pending', 'Paid', 'Cancel'),
-    totalPrice: DataTypes.DECIMAL(10, 2)
+    totalPrice: DataTypes.DECIMAL(10, 2),
+    delivery: DataTypes.BOOLEAN,
+    orderReceiver: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    receiverPhone: {
+      type: DataTypes.BIGINT,
+      allowNull: true
+    }
   }, {
     sequelize,
     modelName: 'Order',
