@@ -34,4 +34,6 @@ export {
     ProductsOrder,
     Categories,
     ProductsCategories,
+    Business,
+    BusinessImages,
 };
