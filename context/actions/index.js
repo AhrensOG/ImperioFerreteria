@@ -1,5 +1,6 @@
 import { uploadFile } from "@/firebase/uploadFile";
 import axios from "axios";
+import { isUserLogged } from "./isUserLogged";
 
 export const getAllCategories = async (dispatch) => {
   try {
@@ -98,6 +99,10 @@ export const deleteProductToCart = async (data, dispatch) => {
   return dispatch({ type: "DELETE_PRODUCT_TO_CART", payload: data });
 };
 
+export const deleteCart = async (dispatch) => {
+  return dispatch({ type: "DELETE_CART" })
+}
+
 export const createAndPayOrder = async (user, productsCart, dispatch) => {
   try {
     const res = await axios.post(`/api/order/controller`, {
@@ -142,6 +147,43 @@ export const createAndPayOrder = async (user, productsCart, dispatch) => {
     console.log(error);
   }
 };
+
+export const createAndPayOrderWithDelivery = async (user, productsCart, deliveryData) => {
+  try {
+    const res = await axios.post(`/api/order/controllerWithDelivery`, {
+      userId: user.id,
+      delivery: deliveryData.delivery,
+      orderReceiver: deliveryData.orderReceiver,
+      receiverPhone: deliveryData.receiverPhone,
+      totalPrice: deliveryData.totalPrice
+    });
+
+    const productsOrderData = {
+      OrderId: res.data.Order.id,
+      productsList: productsCart,
+      delivery: deliveryData.delivery
+    };
+
+    //Delete previous unpaid products
+    await axios.delete(
+      `/api/productsOrder/controller?OrderId=${res.data.Order.id}`
+    );
+
+    await axios.post(`/api/productsOrder/controller`, productsOrderData);
+
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const cancelOrder = async (orderId, dispatch) => {
+  try {
+    await axios.put('/api/order/controllerWithDelivery', { orderId })
+    isUserLogged(dispatch)
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 export const deleteInit_Point = (dispatch) => {
   return dispatch({ type: "DELETE_INIT_POINT" });

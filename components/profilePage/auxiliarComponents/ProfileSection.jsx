@@ -31,7 +31,7 @@ const ProfileSection = ({ state }) => {
           {
             state?.user?.Orders?.length
             ? state.user.Orders.map((o) => {
-                return o.orderId && <OrderDropDown key={o.id} order={o} />
+                return o.status !== 'Shopping' && <OrderDropDown key={o.id} order={o} />
               })
             : <div className="hidden"></div>
           }

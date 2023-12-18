@@ -12,7 +12,7 @@ export default function App({ Component, pageProps }) {
   return (
     <GlobalContext>
       <main className={roboto.className}>
-        <Toaster richColors visibleToasts={5} toastOptions={{ style: {background: 'white', color: '#e26928'} }}/>
+        <Toaster closeButton richColors visibleToasts={5} toastOptions={{ style: {background: 'white', color: '#e26928'} }}/>
         <Component {...pageProps} />
       </main>
     </GlobalContext>

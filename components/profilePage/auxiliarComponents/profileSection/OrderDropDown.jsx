@@ -1,8 +1,10 @@
-import { getOrderProducts } from "@/context/actions";
-import React, { useEffect, useState } from "react";
+import { cancelOrder, getOrderProducts } from "@/context/actions";
+import React, { useContext, useEffect, useState } from "react";
 import ProductOrderCard from "./ProductOrderCard";
+import { Context } from "@/context/GlobalContext";
 
 const OrderDropDown = ({ order }) => {
+  const { dispatch, state } = useContext(Context)
   const dateObj = new Date(order.updatedAt);
   const date = dateObj.toLocaleDateString("es-ES", {
     day: "2-digit",
@@ -17,21 +19,32 @@ const OrderDropDown = ({ order }) => {
     setOpen(!open);
   };
 
+  const handleCacelOrder  = () => {
+    cancelOrder(order.id, dispatch)
+  }
+
   useEffect(() => {
     const getData = async () => {
       const data = await getOrderProducts(order.id);
       setOrderProducts(data);
     };
     getData();
-  }, []);
+  }, [state.user]);
 
   return (
-    <div onClick={handleOpenOrder} className="flex flex-col">
-      <div className="flex flex-row w-full cursor-pointer justify-between items-center bg-white border border-[#e26928] p-2 rounded-sm">
-        <span className="text-[#e26928] font-semibold">
-          Orden: {order.orderId}
+    <div className="flex flex-col">
+      <div
+        onClick={handleOpenOrder}
+        className="flex flex-row w-full cursor-pointer justify-between items-center bg-white border border-[#e26928] p-2 rounded-sm"
+      >
+        <span className="text-[#e26928] text-sm sm:text-base font-semibold">
+          Orden: {order.status === "Paid"
+                  ? order.orderId
+                  : order.status === "Pending"
+                  ? "Pendiente"
+                  : "Cancelado"}
         </span>
-        <span className="text-[#e26928] font-semibold flex flex-row gap-1">
+        <span className="text-[#e26928] font-semibold flex flex-row gap-1 text-sm sm:text-base">
           {date}
           {open ? (
             <svg
@@ -66,28 +79,51 @@ const OrderDropDown = ({ order }) => {
           )}
         </span>
       </div>
-      {
-        open
-        ? <div className="flex flex-col p-2 gap-2">
-            <div className="flex flex-row justify-evenly">
-              <p className="text-[#e26928] font-semibold text-lg">
-                Estado:
-                <span className="text-green-700 font-semibold pl-1">{order.status === "Paid" ? "Pagado" : "Pendiente"}</span>
-              </p>
-              <span className="text-[#e26928] font-semibold text-lg">Total: {order.totalPrice}</span>
-            </div>
-            <div className="flex flex-col gap-1">
-              {orderProducts ? (
-                orderProducts?.map((op) => {
-                  return <ProductOrderCard key={op.productName} productOrder={op} />;
-                })
-              ) : (
-                <div className="hidden"></div>
-              )}
-            </div>
+      {open ? (
+        <div className="flex flex-col p-2 gap-2">
+          <div className="flex flex-row justify-evenly">
+            <p className="text-[#e26928] font-semibold text-base">
+              Estado:
+              <span
+                className={`${
+                  order.status === "Paid"
+                    ? "text-green-700"
+                    : order.status === "Pending"
+                    ? "text-yellow-500"
+                    : "text-red-600"
+                } font-semibold pl-1`}
+              >
+                {order.status === "Paid"
+                  ? "Pagado"
+                  : order.status === "Pending"
+                  ? "Pendiente"
+                  : "Cancelado"}
+              </span>
+            </p>
+            <span className="text-[#e26928] font-semibold text-base">
+              Total: {order.totalPrice}
+            </span>
           </div>
-        : <div className="hidden"></div>
-      }
+          <div className="flex flex-col gap-1">
+            {orderProducts ? (
+              orderProducts?.map((op) => {
+                return (
+                  <ProductOrderCard key={op.productName} productOrder={op} />
+                );
+              })
+            ) : (
+              <div className="hidden"></div>
+            )}
+          </div>
+          {
+            order?.status === 'Pending'
+            ? <button onClick={() => handleCacelOrder()} className="underline underline-offset-4 text-red-600">Cancelar Pedido</button>
+            : <div className="hidden"></div>
+          }
+        </div>
+      ) : (
+        <div className="hidden"></div>
+      )}
     </div>
   );
 };

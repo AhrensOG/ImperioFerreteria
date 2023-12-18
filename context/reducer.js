@@ -92,7 +92,7 @@ export const reducer = (state, action) => {
           productsCart: products,
           cartTotalPrice: totalPrice,
         };
-      }
+      };
     case "DELETE_PRODUCT_TO_CART":
       const products = state.productsCart;
       const index = products.findIndex(
@@ -113,6 +113,12 @@ export const reducer = (state, action) => {
         ...state,
         productsCart: products,
         cartTotalPrice: totalPrice,
+      };
+    case "DELETE_CART":
+      return {
+        ...state,
+        productsCart: null,
+        cartTotalPrice: null,
       };
     case "INIT_POINT":
       return {
