@@ -3,12 +3,13 @@ import Logo from "./Logo";
 import { signOut } from "firebase/auth";
 import { auth } from "@/firebase/config";
 
-const SideBar = ({ setShowProducts, showProducts, setShowCategories, showCategories, setShowUsers, showUsers }) => {
+const SideBar = ({ setShowProducts, showProducts, setShowCategories, showCategories, setShowUsers, showUsers, setShowOrders, showOrders }) => {
 
   const handleShow = (show, setShow) => {
     setShowProducts(false)
     setShowCategories(false)
     setShowUsers(false)
+    setShowOrders(false)
 
     return setShow(!show)
   }
@@ -21,6 +22,7 @@ const SideBar = ({ setShowProducts, showProducts, setShowCategories, showCategor
           <button onClick={() => handleShow(showProducts, setShowProducts)} className="text-2xl">Productos</button>
           <button onClick={() => handleShow(showCategories, setShowCategories)} className="text-2xl">Categorías</button>
           <button onClick={() => handleShow(showUsers, setShowUsers)} className="text-2xl">Usuarios</button>
+          <button onClick={() => handleShow(showOrders, setShowOrders)} className="text-2xl">Ordenes</button>
         </div>
         <div className="flex justify-center h-full items-end">
           <button className="pb-16 text-2xl text-[#e26928] font-bold" onClick={() => signOut(auth)}>
