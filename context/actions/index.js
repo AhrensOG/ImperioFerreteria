@@ -7,7 +7,7 @@ export const getAllCategories = async (dispatch) => {
     const res = await axios.get("/api/categories/controller");
     return dispatch({ type: "GET_ALL_CATEGORIES", payload: res.data });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };
 
@@ -16,7 +16,7 @@ export const getAllUsers = async (dispatch) => {
     const res = await axios.get("/api/user/controller");
     return dispatch({ type: "GET_ALL_USERS", payload: res.data });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };
 
@@ -25,7 +25,16 @@ export const getAllProducts = async (dispatch) => {
     const res = await axios.get("/api/products/controller");
     return dispatch({ type: "GET_ALL_PRODUCTS", payload: res.data });
   } catch (error) {
-    console.log(error)
+    console.log(error);
+  }
+};
+
+export const getAllOrders = async (dispatch) => {
+  try {
+    const res = await axios.get("/api/order/controller");
+    return dispatch({ type: "GET_ALL_ORDERS", payload: res.data });
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -34,7 +43,7 @@ export const getOneProduct = async (id, dispatch) => {
     const res = await axios.get(`/api/products/controller?productId=${id}`);
     return dispatch({ type: "GET_ONE_PRODUCT", payload: res.data });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };
 
@@ -87,7 +96,7 @@ export const updateUser = async (data, dispatch) => {
     const res = await axios.put(`/api/auth/${data.id}`, data);
     return dispatch({ type: "UPDATE_USER", payload: res.data });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };
 
@@ -100,8 +109,8 @@ export const deleteProductToCart = async (data, dispatch) => {
 };
 
 export const deleteCart = async (dispatch) => {
-  return dispatch({ type: "DELETE_CART" })
-}
+  return dispatch({ type: "DELETE_CART" });
+};
 
 export const createAndPayOrder = async (user, productsCart, dispatch) => {
   try {
@@ -148,20 +157,24 @@ export const createAndPayOrder = async (user, productsCart, dispatch) => {
   }
 };
 
-export const createAndPayOrderWithDelivery = async (user, productsCart, deliveryData) => {
+export const createOrderWithDelivery = async (
+  user,
+  productsCart,
+  deliveryData
+) => {
   try {
     const res = await axios.post(`/api/order/controllerWithDelivery`, {
       userId: user.id,
       delivery: deliveryData.delivery,
       orderReceiver: deliveryData.orderReceiver,
       receiverPhone: deliveryData.receiverPhone,
-      totalPrice: deliveryData.totalPrice
+      totalPrice: deliveryData.totalPrice,
     });
 
     const productsOrderData = {
       OrderId: res.data.Order.id,
       productsList: productsCart,
-      delivery: deliveryData.delivery
+      delivery: deliveryData.delivery,
     };
 
     //Delete previous unpaid products
@@ -170,7 +183,34 @@ export const createAndPayOrderWithDelivery = async (user, productsCart, delivery
     );
 
     await axios.post(`/api/productsOrder/controller`, productsOrderData);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
+export const payOrderWithDelivery = async (user, orderProducts) => {
+  try {
+    const productsPayment = orderProducts.map((p) => {
+      return {
+        id: p.id,
+        description: p.description,
+        title: p.title,
+        quantity: p.ProductsOrder.quantity,
+        unit_price: parseFloat(p.price),
+        currency_id: "ARS",
+      };
+    });
+
+
+    const paymentData = {
+      payer: user,
+      items: productsPayment,
+    };
+
+    const pay = await axios.post(`/api/payment/controller`, paymentData);
+
+    return pay.data["init_point"]
+    
   } catch (error) {
     console.log(error);
   }
@@ -178,12 +218,12 @@ export const createAndPayOrderWithDelivery = async (user, productsCart, delivery
 
 export const cancelOrder = async (orderId, dispatch) => {
   try {
-    await axios.put('/api/order/controllerWithDelivery', { orderId })
-    isUserLogged(dispatch)
+    await axios.put("/api/order/controllerWithDelivery", { orderId });
+    isUserLogged(dispatch);
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 export const deleteInit_Point = (dispatch) => {
   return dispatch({ type: "DELETE_INIT_POINT" });

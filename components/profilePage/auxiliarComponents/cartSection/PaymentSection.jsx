@@ -1,5 +1,5 @@
 import { Context } from "@/context/GlobalContext";
-import { createAndPayOrderWithDelivery, deleteCart, deleteInit_Point } from "@/context/actions";
+import { createOrderWithDelivery, deleteCart, deleteInit_Point } from "@/context/actions";
 import { useFormik } from "formik";
 import Image from "next/image";
 import Link from "next/link";
@@ -24,7 +24,7 @@ const PaymentSection = () => {
       receiverPhone: values.receiverPhone,
       totalPrice: state?.cartTotalPrice
     }
-    await createAndPayOrderWithDelivery(state?.user, state?.productsCart, deliveryData)
+    await createOrderWithDelivery(state?.user, state?.productsCart, deliveryData)
     deleteInit_Point(dispatch);
     deleteCart(dispatch);
     toast.success('Solicitud enviada con exito!',{
