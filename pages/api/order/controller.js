@@ -1,105 +1,109 @@
-import { Order, Products, ProductsOrder, User } from "@/db/models/models"
+import { Order, Products, User } from "@/db/models/models";
 import { Op } from "sequelize";
 
-
 export default async function handler(req, res) {
-  if (req.method === 'GET') {
+  if (req.method === "GET") {
     try {
       const { userId } = req.body;
-      if (!userId) {
-        return res.status(400).send('Missing UserID')
+      if (userId) {
+        const response = await Order.findAll({
+          where: { UserId: userId },
+          include: [{ model: User }, { model: Products }],
+        });
+        return res.status(200).send(response);
       }
-      const response = await Order.findOne({ where: { UserId: userId }, include: [
-        {model: User},
-        {model: Products},
-      ] })
-      return response ? res.status(200).send(response) : res.status(400).send('Order doesnt exists')
+
+      const orders = await Order.findAll({
+        order: [["updatedAt", "DESC"]],
+        include: [{ model: User }, { model: Products }],
+      });
+
+      return res.status(200).send(orders);
     } catch (error) {
-      return res.status(400).send(error)
+      return res.status(400).send(error);
     }
-  } else if (req.method === 'POST') {
+  } else if (req.method === "POST") {
     try {
       const { userId } = req.body;
 
-      if( !userId ) {
-        return res.status(400).send('An UserID is required')
-      };
+      if (!userId) {
+        return res.status(400).send("An UserID is required");
+      }
 
-      const foundOrder = await Order.findOne({ where: { [Op.and]: { UserId: userId, status: 'Shopping' } }, include: [
-        {model: User},
-        {model: Products}
-      ] })
+      const foundOrder = await Order.findOne({
+        where: { [Op.and]: { UserId: userId, status: "Shopping" } },
+        include: [{ model: User }, { model: Products }],
+      });
 
       if (foundOrder) {
-        return res.status(200).send({ Order:foundOrder, alreadyExist: true})
+        return res.status(200).send({ Order: foundOrder, alreadyExist: true });
       }
 
       const newOrder = await Order.create({
-        status: 'Shopping',
+        status: "Shopping",
         totalPrice: 0,
-      })
+      });
 
-      const userOrder = await User.findOne({where: { id: userId }})
+      const userOrder = await User.findOne({ where: { id: userId } });
 
-      await userOrder.addOrder(newOrder)
+      await userOrder.addOrder(newOrder);
 
-      const createdOrder = await Order.findOne({ where: { id: newOrder.dataValues.id }, include: [
-        {model: User},
-        {model: Products}
-      ] })
+      const createdOrder = await Order.findOne({
+        where: { id: newOrder.dataValues.id },
+        include: [{ model: User }, { model: Products }],
+      });
 
-      return res.status(200).send({ Order: createdOrder, alreadyExist: false})
-
+      return res.status(200).send({ Order: createdOrder, alreadyExist: false });
     } catch (error) {
-      res.status(400).send(error)
+      res.status(400).send(error);
     }
-  } else if (req.method === 'PUT') {
+  } else if (req.method === "PUT") {
     try {
       const { userId, status, totalPrice } = req.body;
 
-      if ( !userId ) {
-        return res.status(400).send('An UserID is required')
+      if (!userId) {
+        return res.status(400).send("An UserID is required");
       }
 
       const foundOrder = await Order.findOne({ where: { UserId: userId } });
 
       if (status) {
         await foundOrder.update({
-          status
-        })
+          status,
+        });
       }
       if (totalPrice) {
         await foundOrder.update({
-          totalPrice
-        })
+          totalPrice,
+        });
       }
 
-      const updatedOrder = await Order.findOne({ where: { UserId: userId }, include: [
-        {model: User},
-        {model: Products}
-      ] });
+      const updatedOrder = await Order.findOne({
+        where: { UserId: userId },
+        include: [{ model: User }, { model: Products }],
+      });
 
-      return res.status(200).send(updatedOrder)
-      
+      return res.status(200).send(updatedOrder);
     } catch (error) {
-      res.status(400).send(error)
+      res.status(400).send(error);
     }
-  } else if (req.method === 'DELETE') {
+  } else if (req.method === "DELETE") {
     try {
       const { userId } = req.body;
 
-      if ( !userId ) {
-        return res.status(400).send('An UserID is required');
-      };
+      if (!userId) {
+        return res.status(400).send("An UserID is required");
+      }
 
       await Order.destroy({ where: { UserId: userId } });
 
       const deleted = await Order.findOne({ where: { UserId: userId } });
 
-      return deleted ? res.status(400).send('Error deleting Order') : res.status(200).send('Order successfully destroyed');
-
+      return deleted
+        ? res.status(400).send("Error deleting Order")
+        : res.status(200).send("Order successfully destroyed");
     } catch (error) {
-      res.status(400).send(error)
+      res.status(400).send(error);
     }
-  };
-};
+  }
+}

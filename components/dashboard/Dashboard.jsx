@@ -5,6 +5,7 @@ import Products from "./products/Products";
 import { Context } from "@/context/GlobalContext";
 import {
   getAllCategories,
+  getAllOrders,
   getAllProducts,
   getAllUsers,
 } from "@/context/actions";
@@ -15,6 +16,7 @@ import CategoryForm from "./categories/CategoryForm";
 import { isUserLogged } from "@/context/actions/isUserLogged";
 import { signOut } from "firebase/auth";
 import { auth } from "@/firebase/config";
+import Orders from "./orders/Orders";
 
 const ADMIN = process.env.NEXT_PUBLIC_ADMIN;
 
@@ -22,6 +24,7 @@ const Dashboard = () => {
   const [showProducts, setShowProducts] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
   const [showUsers, setShowUsers] = useState(false);
+  const [showOrders, setShowOrders] = useState(false);
 
   const { state, dispatch } = useContext(Context);
 
@@ -30,6 +33,7 @@ const Dashboard = () => {
     getAllProducts(dispatch);
     getAllUsers(dispatch);
     getAllCategories(dispatch);
+    getAllOrders(dispatch)
   }, [state.editProduct, state.editCategory]);
 
   useEffect(() => {}, [state.products, state.categories]);
@@ -52,6 +56,8 @@ const Dashboard = () => {
               showCategories={showCategories}
               setShowUsers={setShowUsers}
               showUsers={showUsers}
+              setShowOrders={setShowOrders}
+              showOrders={showOrders}
             />
           </div>
           <div className="w-full flex flex-row">
@@ -84,13 +90,21 @@ const Dashboard = () => {
             ) : (
               <div className="hidden"></div>
             )}
+            {showOrders ? <Orders orders={state.orders} /> : <div className="hidden"></div>}
           </div>
         </div>
       ) : (
         <div className="relative w-full">
           <div className="absolute w-full top-[50vh] flex flex-col items-center gap-4">
-            <span className="text-5xl font-bold text-red-700">SIN AUTORIZACIÓN</span>
-            <button className="text-xl font-semibold text-[#e26928]" onClick={() => signOut(auth)} >Cerrar Sesion</button>
+            <span className="text-5xl font-bold text-red-700">
+              SIN AUTORIZACIÓN
+            </span>
+            <button
+              className="text-xl font-semibold text-[#e26928]"
+              onClick={() => signOut(auth)}
+            >
+              Cerrar Sesion
+            </button>
           </div>
         </div>
       )}

@@ -15,6 +15,11 @@ export const reducer = (state, action) => {
         ...state,
         products: action.payload,
       };
+    case "GET_ALL_ORDERS":
+      return {
+        ...state,
+        orders: action.payload,
+      };
     case "GET_PRODUCTS_BY_NAME":
       return {
         ...state,
