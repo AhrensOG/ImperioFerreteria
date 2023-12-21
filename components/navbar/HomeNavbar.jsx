@@ -21,7 +21,7 @@ const HomeNavbar = () => {
   const href = state?.userIsLogged ? "/user/profile" : "/user/signIn";
 
   return (
-    <div className="w-full h-full flex sm:flex-row flex-col gap-8 items-center p-4 sm:px-12">
+    <div className="w-full flex sm:flex-row flex-col gap-8 items-center p-4 sm:px-12">
       <div className="hidden sm:block">
         <Link href={"/"}>
           <Image

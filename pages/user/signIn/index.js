@@ -6,11 +6,15 @@ import React from "react";
 
 const SignIn = () => {
   return (
-    <div>
-      <Header />
-      <HomeNavbar />
-      <LogIn/>
-      <Footer marginTop={10}/>
+    <div className="h-full flex flex-col justify-between">
+      <div>
+        <Header />
+        <HomeNavbar />
+        <LogIn/>
+      </div>
+      <div>
+        <Footer marginTop={10}/>
+      </div>
     </div>
   );
 };

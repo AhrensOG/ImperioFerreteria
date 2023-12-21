@@ -21,10 +21,10 @@ export default function Home() {
     userStatus()
   }, [])
   return (
-    <main className='2xl:flex 2xl:flex-col 2xl:items-center'>
+    <div className='2xl:flex 2xl:flex-col 2xl:items-center'>
       <Header/>
       <HomeNavbar/>
-      <div className='2xl:flex 2xl:flex-col 2xl:max-w-screen-2xl '>
+      <div className='2xl:flex 2xl:flex-col 2xl:max-w-screen-xl'>
         <Filters/>
         <Hero/>
         <Slider/>
@@ -32,6 +32,6 @@ export default function Home() {
         <LowerSection/>
       </div>
       <Footer/>
-    </main>
+    </div>
   )
 }

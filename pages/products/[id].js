@@ -21,25 +21,29 @@ const ProductDetail = () => {
         } 
     }, [id, user]);
     return (
-        <section>
-            <HomeNavbar />
-            <div className=" mx-[20px] md:flex justify-center">
-                {state?.product?.title ? (
-                    <Detail
-                        id={id}
-                        title={state.product.title}
-                        description={state.product.description}
-                        price={state.product.price}
-                        quantity={state.product.quantity}
-                        firstImage={state.product.firstImage}
-                        moreImages={state.product.ProductsImages}
-                    />
-                ) : (
-                    <div className="h-[50vh] flex flex-row justify-center items-center"> <Loader/></div>
-                )}
+        <div className="h-full flex flex-col justify-between">
+            <div>
+                <HomeNavbar />
+                <div className=" mx-[20px] md:flex justify-center">
+                    {state?.product?.title ? (
+                        <Detail
+                            id={id}
+                            title={state.product.title}
+                            description={state.product.description}
+                            price={state.product.price}
+                            quantity={state.product.quantity}
+                            firstImage={state.product.firstImage}
+                            moreImages={state.product.ProductsImages}
+                        />
+                    ) : (
+                        <div className="h-[50vh] flex flex-row justify-center items-center"> <Loader/></div>
+                    )}
+                </div>
             </div>
-            <Footer />
-        </section>
+            <div>
+                <Footer />
+            </div>
+        </div>
     );
 };
 
