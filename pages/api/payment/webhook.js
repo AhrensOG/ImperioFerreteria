@@ -10,12 +10,12 @@ export default async function handler(req, res) {
         const data = await payment.get({ id: query["data.id"] });
 
         const user = await User.findOne({
-          where: { email: "ahrensog@gmail.com" },
+          where: { email: data.additional_info.payer.first_name },
         });
 
         const order = await Order.findOne({
           where: {
-            [Op.and]: { UserId: user.dataValues.id, status: "Shopping" },
+            [Op.and]: { UserId: user.dataValues.id, id: data.additional_info.payer.last_name },
           },
         });
 
@@ -31,7 +31,6 @@ export default async function handler(req, res) {
             where: {
               [Op.and]: {
                 OrderId: order.dataValues.id,
-                status: "Shopping",
               },
             },
           }
