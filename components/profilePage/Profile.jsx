@@ -35,8 +35,8 @@ const Profile = () => {
   }, [state.openCart])
 
   return (
-    <div className="w-full h-full flex flex-col pt-8 max-w-screen-lg">
-      <div className="flex flex-row w-full h-full justify-evenly items-center">
+    <div className="w-full flex flex-col pt-8 max-w-screen-lg 2xl:max-w-screen-xl">
+      <div className="flex flex-row w-full justify-evenly items-center">
         <button
           onClick={handleProfileButton}
           className={`w-full h-full p-2 border border-[#e26928]/60 text-[#e26928] text-md sm:text-lg md:text-xl font-semibold  ${
