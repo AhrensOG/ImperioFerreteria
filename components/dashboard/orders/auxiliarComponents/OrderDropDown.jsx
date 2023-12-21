@@ -17,26 +17,30 @@ const OrderDropDown = ({ order }) => {
   const [paymentLink, setPaymentLink] = useState();
 
   const handleGeneratePaymentLink = async () => {
-    const initPoint = await payOrderWithDelivery(state.user, order.Products);
+    const initPoint = await payOrderWithDelivery(
+      state.user,
+      order.Products,
+      order.id
+    );
     setPaymentLink(initPoint);
   };
 
   const handleCopyLink = async () => {
     try {
       navigator.clipboard.writeText(document.getElementById("inputLink").value);
-      toast.success('Copiado!',{
+      toast.success("Copiado!", {
         duration: 3000,
-        className: 'bg-[#e26928]',
-        position: 'top-center'
-      })
-      setPaymentLink('')
+        className: "bg-[#e26928]",
+        position: "top-center",
+      });
+      setPaymentLink("");
     } catch (error) {
-      toast.error('Ups! Intenta mas tarde',{
+      toast.error("Ups! Intenta mas tarde", {
         duration: 3000,
-        className: 'bg-[#e26928]',
-        position: 'top-center',
-        description: 'Si la falla persiste contacta a un administrador'
-      })
+        className: "bg-[#e26928]",
+        position: "top-center",
+        description: "Si la falla persiste contacta a un administrador",
+      });
     }
   };
 
@@ -97,7 +101,7 @@ const OrderDropDown = ({ order }) => {
             <span className="indent-2 text-[#e26928]">
               Dirección: {order.User.address}
             </span>
-            {order.status === "Pending" && order.delivery ? (
+            {order.delivery ? (
               <div className="flex flex-col gap-2">
                 <div className="flex flex-col">
                   <span className="font-bold text-[#e26928]">
@@ -110,37 +114,41 @@ const OrderDropDown = ({ order }) => {
                     Teléfono: {order.receiverPhone}
                   </span>
                 </div>
-                <div className="flex flex-col gap-1">
-                  <button
-                    className="border border-[#e26928] p-2 rounded-lg text-[#e26928] font-semibold hover:text-white hover:bg-[#e26928] duration-300"
-                    onClick={() => handleGeneratePaymentLink()}
-                  >
-                    Generar Link De Pago
-                  </button>
-                  <div className="flex flex-row w-full justify-center items-center">
-                    <input
-                      className="border border-[#e26928] rounded-lg rounded-r-none p-2 outline-none w-full text-[#e26928]"
-                      type="text"
-                      id="inputLink"
-                      value={paymentLink ?? ""}
-                      readOnly={true}
-                    />
-                    <div className="bg-[#e26928] border-l-0 rounded-lg rounded-l-none w-16 h-full flex flex-row justify-center items-center">
-                      <svg
-                        stroke="currentColor"
-                        fill="currentColor"
-                        strokeWidth="0"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-8 h-8 fill-white cursor-pointer"
-                        onClick={() => handleCopyLink()}
-                      >
-                        <path fill="none" d="M0 0h24v24H0V0z"></path>
-                        <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path>
-                      </svg>
+                {order.status === "Pending" ? (
+                  <div className="flex flex-col gap-1">
+                    <button
+                      className="border border-[#e26928] p-2 rounded-lg text-[#e26928] font-semibold hover:text-white hover:bg-[#e26928] duration-300"
+                      onClick={() => handleGeneratePaymentLink()}
+                    >
+                      Generar Link De Pago
+                    </button>
+                    <div className="flex flex-row w-full justify-center items-center">
+                      <input
+                        className="border border-[#e26928] rounded-lg rounded-r-none p-2 outline-none w-full text-[#e26928]"
+                        type="text"
+                        id="inputLink"
+                        value={paymentLink ?? ""}
+                        readOnly={true}
+                      />
+                      <div className="bg-[#e26928] border-l-0 rounded-lg rounded-l-none w-16 h-full flex flex-row justify-center items-center">
+                        <svg
+                          stroke="currentColor"
+                          fill="currentColor"
+                          strokeWidth="0"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-8 h-8 fill-white cursor-pointer"
+                          onClick={() => handleCopyLink()}
+                        >
+                          <path fill="none" d="M0 0h24v24H0V0z"></path>
+                          <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path>
+                        </svg>
+                      </div>
                     </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="hidden"></div>
+                )}
               </div>
             ) : (
               <div className="hidden"></div>
@@ -152,7 +160,11 @@ const OrderDropDown = ({ order }) => {
             </span>
             <div
               className={`flex flex-col gap-2 w-full ${
-                order.delivery ? "max-h-60" : "max-h-[72px]"
+                order.delivery && order.status === "Pending"
+                  ? "max-h-60"
+                  : order.delivery && order.status !== "Pending"
+                  ? "max-h-[147px]"
+                  : "max-h-[75px]"
               } overflow-y-scroll scrollbar-thin border border-[#e26928] p-2 rounded-lg rounded-r-none`}
             >
               {order.Products.map((p) => {

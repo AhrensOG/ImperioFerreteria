@@ -1,9 +1,9 @@
 import React from "react";
 
-const Loader = () => {
+const Loader = ({ wh = 8 }) => {
   return (
     <svg
-      className="w-8 h-8 text-gray-200 animate-spin fill-[#e26928]"
+      className={`${ wh === 8 ? 'w-8 h-8' : 'w-4 h-4' } text-gray-200 animate-spin fill-[#e26928]`}
       viewBox="0 0 100 101"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

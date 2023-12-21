@@ -5,12 +5,13 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     try {
       const { items, payer } = req.body; 
+      
       const response = await preference.create({
         body: {
           items: items,
           payer: {
-            name: payer.name,
-            email: payer.email,
+            name: payer.email,
+            surname: payer.order,
             phone: {
               number: payer.phone
             },
@@ -23,7 +24,7 @@ export default async function handler(req, res) {
             pending: '',
             failure: ''
           },
-          notification_url: "https://9f84-2803-9800-94c2-8ab6-846-468d-656a-a46.ngrok-free.app/api/payment/webhook"
+          notification_url: "https://8f95-2803-9800-94c2-8ab6-b44e-593c-b2f1-c76.ngrok-free.app/api/payment/webhook",
         }
       })
       return res.status(200).send(response)
