@@ -33,7 +33,6 @@ const Profile = () => {
       handleCartButton()
     }
   }, [state.openCart])
-  console.log(state)
 
   return (
     <div className="w-full h-full flex flex-col pt-8 max-w-screen-lg">

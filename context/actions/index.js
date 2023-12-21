@@ -140,7 +140,7 @@ export const createAndPayOrder = async (user, productsCart, dispatch) => {
         currency_id: "ARS",
       };
     });
-
+    user.order = res.data.Order.id;
     const paymentData = {
       payer: user,
       items: productsPayment,
@@ -188,7 +188,7 @@ export const createOrderWithDelivery = async (
   }
 };
 
-export const payOrderWithDelivery = async (user, orderProducts) => {
+export const payOrderWithDelivery = async (user, orderProducts, order) => {
   try {
     const productsPayment = orderProducts.map((p) => {
       return {
@@ -201,6 +201,7 @@ export const payOrderWithDelivery = async (user, orderProducts) => {
       };
     });
 
+    user.order = order;
 
     const paymentData = {
       payer: user,
@@ -209,8 +210,7 @@ export const payOrderWithDelivery = async (user, orderProducts) => {
 
     const pay = await axios.post(`/api/payment/controller`, paymentData);
 
-    return pay.data["init_point"]
-    
+    return pay.data["init_point"];
   } catch (error) {
     console.log(error);
   }
