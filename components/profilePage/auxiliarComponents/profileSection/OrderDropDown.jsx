@@ -101,7 +101,7 @@ const OrderDropDown = ({ order }) => {
             {order.Products.length ? (
               order.Products?.map((op) => {
                 return (
-                  <ProductOrderCard key={op.productName} productOrder={op} />
+                  <ProductOrderCard key={op.title} productOrder={op} />
                 );
               })
             ) : (

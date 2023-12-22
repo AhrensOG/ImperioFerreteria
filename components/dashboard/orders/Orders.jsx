@@ -40,7 +40,7 @@ const Orders = ({ orders }) => {
           {auto ? (
             <span className="flex flex-row justify-center items-center gap-4">
               Stop
-              <Loader wh={false} />
+              <Loader w={16} h={16} />
             </span>
           ) : (
             "AutoRefresh"
