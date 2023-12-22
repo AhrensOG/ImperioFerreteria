@@ -112,6 +112,29 @@ export const deleteCart = async (dispatch) => {
   return dispatch({ type: "DELETE_CART" });
 };
 
+export const createOrder = async (user, productsCart) => {
+  try {
+    const res = await axios.post(`/api/order/controllerOnlyCreate`, {
+      userId: user.id,
+    });
+
+    const productsOrderData = {
+      OrderId: res.data.Order.id,
+      productsList: productsCart,
+      onlyCreate: true
+    };
+
+    //Delete previous unpaid products
+    await axios.delete(
+      `/api/productsOrder/controller?OrderId=${res.data.Order.id}`
+    );
+
+    await axios.post(`/api/productsOrder/controller`, productsOrderData);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const createAndPayOrder = async (user, productsCart, dispatch) => {
   try {
     const res = await axios.post(`/api/order/controller`, {
