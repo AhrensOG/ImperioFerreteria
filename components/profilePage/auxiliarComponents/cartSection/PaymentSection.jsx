@@ -39,8 +39,6 @@ const PaymentSection = () => {
     setLoader(false)
   };
 
-  console.log(state)
-
   const onSubmit = async (values) => {
     setLoader(true)
     const deliveryData = {
