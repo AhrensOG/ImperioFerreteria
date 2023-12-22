@@ -5,11 +5,13 @@ import { getAllCategories, getAllProducts } from '@/context/actions'
 import ProductsSection from './auxiliarComponents/products/ProductsSection'
 import CatalogSection from './auxiliarComponents/catalog/CatalogSection'
 import Link from 'next/link'
+import ContactSection from './auxiliarComponents/contact/ContactSection'
 
 const Filters = () => {
   const { state, dispatch } = useContext(Context)
   const [listProducts, setListProducts] = useState(false)
   const [listCatalog, setListCatalog] = useState(false)
+  const [listContact, setListContact] = useState(false)
 
 
   useEffect(() => {
@@ -20,6 +22,7 @@ const Filters = () => {
   const displayList = (list, setList) => {
     setListProducts(false)
     setListCatalog(false)
+    setListContact(false)
 
     return setList(!list)
   }
@@ -32,9 +35,9 @@ const Filters = () => {
           <span onMouseEnter={() => displayList(listProducts, setListProducts)} className='text-sm sm:text-lg cursor-pointer'>Productos</span>
         </Link>
         <Link href={'/products'}>
-          <span onMouseEnter={() => displayList(listCatalog, setListCatalog)}  className='text-sm sm:text-lg cursor-pointer'>Catalogo</span>
+          <span onMouseEnter={() => displayList(listCatalog, setListCatalog)}  className='text-sm sm:text-lg cursor-pointer'>Catálogo</span>
         </Link>
-        <span className='text-sm sm:text-lg cursor-pointer'>Noticias</span>
+        <span id='contact' onMouseEnter={() => displayList(listContact, setListContact)} className='text-sm hidden sm:block sm:text-lg cursor-pointer text-[#e26928]'>Contáctanos</span>
       </div>
       {
         listProducts ? 
@@ -44,6 +47,11 @@ const Filters = () => {
       {
         listCatalog ? 
         <CatalogSection listCatalog={listCatalog} setListCatalog={setListCatalog} state={state} />
+        : <div className='hidden'></div>
+      }
+      {
+        listContact ? 
+        <ContactSection listContact={listContact} setListContact={setListContact} />
         : <div className='hidden'></div>
       }
     </div>
