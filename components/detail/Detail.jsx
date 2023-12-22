@@ -17,7 +17,7 @@ const Detail = ({
   firstImage,
   moreImages,
 }) => {
-  const { dispatch } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
   const router = useRouter()
   const imagesArray = moreImages.map((e) => {
     return e.url;
@@ -48,6 +48,13 @@ const Detail = ({
   };
 
   const handleAddProductToCart = () => {
+    if (!state.userIsLogged) {
+      toast.info('Debes iniciar sesion!',{
+        duration: 2000,
+        className: 'bg-[#e26928]'
+      })
+      return router.push('/user/signIn')
+    }
     toast.success('Añadido correctamente!',{
       duration: 2000,
       className: 'bg-[#e26928]'
@@ -65,6 +72,13 @@ const Detail = ({
   };
 
   const handleBuyProduct = () => {
+    if (!state.userIsLogged) {
+      toast.info('Debes iniciar sesion!',{
+        duration: 2000,
+        className: 'bg-[#e26928]'
+      })
+      return router.push('/user/signIn')
+    }
     const productData = {
       id,
       title,
