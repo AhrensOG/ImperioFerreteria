@@ -31,7 +31,7 @@ const ProfilePage = () => {
         </div>
       </div>
       <div>
-        <Footer marginTop={10} />
+        <Footer marginTop={0} />
       </div>
     </div>
   )
