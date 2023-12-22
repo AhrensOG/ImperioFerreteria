@@ -1,4 +1,4 @@
-import { Order, User } from "@/db/models/models"
+import { Order, Products, User } from "@/db/models/models"
 
 
 export default async function handler(req, res) {
@@ -12,7 +12,7 @@ export default async function handler(req, res) {
       if (!user) {
         return res.status(400).json('User not found');
       };
-      const orders = await Order.findAll({ where: { UserId: user.dataValues.id }, order: [ [ 'updatedAt', 'DESC' ] ] })
+      const orders = await Order.findAll({ where: { UserId: user.dataValues.id }, include: { model: Products },order: [ [ 'updatedAt', 'DESC' ] ] })
       
       user.dataValues.Orders = orders
 

@@ -23,7 +23,7 @@ const LogIn = () => {
   }  
 
   return (
-    <div className="flex flex-col justify-center items-center h-full w-full p-4 sm:px-12">
+    <div className="flex flex-col justify-center items-center w-full p-4 sm:px-12">
       <div className="border border-[#e26928] max-w-xs w-full h-full flex flex-col items-center justify-start p-4 py-10 gap-12">
         <span className="text-3xl text-[#e26928] font-bold uppercase">
           Bienvenido

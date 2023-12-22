@@ -1,10 +1,11 @@
-import { cancelOrder, getOrderProducts } from "@/context/actions";
+import { cancelOrder } from "@/context/actions";
 import React, { useContext, useEffect, useState } from "react";
 import ProductOrderCard from "./ProductOrderCard";
 import { Context } from "@/context/GlobalContext";
+import { isUserLogged } from "@/context/actions/isUserLogged";
 
 const OrderDropDown = ({ order }) => {
-  const { dispatch, state } = useContext(Context)
+  const { dispatch, state } = useContext(Context);
   const dateObj = new Date(order.updatedAt);
   const date = dateObj.toLocaleDateString("es-ES", {
     day: "2-digit",
@@ -13,23 +14,14 @@ const OrderDropDown = ({ order }) => {
   });
 
   const [open, setOpen] = useState(false);
-  const [orderProducts, setOrderProducts] = useState();
 
   const handleOpenOrder = () => {
     setOpen(!open);
   };
 
-  const handleCacelOrder  = () => {
-    cancelOrder(order.id, dispatch)
-  }
-
-  useEffect(() => {
-    const getData = async () => {
-      const data = await getOrderProducts(order.id);
-      setOrderProducts(data);
-    };
-    getData();
-  }, [state.user]);
+  const handleCacelOrder = () => {
+    cancelOrder(order.id, dispatch);
+  };
 
   return (
     <div className="flex flex-col">
@@ -38,11 +30,12 @@ const OrderDropDown = ({ order }) => {
         className="flex flex-row w-full cursor-pointer justify-between items-center bg-white border border-[#e26928] p-2 rounded-sm"
       >
         <span className="text-[#e26928] text-sm sm:text-base font-semibold">
-          Orden: {order.status === "Paid"
-                  ? order.orderId
-                  : order.status === "Pending"
-                  ? "Pendiente"
-                  : "Cancelado"}
+          Orden:{" "}
+          {order.status === "Paid"
+            ? order.orderId
+            : order.status === "Pending"
+            ? "Pendiente"
+            : "Cancelado"}
         </span>
         <span className="text-[#e26928] font-semibold flex flex-row gap-1 text-sm sm:text-base">
           {date}
@@ -105,8 +98,8 @@ const OrderDropDown = ({ order }) => {
             </span>
           </div>
           <div className="flex flex-col gap-1">
-            {orderProducts ? (
-              orderProducts?.map((op) => {
+            {order.Products.length ? (
+              order.Products?.map((op) => {
                 return (
                   <ProductOrderCard key={op.productName} productOrder={op} />
                 );
@@ -115,11 +108,16 @@ const OrderDropDown = ({ order }) => {
               <div className="hidden"></div>
             )}
           </div>
-          {
-            order?.status === 'Pending'
-            ? <button onClick={() => handleCacelOrder()} className="underline underline-offset-4 text-red-600">Cancelar Pedido</button>
-            : <div className="hidden"></div>
-          }
+          {order?.status === "Pending" ? (
+            <button
+              onClick={() => handleCacelOrder()}
+              className="underline underline-offset-4 text-red-600"
+            >
+              Cancelar Pedido
+            </button>
+          ) : (
+            <div className="hidden"></div>
+          )}
         </div>
       ) : (
         <div className="hidden"></div>

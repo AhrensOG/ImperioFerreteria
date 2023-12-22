@@ -5,11 +5,11 @@ const ProductOrderCard = ({ productOrder }) => {
     <div className='flex flex-col sm:flex-row sm:justify-evenly text-sm'>
       <p className='font-medium'>
         Producto: 
-        <span className='text-[#e26928] font-medium pl-2'>{productOrder.productName}</span>
+        <span className='text-[#e26928] font-medium pl-2'>{productOrder.title}</span>
       </p>
       <p className='font-medium'>
         Cantidad:
-        <span className='text-[#e26928] font-medium pl-2'>{productOrder.quantity}</span>
+        <span className='text-[#e26928] font-medium pl-2'>{productOrder.ProductsOrder.quantity}</span>
       </p>
     </div>
   )

@@ -11,6 +11,9 @@ const ProfileSection = ({ state }) => {
     }
     userStatus()
   }, [])
+
+  useEffect(() => {}, [state.user]);
+
   return (
     <div className="flex flex-col gap-6">
       <span className="uppercase text-xl font-semibold tracking-tight">

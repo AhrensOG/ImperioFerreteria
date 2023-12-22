@@ -16,11 +16,15 @@ const Products = () => {
   
 
   return (
-    <div>
-      <Header/>
-      <HomeNavbar/>
-      <ProductsPage/>
-      <Footer/>
+    <div className='h-full flex flex-col justify-between'>
+      <div>
+        <Header/>
+        <HomeNavbar/>
+        <ProductsPage/>
+      </div>
+      <div>
+        <Footer/>
+      </div>
     </div>
   )
 }

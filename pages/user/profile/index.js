@@ -17,18 +17,22 @@ const ProfilePage = () => {
   }, [])
   
   return (
-    <div>
-      {
-        state?.init_point 
-        ? <PaymentSection/>
-        : <div className='hidden'></div>
-      }
-      <Header />
-      <HomeNavbar />
-      <div className='flex flex-row justify-center'>
-        <Profile />
+    <div className='h-full flex flex-col justify-between'>
+      <div>
+        {
+          state?.init_point 
+          ? <PaymentSection/>
+          : <div className='hidden'></div>
+        }
+        <Header />
+        <HomeNavbar />
+        <div className='flex flex-row justify-center'>
+          <Profile />
+        </div>
       </div>
-      <Footer marginTop={0}/>
+      <div>
+        <Footer marginTop={0} />
+      </div>
     </div>
   )
 }
