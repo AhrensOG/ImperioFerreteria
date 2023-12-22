@@ -1,28 +1,13 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import React from 'react'
+import Link from "next/link";
+import React from "react";
 
-const Footer = ({ marginTop = 10 }) => {
-  const router = useRouter()
-
+const ContactSection = ({ listContact, setListContact }) => {
   return (
-    <div className={`w-full h-full bg-black py-4 flex flex-col gap-4 sm:gap-6 md:gap-8 lg:gap-10 sm:px-10 sm:py-6 md:py-8 lg:py-10 ${marginTop ? 'mt-10' : '' }`}>
-      <div className='flex flex-row w-full h-full items-center justify-evenly sm:justify-start sm:gap-10'>
-        <Link href={'/'}>
-          <Image src={'/LogoMobile.png'} width={1000} height={1000} alt='Logo' className='w-[60px] h-[28px] sm:w-[100px] sm:h-[48px] md:w-[140px] md:h-[68px] lg:w-[180px] lg:h-[88px] cursor-pointer'/>
-        </Link>
-        <Link href={'/products'}>
-          <span className='text-[0.60rem] text-white/70 sm:text-sm md:text-base lg:text-lg uppercase cursor-pointer'>Productos</span>
-        </Link>
-        <Link href={'/products'}>
-          <span className='text-[0.60rem] text-white/70 sm:text-sm md:text-base lg:text-lg uppercase cursor-pointer'>Catalogo</span>
-        </Link>
-        <Link href={router.asPath === '/' ? '#contact' : '/'}>
-          <span className='text-[0.60rem] text-white/70 sm:text-sm md:text-base lg:text-lg uppercase cursor-pointer'>Contáctanos</span>
-        </Link>
-      </div>
-      <div className='flex flex-row justify-center items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10 sm:justify-start'>
+    <div
+      onMouseLeave={() => setListContact(!listContact)}
+      className={`hidden absolute z-10 px-4 sm:px-12 py-4 w-full h-auto bg-white sm:flex sm:flex-row sm:flex-wrap`}
+    >
+      <div className="flex flex-row gap-10 justify-start items-center cursor-pointer hover:bg-slate-200 duration-500 py-2 px-4">
         <Link
           href={"https://wa.me/3704671438"}
           target="_blank"
@@ -41,6 +26,8 @@ const Footer = ({ marginTop = 10 }) => {
             <path d="M13.29 2.68A7.36 7.36 0 0 0 8 .5a7.44 7.44 0 0 0-6.41 11.15l-1 3.85 3.94-1a7.4 7.4 0 0 0 3.55.9H8a7.44 7.44 0 0 0 5.29-12.72zM8 14.12a6.12 6.12 0 0 1-3.15-.87l-.22-.13-2.34.61.62-2.28-.14-.23a6.18 6.18 0 0 1 9.6-7.65 6.12 6.12 0 0 1 1.81 4.37A6.19 6.19 0 0 1 8 14.12z" />
           </svg>
         </Link>
+      </div>
+      <div className="flex flex-row gap-8 justify-start items-center cursor-pointer hover:bg-slate-200 duration-500 py-2 px-4">
         <Link
           href={
             "https://instagram.com/ferreteriaelimperio?igshid=YzAwZjE1ZTI0Zg=="
@@ -72,6 +59,8 @@ const Footer = ({ marginTop = 10 }) => {
             />
           </svg>
         </Link>
+      </div>
+      <div className="flex flex-row gap-8 justify-start items-center cursor-pointer hover:bg-slate-200 duration-500 py-2 px-4">
         <Link
           href={"https://www.facebook.com/mitre1589?mibextid=ZbWKwL"}
           target="_blank"
@@ -91,7 +80,7 @@ const Footer = ({ marginTop = 10 }) => {
         </Link>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Footer
+export default ContactSection;
