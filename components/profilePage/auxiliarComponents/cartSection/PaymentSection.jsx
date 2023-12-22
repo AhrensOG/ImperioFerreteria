@@ -27,7 +27,7 @@ const PaymentSection = () => {
 
   const handlePayInSite = async () => {
     setLoader(true)
-    await createOrder(state?.user, state?.productsCart);
+    await createOrder(state?.user, state?.productsCart, state?.cartTotalPrice); 
     deleteInit_Point(dispatch);
     deleteCart(dispatch);
     toast.success("Tu pedido se registro con exito!", {
@@ -38,6 +38,8 @@ const PaymentSection = () => {
     });
     setLoader(false)
   };
+
+  console.log(state)
 
   const onSubmit = async (values) => {
     setLoader(true)

@@ -112,10 +112,11 @@ export const deleteCart = async (dispatch) => {
   return dispatch({ type: "DELETE_CART" });
 };
 
-export const createOrder = async (user, productsCart) => {
+export const createOrder = async (user, productsCart, totalPrice) => {
   try {
     const res = await axios.post(`/api/order/controllerOnlyCreate`, {
       userId: user.id,
+      totalPrice
     });
 
     const productsOrderData = {

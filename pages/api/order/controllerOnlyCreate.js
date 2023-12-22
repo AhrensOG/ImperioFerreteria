@@ -4,7 +4,7 @@ import { Op } from "sequelize";
 export default async function handler(req, res) {
   if (req.method === "POST") {
     try {
-      const { userId } = req.body;
+      const { userId, totalPrice } = req.body;
 
       if (!userId) {
         return res.status(400).send("An UserID is required");
@@ -16,13 +16,13 @@ export default async function handler(req, res) {
       });
 
       if (foundOrder) {
-        await foundOrder.update({ status: 'Pending' })
+        await foundOrder.update({ status: 'Pending', totalPrice })
         return res.status(200).send({ Order: foundOrder, alreadyExist: true });
       }
 
       const newOrder = await Order.create({
         status: "Pending",
-        totalPrice: 0,
+        totalPrice
       });
 
       const userOrder = await User.findOne({ where: { id: userId } });
