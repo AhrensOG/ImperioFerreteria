@@ -21,6 +21,10 @@ const orderInit = (sequelize, DataTypes) => {
     status: DataTypes.ENUM('Shopping', 'Pending', 'Paid', 'Cancel'),
     totalPrice: DataTypes.DECIMAL(10, 2),
     delivery: DataTypes.BOOLEAN,
+    delivered: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
     orderReceiver: {
       type: DataTypes.TEXT,
       allowNull: true

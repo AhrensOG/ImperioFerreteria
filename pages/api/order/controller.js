@@ -14,7 +14,7 @@ export default async function handler(req, res) {
       }
 
       const orders = await Order.findAll({
-        order: [["updatedAt", "DESC"]],
+        order: [["createdAt", "DESC"]],
         include: [{ model: User }, { model: Products }],
       });
 
@@ -59,13 +59,13 @@ export default async function handler(req, res) {
     }
   } else if (req.method === "PUT") {
     try {
-      const { userId, status, totalPrice } = req.body;
+      const { orderId, status, totalPrice, delivered } = req.body;
 
-      if (!userId) {
-        return res.status(400).send("An UserID is required");
+      if (!orderId) {
+        return res.status(400).send("An orderId is required");
       }
 
-      const foundOrder = await Order.findOne({ where: { UserId: userId } });
+      const foundOrder = await Order.findOne({ where: { id: orderId } });
 
       if (status) {
         await foundOrder.update({
@@ -78,8 +78,12 @@ export default async function handler(req, res) {
         });
       }
 
+      await foundOrder.update({
+        delivered,
+      });
+
       const updatedOrder = await Order.findOne({
-        where: { UserId: userId },
+        where: { id: orderId },
         include: [{ model: User }, { model: Products }],
       });
 

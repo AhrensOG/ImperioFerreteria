@@ -116,13 +116,13 @@ export const createOrder = async (user, productsCart, totalPrice) => {
   try {
     const res = await axios.post(`/api/order/controllerOnlyCreate`, {
       userId: user.id,
-      totalPrice
+      totalPrice,
     });
 
     const productsOrderData = {
       OrderId: res.data.Order.id,
       productsList: productsCart,
-      onlyCreate: true
+      onlyCreate: true,
     };
 
     //Delete previous unpaid products
@@ -240,9 +240,20 @@ export const payOrderWithDelivery = async (user, orderProducts, order) => {
   }
 };
 
-export const cancelOrder = async (orderId, dispatch) => {
+export const cancelOrder = async (orderId, dispatch = false) => {
   try {
     await axios.put("/api/order/controllerWithDelivery", { orderId });
+    if (dispatch) {
+      isUserLogged(dispatch);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deliveredOrder = async (orderId, delivered, dispatch) => {
+  try {
+    await axios.put("/api/order/controller", { orderId, delivered });
     isUserLogged(dispatch);
   } catch (error) {
     console.log(error);
