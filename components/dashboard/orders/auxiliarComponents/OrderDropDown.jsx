@@ -21,7 +21,7 @@ const OrderDropDown = ({ order }) => {
   });
 
   const [paymentLink, setPaymentLink] = useState();
-  const [deliveryCost, setDeliveryCost] = useState();
+  const [deliveryCost, setDeliveryCost] = useState(null);
 
   const handleDelivered = async () => {
     await deliveredOrder(order?.id, !order?.delivered, dispatch);
@@ -34,17 +34,19 @@ const OrderDropDown = ({ order }) => {
   }
 
   const handleGeneratePaymentLink = async () => {
-    const itemDeliveryCost = {
-      id: order.id,
-      description: 'Costo de envio',
-      title: 'Envio',
-      ProductsOrder: {
-        quantity: 1
-      },
-      price: parseFloat(deliveryCost)
-    }
     const orderProducts = JSON.parse(JSON.stringify(order.Products));
-    orderProducts.push(itemDeliveryCost)
+    if (deliveryCost) {
+      const itemDeliveryCost = {
+        id: order.id,
+        description: 'Costo de envio',
+        title: 'Envio',
+        ProductsOrder: {
+          quantity: 1
+        },
+        price: parseFloat(deliveryCost)
+      }
+      orderProducts.push(itemDeliveryCost)
+    }
 
     const initPoint = await payOrderWithDelivery(
       state.user,
