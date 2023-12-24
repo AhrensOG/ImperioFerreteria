@@ -14,19 +14,16 @@ const CategoryForm = ({ data = null }) => {
   };
 
   const onSubmit = async (values, { resetForm }) => {
+    setLoader(true)
     if (action === 'POST') {
-      setLoader(true)
-      createCategory(values)
-      getAllCategories(dispatch)
+      await createCategory(values)
       resetForm()
-      setLoader(false)
     }
     if (action === 'PUT') {
-      setLoader(true)
-      updateCategory(values)
-      getAllCategories(dispatch)
-      setLoader(false)
+      await updateCategory(values)
     }
+    await getAllCategories(dispatch)
+    setLoader(false)
   }
 
   const formik = useFormik({

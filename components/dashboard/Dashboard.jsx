@@ -29,14 +29,15 @@ const Dashboard = () => {
   const { state, dispatch } = useContext(Context);
 
   useEffect(() => {
-    isUserLogged(dispatch);
-    getAllProducts(dispatch);
-    getAllUsers(dispatch);
-    getAllCategories(dispatch);
-    getAllOrders(dispatch)
-  }, [state.editProduct, state.editCategory]);
-
-  useEffect(() => {}, [state.products, state.categories]);
+    const getData = async () => {
+      await isUserLogged(dispatch);
+      await getAllProducts(dispatch);
+      await getAllCategories(dispatch);
+      await getAllUsers(dispatch);
+      await getAllOrders(dispatch)
+    }
+    getData()
+  }, []);
 
   return (
     <div>

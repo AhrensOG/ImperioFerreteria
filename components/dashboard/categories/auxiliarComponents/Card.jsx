@@ -5,13 +5,13 @@ import React, { useContext } from "react";
 const Card = ({ category }) => {
   const { dispatch } = useContext(Context);
 
-  const handleEdit = () => {
-    editCategory(category, dispatch);
+  const handleEdit = async () => {
+    await editCategory(category, dispatch);
   };
 
-  const handleDelete = () => {
-    deleteCategory(category.id);
-    getAllCategories(dispatch)
+  const handleDelete = async () => {
+    await deleteCategory(category.id); 
+    await getAllCategories(dispatch)
   };
 
   return (
