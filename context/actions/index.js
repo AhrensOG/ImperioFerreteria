@@ -112,6 +112,30 @@ export const deleteCart = async (dispatch) => {
   return dispatch({ type: "DELETE_CART" });
 };
 
+export const createOrder = async (user, productsCart, totalPrice) => {
+  try {
+    const res = await axios.post(`/api/order/controllerOnlyCreate`, {
+      userId: user.id,
+      totalPrice,
+    });
+
+    const productsOrderData = {
+      OrderId: res.data.Order.id,
+      productsList: productsCart,
+      onlyCreate: true,
+    };
+
+    //Delete previous unpaid products
+    await axios.delete(
+      `/api/productsOrder/controller?OrderId=${res.data.Order.id}`
+    );
+
+    await axios.post(`/api/productsOrder/controller`, productsOrderData);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const createAndPayOrder = async (user, productsCart, dispatch) => {
   try {
     const res = await axios.post(`/api/order/controller`, {
@@ -216,9 +240,20 @@ export const payOrderWithDelivery = async (user, orderProducts, order) => {
   }
 };
 
-export const cancelOrder = async (orderId, dispatch) => {
+export const cancelOrder = async (orderId, dispatch = false) => {
   try {
     await axios.put("/api/order/controllerWithDelivery", { orderId });
+    if (dispatch) {
+      isUserLogged(dispatch);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deliveredOrder = async (orderId, delivered, dispatch) => {
+  try {
+    await axios.put("/api/order/controller", { orderId, delivered });
     isUserLogged(dispatch);
   } catch (error) {
     console.log(error);

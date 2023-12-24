@@ -1,8 +1,11 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 const Footer = ({ marginTop = 10 }) => {
+  const router = useRouter()
+
   return (
     <div className={`w-full h-full bg-black py-4 flex flex-col gap-4 sm:gap-6 md:gap-8 lg:gap-10 sm:px-10 sm:py-6 md:py-8 lg:py-10 ${marginTop ? 'mt-10' : '' }`}>
       <div className='flex flex-row w-full h-full items-center justify-evenly sm:justify-start sm:gap-10'>
@@ -15,8 +18,8 @@ const Footer = ({ marginTop = 10 }) => {
         <Link href={'/products'}>
           <span className='text-[0.60rem] text-white/70 sm:text-sm md:text-base lg:text-lg uppercase cursor-pointer'>Catalogo</span>
         </Link>
-        <Link href={'/'}>
-          <span className='text-[0.60rem] text-white/70 sm:text-sm md:text-base lg:text-lg uppercase cursor-pointer'>Noticias</span>
+        <Link href={router.asPath === '/' ? '#contact' : '/'}>
+          <span className='text-[0.60rem] text-white/70 sm:text-sm md:text-base lg:text-lg uppercase cursor-pointer'>Contáctanos</span>
         </Link>
       </div>
       <div className='flex flex-row justify-center items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10 sm:justify-start'>

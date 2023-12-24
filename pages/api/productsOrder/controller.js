@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     }
   } else if (req.method === 'POST') {
     try {
-      const { OrderId, productsList, delivery } = req.body;
+      const { OrderId, productsList, delivery, onlyCreate } = req.body;
 
       if ( !OrderId || !productsList || productsList.length === 0 ) {
         return res.status(400).send('A OrderId or Products list are required')
@@ -38,7 +38,7 @@ export default async function handler(req, res) {
           return res.status(400).send(`Product with ID ${productsList[i].id} doesn't exists`)
         }
       }
-      if (delivery) {
+      if (delivery || onlyCreate) {
         for (let i = 0; i < productsList.length; i++) {
           const product = await Products.findByPk(productsList[i].id)
           await order.addProducts(product, { through: { productName: productsList[i].title, quantity: productsList[i].items, status: 'Pending' } })

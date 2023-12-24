@@ -2,12 +2,18 @@ import React, { useContext, useEffect, useState } from "react";
 import ProductOrderCard from "./ProductOrderCard";
 import { Context } from "@/context/GlobalContext";
 import ArrowIcon from "./ArrowIcon";
-import { payOrderWithDelivery } from "@/context/actions";
+import {
+  cancelOrder,
+  deliveredOrder,
+  getAllOrders,
+  payOrderWithDelivery,
+} from "@/context/actions";
 import { toast } from "sonner";
+import ToggleSwitch from "./ToggleSwitch";
 
 const OrderDropDown = ({ order }) => {
-  const { state } = useContext(Context);
-  const dateObj = new Date(order.updatedAt);
+  const { state, dispatch } = useContext(Context);
+  const dateObj = new Date(order.createdAt);
   const date = dateObj.toLocaleDateString("es-ES", {
     day: "2-digit",
     month: "2-digit",
@@ -15,14 +21,38 @@ const OrderDropDown = ({ order }) => {
   });
 
   const [paymentLink, setPaymentLink] = useState();
+  const [deliveryCost, setDeliveryCost] = useState();
+
+  const handleDelivered = async () => {
+    await deliveredOrder(order?.id, !order?.delivered, dispatch);
+    await getAllOrders(dispatch);
+  };
+
+  const handleDeliveryCost = (e) => {
+    e.preventDefault()
+    setDeliveryCost(e.target.value)
+  }
 
   const handleGeneratePaymentLink = async () => {
+    const itemDeliveryCost = {
+      id: order.id,
+      description: 'Costo de envio',
+      title: 'Envio',
+      ProductsOrder: {
+        quantity: 1
+      },
+      price: parseFloat(deliveryCost)
+    }
+    const orderProducts = JSON.parse(JSON.stringify(order.Products));
+    orderProducts.push(itemDeliveryCost)
+
     const initPoint = await payOrderWithDelivery(
       state.user,
-      order.Products,
+      orderProducts,
       order.id
     );
     setPaymentLink(initPoint);
+    setDeliveryCost(null)
   };
 
   const handleCopyLink = async () => {
@@ -42,6 +72,11 @@ const OrderDropDown = ({ order }) => {
         description: "Si la falla persiste contacta a un administrador",
       });
     }
+  };
+
+  const handleCancelOrderAlert = async () => {
+    await cancelOrder(order.id);
+    await getAllOrders(dispatch);
   };
 
   const [openDropDown, setOpenDropDown] = useState(false);
@@ -116,6 +151,38 @@ const OrderDropDown = ({ order }) => {
                 </div>
                 {order.status === "Pending" ? (
                   <div className="flex flex-col gap-1">
+                    <div className="flex flex-row w-full justify-center items-center">
+                      <div className="bg-[#e26928] border-r-0 rounded-lg rounded-r-none w-16 h-full flex flex-row justify-center items-center">
+                        <svg
+                          stroke="currentColor"
+                          fill="none"
+                          strokeWidth="2"
+                          viewBox="0 0 24 24"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-8 h-8 stroke-white"
+                        >
+                          <path
+                            stroke="none"
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          ></path>
+                          <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                          <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                          <path d="M5 17h-2v-4m-1 -8h11v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5"></path>
+                          <path d="M3 9l4 0"></path>
+                        </svg>
+                      </div>
+                      <span className="font-semibold text-lg text-[#e26928] border-y border-[#e26928] h-full flex flex-row items-center pl-2 pr-1">$</span>
+                      <input
+                        className="border border-[#e26928] border-l-0 rounded-lg rounded-l-none pl-0 p-2 outline-none w-full text-[#e26928] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                        type="number"
+                        name="deliveryCost"
+                        value={deliveryCost ?? ''}
+                        onChange={handleDeliveryCost}
+                      />
+                    </div>
                     <button
                       className="border border-[#e26928] p-2 rounded-lg text-[#e26928] font-semibold hover:text-white hover:bg-[#e26928] duration-300"
                       onClick={() => handleGeneratePaymentLink()}
@@ -153,8 +220,33 @@ const OrderDropDown = ({ order }) => {
             ) : (
               <div className="hidden"></div>
             )}
+            {order.status === "Pending" ? (
+              <button
+                className="text-red-700 text-start font-semibold underline underline-offset-2"
+                onClick={() =>
+                  toast.warning("Cuidado! Estas por cancelar la orden!", {
+                    action: {
+                      label: "Confirmar",
+                      onClick: handleCancelOrderAlert,
+                    },
+                  })
+                }
+              >
+                Cancelar Pedido
+              </button>
+            ) : (
+              <div className="hidden"></div>
+            )}
           </div>
-          <div className="col-span-2 flex flex-col items-center">
+          <div className="col-span-2 flex flex-col gap-1 items-center relative">
+            {order.status !== "Cancel" ? (
+              <ToggleSwitch
+                delivered={order?.delivered}
+                setDelivered={handleDelivered}
+              />
+            ) : (
+              <div className="hideen"></div>
+            )}
             <span className="font-bold text-[#e26928]">
               Productos / Total: {order.totalPrice}
             </span>
