@@ -51,14 +51,14 @@ const Form = ({ data = null }) => {
           return console.log(createdProduct);
         }
         if (selectedCategories.length) {
-          addCategoriesToProduct(selectedCategories, createdProduct.id);
+          await addCategoriesToProduct(selectedCategories, createdProduct.id);
           setSelectedCategories([]);
         }
         if (newImages.length) {
-          addImagesToProduct(newImages, createdProduct.id);
+          await addImagesToProduct(newImages, createdProduct.id);
           setNewImages([]);
         }
-        getAllProducts(dispatch);
+        await getAllProducts(dispatch);
         resetForm();
         setRemovedCategories([]);
         setPrevImages([]);
@@ -76,21 +76,21 @@ const Form = ({ data = null }) => {
         const updatedProduct = await updateProduct(values);
         
         if (removedCategories.length) {
-          removeCategoriesToProduct(removedCategories, updatedProduct.id);
+          await removeCategoriesToProduct(removedCategories, updatedProduct.id);
           setRemovedCategories([]);
         }
         if (selectedCategories.length) {
-          addCategoriesToProduct(selectedCategories, updatedProduct.id);
+          await addCategoriesToProduct(selectedCategories, updatedProduct.id);
         }
         if (removedImages.length) {
-          removeImagesToProduct(removedImages);
+          await removeImagesToProduct(removedImages);
           setRemovedImages([]);
         }
         if (newImages.length) {
-          addImagesToProduct(newImages, updatedProduct.id);
+          await addImagesToProduct(newImages, updatedProduct.id);
           setNewImages([]);
         }
-        getAllProducts(dispatch);
+        await getAllProducts(dispatch);
         setLoader(false);
       }
     } catch (error) {
@@ -169,7 +169,7 @@ const Form = ({ data = null }) => {
       <span className="text-4xl font-semibold text-[#e26928] pb-10 w-full text-center">
         {data ? "Actualizar Producto" : "Crear Producto"}
       </span>
-      <div className="overflow-y-scroll scrollbar-thumb-[#e26928] scrollbar-thin px-1">
+      <div className="overflow-y-scroll scrollbar-thumb-[#e26928] scrollbar-thin p-1">
         <form onSubmit={formik.handleSubmit} className="flex flex-col gap-4">
           <input
             id="title"
@@ -203,7 +203,7 @@ const Form = ({ data = null }) => {
               placeholder="Precio"
               onChange={formik.handleChange}
               value={formik.values.price}
-              className="border border-[#e26928] p-3 rounded-md outline-none text-xl focus:ring focus:ring-[#e26928] w-full"
+              className="border border-[#e26928] p-3 rounded-md outline-none text-xl focus:ring focus:ring-[#e26928] w-full [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             />
             <input
               id="quantity"
@@ -212,7 +212,7 @@ const Form = ({ data = null }) => {
               placeholder="Cantidad"
               onChange={formik.handleChange}
               value={formik.values.quantity}
-              className="border border-[#e26928] p-3 rounded-md outline-none text-xl focus:ring focus:ring-[#e26928] w-full"
+              className="border border-[#e26928] p-3 rounded-md outline-none text-xl focus:ring focus:ring-[#e26928] w-full [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             />
           </div>
           <input
