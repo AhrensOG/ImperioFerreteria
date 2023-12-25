@@ -10,7 +10,7 @@ const Card = ({ product }) => {
   }
 
   const handleDelete = async () => {
-    deleteProduct(product.id)
+    await deleteProduct(product.id)
     await getAllProducts(dispatch)
   }
 

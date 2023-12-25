@@ -8,14 +8,14 @@ export default async function handler(req, res) {
       if (userId) {
         const response = await Order.findAll({
           where: { UserId: userId },
-          include: [{ model: User }, { model: Products }],
+          include: [{ model: User }, { model: Products, paranoid: false }],
         });
         return res.status(200).send(response);
       }
 
       const orders = await Order.findAll({
         order: [["createdAt", "DESC"]],
-        include: [{ model: User }, { model: Products }],
+        include: [{ model: User }, { model: Products, paranoid: false }],
       });
 
       return res.status(200).send(orders);
