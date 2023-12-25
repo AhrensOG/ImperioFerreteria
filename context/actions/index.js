@@ -251,10 +251,20 @@ export const cancelOrder = async (orderId, dispatch = false) => {
   }
 };
 
-export const deliveredOrder = async (orderId, delivered, dispatch) => {
+export const payOrder = async (orderId, dispatch = false) => {
+  try {
+    await axios.put("/api/order/controller", { orderId, delivered: false, status: 'Paid' });
+    if (dispatch) {
+      isUserLogged(dispatch);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deliveredOrder = async (orderId, delivered) => {
   try {
     await axios.put("/api/order/controller", { orderId, delivered });
-    isUserLogged(dispatch);
   } catch (error) {
     console.log(error);
   }

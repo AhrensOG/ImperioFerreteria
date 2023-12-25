@@ -8,7 +8,7 @@ const Products = ({ products }) => {
       <div className='overflow-y-scroll flex flex-col gap-6 scrollbar-thumb-[#e26928] scrollbar-thin px-1'>
         {
           products?.map( p => {
-            return <Card key={p.id} product={p}/>
+            return !p.deletedAt && <Card key={p.id} product={p}/>
           })
         }
       </div>

@@ -1,17 +1,17 @@
 import { Context } from "@/context/GlobalContext";
-import { deleteProduct, editProduct, getAllProducts } from "@/context/actions";
+import { backToCreateProduct, deleteProduct, editProduct, getAllProducts } from "@/context/actions";
 import React, { useContext } from "react";
 
 const Card = ({ product }) => {
   const { dispatch } = useContext(Context)
   
-  const handleEdit = () => {
-    editProduct(product, dispatch)
+  const handleEdit = async() => {
+    await editProduct(product, dispatch)
   }
 
-  const handleDelete = () => {
-    deleteProduct(product.id)
-    getAllProducts(dispatch)
+  const handleDelete = async () => {
+    await deleteProduct(product.id)
+    await getAllProducts(dispatch)
   }
 
   return (

@@ -6,6 +6,7 @@ import {
   cancelOrder,
   deliveredOrder,
   getAllOrders,
+  payOrder,
   payOrderWithDelivery,
 } from "@/context/actions";
 import { toast } from "sonner";
@@ -29,23 +30,23 @@ const OrderDropDown = ({ order }) => {
   };
 
   const handleDeliveryCost = (e) => {
-    e.preventDefault()
-    setDeliveryCost(e.target.value)
-  }
+    e.preventDefault();
+    setDeliveryCost(e.target.value);
+  };
 
   const handleGeneratePaymentLink = async () => {
     const orderProducts = JSON.parse(JSON.stringify(order.Products));
     if (deliveryCost) {
       const itemDeliveryCost = {
         id: order.id,
-        description: 'Costo de envio',
-        title: 'Envio',
+        description: "Costo de envio",
+        title: "Envio",
         ProductsOrder: {
-          quantity: 1
+          quantity: 1,
         },
-        price: parseFloat(deliveryCost)
-      }
-      orderProducts.push(itemDeliveryCost)
+        price: parseFloat(deliveryCost),
+      };
+      orderProducts.push(itemDeliveryCost);
     }
 
     const initPoint = await payOrderWithDelivery(
@@ -54,7 +55,7 @@ const OrderDropDown = ({ order }) => {
       order.id
     );
     setPaymentLink(initPoint);
-    setDeliveryCost(null)
+    setDeliveryCost(null);
   };
 
   const handleCopyLink = async () => {
@@ -78,6 +79,11 @@ const OrderDropDown = ({ order }) => {
 
   const handleCancelOrderAlert = async () => {
     await cancelOrder(order.id);
+    await getAllOrders(dispatch);
+  };
+
+  const handlePayOrderAlert = async () => {
+    await payOrder(order.id);
     await getAllOrders(dispatch);
   };
 
@@ -176,12 +182,14 @@ const OrderDropDown = ({ order }) => {
                           <path d="M3 9l4 0"></path>
                         </svg>
                       </div>
-                      <span className="font-semibold text-lg text-[#e26928] border-y border-[#e26928] h-full flex flex-row items-center pl-2 pr-1">$</span>
+                      <span className="font-semibold text-lg text-[#e26928] border-y border-[#e26928] h-full flex flex-row items-center pl-2 pr-1">
+                        $
+                      </span>
                       <input
                         className="border border-[#e26928] border-l-0 rounded-lg rounded-l-none pl-0 p-2 outline-none w-full text-[#e26928] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                         type="number"
                         name="deliveryCost"
-                        value={deliveryCost ?? ''}
+                        value={deliveryCost ?? ""}
                         onChange={handleDeliveryCost}
                       />
                     </div>
@@ -223,19 +231,34 @@ const OrderDropDown = ({ order }) => {
               <div className="hidden"></div>
             )}
             {order.status === "Pending" ? (
-              <button
-                className="text-red-700 text-start font-semibold underline underline-offset-2"
-                onClick={() =>
-                  toast.warning("Cuidado! Estas por cancelar la orden!", {
-                    action: {
-                      label: "Confirmar",
-                      onClick: handleCancelOrderAlert,
-                    },
-                  })
-                }
-              >
-                Cancelar Pedido
-              </button>
+              <div className="flex flex-row items-center justify-around gap-1 my-1">
+                <button
+                  className="text-red-700 w-full font-semibold border border-red-700 rounded-lg p-2"
+                  onClick={() =>
+                    toast.warning("Cuidado! Estas por cancelar la orden!", {
+                      action: {
+                        label: "Confirmar",
+                        onClick: handleCancelOrderAlert,
+                      },
+                    })
+                  }
+                >
+                  Cancelar Pedido
+                </button>
+                <button
+                  className="text-green-700 w-full font-semibold border border-green-700 rounded-lg p-2"
+                  onClick={() =>
+                    toast.warning("Marcaras como pagada la orden!", {
+                      action: {
+                        label: "Confirmar",
+                        onClick: handlePayOrderAlert,
+                      },
+                    })
+                  }
+                >
+                  Pagado
+                </button>
+              </div>
             ) : (
               <div className="hidden"></div>
             )}
@@ -255,10 +278,10 @@ const OrderDropDown = ({ order }) => {
             <div
               className={`flex flex-col gap-2 w-full ${
                 order.delivery && order.status === "Pending"
-                  ? "max-h-60"
+                  ? "max-h-[327px]"
                   : order.delivery && order.status !== "Pending"
                   ? "max-h-[147px]"
-                  : "max-h-[75px]"
+                  : "max-h-[85px]"
               } overflow-y-scroll scrollbar-thin border border-[#e26928] p-2 rounded-lg rounded-r-none`}
             >
               {order.Products.map((p) => {

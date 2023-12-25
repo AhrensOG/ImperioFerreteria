@@ -22,7 +22,8 @@ const productstInit = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Products',
-    freezeTableName: true
+    freezeTableName: true,
+    paranoid: true
   });
   return Products;
 };
