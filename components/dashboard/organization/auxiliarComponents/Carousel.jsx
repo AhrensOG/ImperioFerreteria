@@ -25,20 +25,12 @@ const Carousel = ({slides = images, autoSlide = false, autoSlideInterval = 3000,
   },[stopAutoSlide])
 
   return (
-    <div className={`h-[350px] sm:h-[500px] md:h-[650px] bg-cover bg-no-repeat bg-center bg-origin-border`}>
-      <div className={`h-[350px] sm:h-[500px] md:h-[650px] w-full m-auto relative group`}>
+    <div className={`h-[300px] bg-cover bg-no-repeat bg-center bg-origin-border`}>
+      <div className={`h-[300px] w-full m-auto relative group`}>
         <div
-          className="relative w-full h-full bg-center bg-cover bg-origin-border duration-500"
+          className="relative w-full h-full duration-500"
         >
-          <img onMouseDown={() => setStopAutoSlide(true)} onMouseUp={() => setStopAutoSlide(false)} src={slides[currentIndex]?.url} alt="" className="absolute hover:cursor-pointer w-full h-full object- object-center duration-500" />
-          {/* <div className={`absolute h-[350px] sm:h-[500px] md:h-[650px] w-full flex flex-col justify-center items-center`}>
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white py-2 text-center">
-              {title}
-            </h1>
-            <h2 className="text-xl sm:text-2xl md:text-3xl text-white py-2 text-center">
-              {subtitle}
-            </h2>
-          </div> */}
+          <img onMouseDown={() => setStopAutoSlide(true)} onMouseUp={() => setStopAutoSlide(false)} src={slides[currentIndex]?.url} alt="" className="absolute hover:cursor-pointer rounded-lg w-full h-full duration-500 object-cover" />
         </div>
         {/* Left Arrow */}
         <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">

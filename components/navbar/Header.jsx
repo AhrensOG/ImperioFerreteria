@@ -1,11 +1,14 @@
+import { Context } from "@/context/GlobalContext";
 import Link from "next/link";
-import React from "react";
+import React, { useContext } from "react";
 
 const Header = () => {
+  const { state } = useContext(Context)
+  
   return (
     <div className="bg-black py-1 sm:px-11 px-2 w-full h-9 flex flex-row justify-end items-center">
       <Link
-        href={"https://wa.me/3704671438"}
+        href={state?.organization?.whatsAppLink || '' }
         target="_blank"
         rel="noreferrer noopener"
       >
@@ -23,9 +26,7 @@ const Header = () => {
         </svg>
       </Link>
       <Link
-        href={
-          "https://instagram.com/ferreteriaelimperio?igshid=YzAwZjE1ZTI0Zg=="
-        }
+        href={state?.organization?.instagramLink || '' }
         target="_blank"
         rel="noreferrer noopener"
       >
@@ -54,7 +55,7 @@ const Header = () => {
         </svg>
       </Link>
       <Link
-        href={"https://www.facebook.com/mitre1589?mibextid=ZbWKwL"}
+        href={state?.organization?.facebookLink || '' }
         target="_blank"
         rel="noreferrer noopener"
       >
