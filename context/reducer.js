@@ -1,5 +1,10 @@
 export const reducer = (state, action) => {
   switch (action.type) {
+    case "GET_ORGANIZATION":
+      return {
+        ...state,
+        organization: action.payload,
+      };
     case "GET_ALL_CATEGORIES":
       return {
         ...state,

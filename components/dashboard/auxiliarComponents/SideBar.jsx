@@ -3,13 +3,14 @@ import Logo from "./Logo";
 import { signOut } from "firebase/auth";
 import { auth } from "@/firebase/config";
 
-const SideBar = ({ setShowProducts, showProducts, setShowCategories, showCategories, setShowUsers, showUsers, setShowOrders, showOrders }) => {
+const SideBar = ({ setShowProducts, showProducts, setShowCategories, showCategories, setShowUsers, showUsers, setShowOrders, showOrders, setShowOrganization, showOrganization }) => {
 
   const handleShow = (show, setShow) => {
     setShowProducts(false)
     setShowCategories(false)
     setShowUsers(false)
     setShowOrders(false)
+    setShowOrganization(false)
 
     return setShow(!show)
   }
@@ -20,9 +21,10 @@ const SideBar = ({ setShowProducts, showProducts, setShowCategories, showCategor
         <Logo />
         <div className="flex flex-col items-start gap-6">
           <button onClick={() => handleShow(showProducts, setShowProducts)} className="text-2xl">Productos</button>
+          <button onClick={() => handleShow(showOrders, setShowOrders)} className="text-2xl">Ordenes</button>
           <button onClick={() => handleShow(showCategories, setShowCategories)} className="text-2xl">Categorías</button>
           <button onClick={() => handleShow(showUsers, setShowUsers)} className="text-2xl">Usuarios</button>
-          <button onClick={() => handleShow(showOrders, setShowOrders)} className="text-2xl">Ordenes</button>
+          <button onClick={() => handleShow(showOrganization, setShowOrganization)} className="text-2xl">Organización</button>
         </div>
         <div className="flex justify-center h-full items-end">
           <button className="pb-16 text-2xl text-[#e26928] font-bold" onClick={() => signOut(auth)}>

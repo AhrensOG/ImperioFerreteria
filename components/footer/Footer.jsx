@@ -1,10 +1,12 @@
+import { Context } from '@/context/GlobalContext'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useContext } from 'react'
 
 const Footer = ({ marginTop = 10 }) => {
   const router = useRouter()
+  const { state } = useContext(Context)
 
   return (
     <div className={`w-full h-full bg-black py-4 flex flex-col gap-4 sm:gap-6 md:gap-8 lg:gap-10 sm:px-10 sm:py-6 md:py-8 lg:py-10 ${marginTop ? 'mt-10' : '' }`}>
@@ -24,7 +26,7 @@ const Footer = ({ marginTop = 10 }) => {
       </div>
       <div className='flex flex-row justify-center items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10 sm:justify-start'>
         <Link
-          href={"https://wa.me/3704671438"}
+          href={state?.organization?.whatsAppLink || '' }
           target="_blank"
           rel="noreferrer noopener"
         >
@@ -42,9 +44,7 @@ const Footer = ({ marginTop = 10 }) => {
           </svg>
         </Link>
         <Link
-          href={
-            "https://instagram.com/ferreteriaelimperio?igshid=YzAwZjE1ZTI0Zg=="
-          }
+          href={state?.organization?.instagramLink || '' }
           target="_blank"
           rel="noreferrer noopener"
         >
@@ -73,7 +73,7 @@ const Footer = ({ marginTop = 10 }) => {
           </svg>
         </Link>
         <Link
-          href={"https://www.facebook.com/mitre1589?mibextid=ZbWKwL"}
+          href={state?.organization?.facebookLink || '' }
           target="_blank"
           rel="noreferrer noopener"
         >

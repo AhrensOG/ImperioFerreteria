@@ -1,6 +1,16 @@
 import { uploadFile } from "@/firebase/uploadFile";
 import axios from "axios";
 import { isUserLogged } from "./isUserLogged";
+import { uploadBusinessFile } from "@/firebase/uploadBusinessFile";
+
+export const getOrganization = async (dispatch) => {
+  try {
+    const res = await axios.get("/api/business/controller");
+    return dispatch({ type: "GET_ORGANIZATION", payload: res.data });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const getAllCategories = async (dispatch) => {
   try {
@@ -253,7 +263,11 @@ export const cancelOrder = async (orderId, dispatch = false) => {
 
 export const payOrder = async (orderId, dispatch = false) => {
   try {
-    await axios.put("/api/order/controller", { orderId, delivered: false, status: 'Paid' });
+    await axios.put("/api/order/controller", {
+      orderId,
+      delivered: false,
+      status: "Paid",
+    });
     if (dispatch) {
       isUserLogged(dispatch);
     }
@@ -415,5 +429,61 @@ export const getOrderProducts = async (OrderId) => {
     return res.data;
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const createOrganization = async (data) => {
+  try {
+    const res = await axios.post("/api/business/controller", data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const addImagesToOrganization = async (filesList, businessId) => {
+  try {
+    const uploadPromises = filesList.map((file) => uploadBusinessFile(file));
+    const imagesList = await Promise.all(uploadPromises);
+
+    const body = {
+      imagesList,
+      businessId,
+    };
+
+    await axios.post("/api/businessImages/controller", body);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const addOrganizationFirstImage = async (file) => {
+  try {
+    const image = await uploadBusinessFile(file);
+    return image.url;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateOrganization = async (data, businessId) => {
+  try {
+    const body = {
+      ...data,
+      businessId: businessId,
+    };
+    console.log(body)
+    const res = await axios.put("/api/business/controller", body);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const removeImagesToOrganization = async (idList) => {
+  try {
+    await axios.post(`/api/businessImages/delete`, { idList });
+  } catch (error) {
+    console.log(error.message);
   }
 };
