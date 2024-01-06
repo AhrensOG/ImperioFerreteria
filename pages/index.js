@@ -22,7 +22,6 @@ export default function Home() {
     };
     userStatusAndOrganization();
   }, []);
-  console.log(state)
   return (
     <div className="2xl:flex 2xl:flex-col 2xl:items-center h-full">
       <Header />

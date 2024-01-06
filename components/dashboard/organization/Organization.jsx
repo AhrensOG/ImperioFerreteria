@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 
 const Organization = ({ data }) => {
-  console.log(data);
   return (
     <div className="flex flex-col items-center h-screen p-10 w-3/5">
       <span className="text-4xl font-semibold text-[#e26928] pb-10 w-full text-center">
