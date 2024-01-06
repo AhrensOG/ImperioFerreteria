@@ -1,29 +1,45 @@
 import { BusinessImages } from "@/db/models/models";
 
 export default async function handler(req, res) {
-    if (req.method === "POST") {
-        try {
-            const { idList } = req.body;
-            if (!idList || !idList.length) {
-                return res.status(400).send("An ID list is required");
-            }
+  if (req.method === "POST") {
+    try {
+      const { idList } = req.body;
 
-            for (let i = 0; i < idList.length; i++) {
-                const exist = await BusinessImages.findByPk(idList[i].id);
-                if (!exist) {
-                    return res
-                        .status(400)
-                        .send(`Image with ID ${idList[i].id} doesnt exists`);
-                }
-            }
+      if (!idList || !idList.length) {
+        return res.status(400).send("An ID list is required");
+      }
 
-            for (let i = 0; i < idList.length; i++) {
-                await BusinessImages.destroy({ where: { id: idList[i].id } });
-            }
+      const imagesToDelete = await BusinessImages.findAll({
+        where: {
+          id: idList.map((item) => item.id),
+        },
+      });
 
-            return res.status(200).send("Image successfully destroyed");
-        } catch (error) {
-            return res.status(400).send(error);
-        }
+      const imageIdsToDelete = imagesToDelete.map((image) => image.id);
+
+      const imagesNotFound = idList.filter(
+        (item) => !imageIdsToDelete.includes(item.id)
+      );
+
+      if (imagesNotFound.length > 0) {
+        return res
+          .status(400)
+          .send(
+            `Images with IDs ${imagesNotFound
+              .map((item) => item.id)
+              .join(", ")} dont exist`
+          );
+      }
+
+      await BusinessImages.destroy({
+        where: {
+          id: imageIdsToDelete,
+        },
+      });
+
+      return res.status(200).send("Images successfully destroyed");
+    } catch (error) {
+      return res.status(400).send(error.message);
     }
+  }
 }

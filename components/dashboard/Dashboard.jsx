@@ -8,6 +8,7 @@ import {
   getAllOrders,
   getAllProducts,
   getAllUsers,
+  getOrganization,
 } from "@/context/actions";
 import Form from "./products/Form";
 import LogIn from "../logIn/LogIn";
@@ -17,6 +18,8 @@ import { isUserLogged } from "@/context/actions/isUserLogged";
 import { signOut } from "firebase/auth";
 import { auth } from "@/firebase/config";
 import Orders from "./orders/Orders";
+import Organization from "./organization/Organization";
+import OrganizationForm from "./organization/auxiliarComponents/OrganizationForm";
 
 const ADMIN = process.env.NEXT_PUBLIC_ADMIN;
 
@@ -25,6 +28,7 @@ const Dashboard = () => {
   const [showCategories, setShowCategories] = useState(false);
   const [showUsers, setShowUsers] = useState(false);
   const [showOrders, setShowOrders] = useState(false);
+  const [showOrganization, setShowOrganization] = useState(false);
 
   const { state, dispatch } = useContext(Context);
 
@@ -34,9 +38,10 @@ const Dashboard = () => {
       await getAllProducts(dispatch);
       await getAllCategories(dispatch);
       await getAllUsers(dispatch);
-      await getAllOrders(dispatch)
-    }
-    getData()
+      await getAllOrders(dispatch);
+      await getOrganization(dispatch);
+    };
+    getData();
   }, []);
 
   return (
@@ -59,6 +64,8 @@ const Dashboard = () => {
               showUsers={showUsers}
               setShowOrders={setShowOrders}
               showOrders={showOrders}
+              setShowOrganization={setShowOrganization}
+              showOrganization={showOrganization}
             />
           </div>
           <div className="w-full flex flex-row">
@@ -91,7 +98,23 @@ const Dashboard = () => {
             ) : (
               <div className="hidden"></div>
             )}
-            {showOrders ? <Orders orders={state.orders} /> : <div className="hidden"></div>}
+            {showOrders ? (
+              <Orders orders={state.orders} />
+            ) : (
+              <div className="hidden"></div>
+            )}
+            {showOrganization ? (
+              <div className="w-full flex flex-row">
+                <Organization data={state.organization}/>
+                {state.organization ? (
+                  <OrganizationForm data={state.organization} />
+                ) : (
+                  <OrganizationForm />
+                )}
+              </div>
+            ) : (
+              <div className="hidden"></div>
+            )}
           </div>
         </div>
       ) : (

@@ -1,8 +1,10 @@
+import { Context } from "@/context/GlobalContext";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useContext } from "react";
 
 const Location = () => {
+  const { state } = useContext(Context)
   return (
     <div className="py-10">
       <div className="relative">
@@ -24,7 +26,7 @@ const Location = () => {
           </div>
           <div className="w-full h-full flex justify-center items-start">
             <Link
-              href={"https://maps.app.goo.gl/wzzymfYtV2njSNLAA"}
+              href={state?.organization?.locationLink || '' }
               target="_blank"
               rel="noreferrer noopener"
             >
