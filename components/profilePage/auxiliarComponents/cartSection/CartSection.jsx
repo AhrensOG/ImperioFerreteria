@@ -35,7 +35,7 @@ const CartSection = ({ state }) => {
         <div className="flex flex-col w-full">
           <div className="text-center bg-white border border-x-[#e26928] border-b-[#e26928] p-3">
             <span className="text-xl font-semibold text-[#e26928]">
-              Compra Total: ${state.cartTotalPrice}
+              Compra Total: ${state.cartTotalPrice.toLocaleString()}
             </span>
           </div>
         </div>

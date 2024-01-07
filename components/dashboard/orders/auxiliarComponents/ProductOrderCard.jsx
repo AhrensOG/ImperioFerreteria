@@ -11,7 +11,7 @@ const ProductOrderCard = ({ product }) => {
         <span className="text-[#e26928] text-sm">
           Cantidad: {product.ProductsOrder.quantity}
         </span>
-        <span className="text-[#e26928] text-sm">Precio: ${product.price}</span>
+        <span className="text-[#e26928] text-sm">Precio: ${Number(product.price).toLocaleString()}</span>
         {product.deletedAt ? (
           <div className="realtive">
             <svg

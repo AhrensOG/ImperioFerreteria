@@ -273,7 +273,7 @@ const OrderDropDown = ({ order }) => {
               <div className="hideen"></div>
             )}
             <span className="font-bold text-[#e26928]">
-              Productos / Total: {order.totalPrice}
+              Productos / Total: ${Number(order.totalPrice).toLocaleString()}
             </span>
             <div
               className={`flex flex-col gap-2 w-full ${
