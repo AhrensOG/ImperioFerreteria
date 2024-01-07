@@ -1,3 +1,4 @@
+import NoInternetConnection from '@/components/errorHandlers/NoInternetConnection'
 import GlobalContext from '@/context/GlobalContext'
 import '@/styles/globals.css'
 import { Roboto } from 'next/font/google'
@@ -10,12 +11,14 @@ const roboto = Roboto({
 
 export default function App({ Component, pageProps }) {
   return (
-    <GlobalContext>
-      <main className={roboto.className}>
-        <Toaster closeButton richColors visibleToasts={5} toastOptions={{ style: {background: 'white', color: '#e26928'} }}/>
-        <Component {...pageProps} />
-      </main>
-    </GlobalContext>
+    <NoInternetConnection>
+      <GlobalContext>
+        <main className={roboto.className}>
+          <Toaster closeButton richColors visibleToasts={5} toastOptions={{ style: {background: 'white', color: '#e26928'} }}/>
+          <Component {...pageProps} />
+        </main>
+      </GlobalContext>
+    </NoInternetConnection>
   )
 
 }
