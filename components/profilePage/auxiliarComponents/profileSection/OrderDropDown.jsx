@@ -94,7 +94,7 @@ const OrderDropDown = ({ order }) => {
               </span>
             </p>
             <span className="text-[#e26928] font-semibold text-base">
-              Total: {order.totalPrice}
+              Total: ${Number(order.totalPrice).toLocaleString()}
             </span>
           </div>
           <div className="flex flex-col gap-1">

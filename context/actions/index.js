@@ -3,9 +3,62 @@ import axios from "axios";
 import { isUserLogged } from "./isUserLogged";
 import { uploadBusinessFile } from "@/firebase/uploadBusinessFile";
 
+const SERVER_URL_BUSINESS_CONTROLLER =
+  process.env.NEXT_PUBLIC_SERVER_ENDPOINT_BUSINESS_CONTROLLER;
+
+const SERVER_URL_CATEGORIES_CONTROLLER =
+  process.env.NEXT_PUBLIC_SERVER_ENDPOINT_CATEGORIES_CONTROLLER;
+
+const SERVER_URL_USER_CONTROLLER =
+  process.env.NEXT_PUBLIC_SERVER_ENDPOINT_USER_CONTROLLER;
+
+const SERVER_URL_PRODUCTS_CONTROLLER =
+  process.env.NEXT_PUBLIC_SERVER_ENDPOINT_PRODUCTS_CONTROLLER;
+
+const SERVER_URL_ORDER_CONTROLLER =
+  process.env.NEXT_PUBLIC_SERVER_ENDPOINT_ORDER_CONTROLLER;
+
+const SERVER_URL_GET_PRODUCTS_BY_NAME =
+  process.env.NEXT_PUBLIC_SERVER_ENDPOINT_GET_PRODUCTS_BY_NAME;
+
+const SERVER_URL_GET_PRODUCTS_BY_CATEGORY =
+  process.env.NEXT_PUBLIC_SERVER_ENDPOINT_GET_PRODUCTS_BY_CATEGORY;
+
+const SERVER_URL_USER_AUTH = process.env.NEXT_PUBLIC_SERVER_ENDPOINT_USER_AUTH;
+
+const SERVER_URL_ORDER_CONTROLLER_ONLY_CREATE =
+  process.env.NEXT_PUBLIC_SERVER_ENDPOINT_ORDER_CONTROLLER_ONLY_CREATE;
+
+const SERVER_URL_ORDER_CONTROLLER_WITH_DELIVERY =
+  process.env.NEXT_PUBLIC_SERVER_ENDPOINT_ORDER_CONTROLLER_WITH_DELIVERY;
+
+const SERVER_URL_PRODUCTS_ORDER_CONTROLLER =
+  process.env.NEXT_PUBLIC_SERVER_ENDPOINT_PRODUCTS_ORDER_CONTROLLER;
+
+const SERVER_URL_PAYMENT_CONTROLLER =
+  process.env.NEXT_PUBLIC_SERVER_ENDPOINT_PAYMENT_CONTROLLER;
+
+const SERVER_URL_PRODUCTS_CATEGORIES_CONTROLLER =
+  process.env.NEXT_PUBLIC_SERVER_ENDPOINT_PRODUCTS_CATEGORIES_CONTROLLER;
+
+const SERVER_URL_PRODUCTS_IMAGES_CONTROLLER =
+  process.env.NEXT_PUBLIC_SERVER_ENDPOINT_PRODUCTS_IMAGES_CONTROLLER;
+
+const SERVER_URL_PRODUCTS_CATEGORIES_DELETE_CONTROLLER =
+  process.env.NEXT_PUBLIC_SERVER_DELETE_ENDPOINT_PRODUCTS_CATEGORIES_CONTROLLER;
+
+const SERVER_URL_PRODUCTS_IMAGES_DELETE_CONTROLLER =
+  process.env.NEXT_PUBLIC_SERVER_DELETE_ENDPOINT_PRODUCTS_IMAGES_CONTROLLER;
+
+const SERVER_URL_BUSINESS_IMAGES_CONTROLLER =
+  process.env.NEXT_PUBLIC_SERVER_ENDPOINT_BUSINESS_IMAGES_CONTROLLER;
+
+const SERVER_URL_BUSINESS_IMAGES_DELETE_CONTROLLER =
+  process.env.NEXT_PUBLIC_SERVER_DELETE_ENDPOINT_BUSINESS_IMAGES_CONTROLLER;
+
 export const getOrganization = async (dispatch) => {
   try {
-    const res = await axios.get("/api/business/controller");
+    const res = await axios.get(`${SERVER_URL_BUSINESS_CONTROLLER}`);
     return dispatch({ type: "GET_ORGANIZATION", payload: res.data });
   } catch (error) {
     console.log(error);
@@ -14,7 +67,7 @@ export const getOrganization = async (dispatch) => {
 
 export const getAllCategories = async (dispatch) => {
   try {
-    const res = await axios.get("/api/categories/controller");
+    const res = await axios.get(`${SERVER_URL_CATEGORIES_CONTROLLER}`);
     return dispatch({ type: "GET_ALL_CATEGORIES", payload: res.data });
   } catch (error) {
     console.log(error);
@@ -23,7 +76,7 @@ export const getAllCategories = async (dispatch) => {
 
 export const getAllUsers = async (dispatch) => {
   try {
-    const res = await axios.get("/api/user/controller");
+    const res = await axios.get(`${SERVER_URL_USER_CONTROLLER}`);
     return dispatch({ type: "GET_ALL_USERS", payload: res.data });
   } catch (error) {
     console.log(error);
@@ -32,7 +85,7 @@ export const getAllUsers = async (dispatch) => {
 
 export const getAllProducts = async (dispatch) => {
   try {
-    const res = await axios.get("/api/products/controller");
+    const res = await axios.get(`${SERVER_URL_PRODUCTS_CONTROLLER}`);
     return dispatch({ type: "GET_ALL_PRODUCTS", payload: res.data });
   } catch (error) {
     console.log(error);
@@ -41,7 +94,7 @@ export const getAllProducts = async (dispatch) => {
 
 export const getAllOrders = async (dispatch) => {
   try {
-    const res = await axios.get("/api/order/controller");
+    const res = await axios.get(`${SERVER_URL_ORDER_CONTROLLER}`);
     return dispatch({ type: "GET_ALL_ORDERS", payload: res.data });
   } catch (error) {
     console.log(error);
@@ -50,7 +103,9 @@ export const getAllOrders = async (dispatch) => {
 
 export const getOneProduct = async (id, dispatch) => {
   try {
-    const res = await axios.get(`/api/products/controller?productId=${id}`);
+    const res = await axios.get(
+      `${SERVER_URL_PRODUCTS_CONTROLLER}?productId=${id}`
+    );
     return dispatch({ type: "GET_ONE_PRODUCT", payload: res.data });
   } catch (error) {
     console.log(error);
@@ -63,9 +118,7 @@ export const deleteProductDetail = (dispatch) => {
 
 export const searchProductsByName = async (title, dispatch) => {
   try {
-    const res = await axios.get(
-      `/api/products/filters/searchByName?productName=${title}`
-    );
+    const res = await axios.get(`${SERVER_URL_GET_PRODUCTS_BY_NAME}${title}`);
     return dispatch({
       type: "GET_PRODUCTS_BY_NAME",
       payload: { data: res.data, title },
@@ -78,7 +131,7 @@ export const searchProductsByName = async (title, dispatch) => {
 export const searchProductsByCategory = async (category, dispatch) => {
   try {
     const res = await axios.get(
-      `/api/products/filters/searchByCategory?categoryName=${category}`
+      `${SERVER_URL_GET_PRODUCTS_BY_CATEGORY}${category}`
     );
     const data = {
       category,
@@ -103,7 +156,7 @@ export const deleteSearchByNameFilter = async (dispatch) => {
 
 export const updateUser = async (data, dispatch) => {
   try {
-    const res = await axios.put(`/api/auth/${data.id}`, data);
+    const res = await axios.put(`${SERVER_URL_USER_AUTH}${data.id}`, data);
     return dispatch({ type: "UPDATE_USER", payload: res.data });
   } catch (error) {
     console.log(error);
@@ -124,7 +177,7 @@ export const deleteCart = async (dispatch) => {
 
 export const createOrder = async (user, productsCart, totalPrice) => {
   try {
-    const res = await axios.post(`/api/order/controllerOnlyCreate`, {
+    const res = await axios.post(`${SERVER_URL_ORDER_CONTROLLER_ONLY_CREATE}`, {
       userId: user.id,
       totalPrice,
     });
@@ -137,10 +190,13 @@ export const createOrder = async (user, productsCart, totalPrice) => {
 
     //Delete previous unpaid products
     await axios.delete(
-      `/api/productsOrder/controller?OrderId=${res.data.Order.id}`
+      `${SERVER_URL_PRODUCTS_ORDER_CONTROLLER}?OrderId=${res.data.Order.id}`
     );
 
-    await axios.post(`/api/productsOrder/controller`, productsOrderData);
+    await axios.post(
+      `${SERVER_URL_PRODUCTS_ORDER_CONTROLLER}`,
+      productsOrderData
+    );
   } catch (error) {
     console.log(error);
   }
@@ -148,7 +204,7 @@ export const createOrder = async (user, productsCart, totalPrice) => {
 
 export const createAndPayOrder = async (user, productsCart, dispatch) => {
   try {
-    const res = await axios.post(`/api/order/controller`, {
+    const res = await axios.post(`${SERVER_URL_ORDER_CONTROLLER}`, {
       userId: user.id,
     });
 
@@ -159,10 +215,13 @@ export const createAndPayOrder = async (user, productsCart, dispatch) => {
 
     //Delete previous unpaid products
     await axios.delete(
-      `/api/productsOrder/controller?OrderId=${res.data.Order.id}`
+      `${SERVER_URL_PRODUCTS_ORDER_CONTROLLER}?OrderId=${res.data.Order.id}`
     );
 
-    await axios.post(`/api/productsOrder/controller`, productsOrderData);
+    await axios.post(
+      `${SERVER_URL_PRODUCTS_ORDER_CONTROLLER}`,
+      productsOrderData
+    );
 
     const productsPayment = productsCart.map((p) => {
       return {
@@ -197,13 +256,16 @@ export const createOrderWithDelivery = async (
   deliveryData
 ) => {
   try {
-    const res = await axios.post(`/api/order/controllerWithDelivery`, {
-      userId: user.id,
-      delivery: deliveryData.delivery,
-      orderReceiver: deliveryData.orderReceiver,
-      receiverPhone: deliveryData.receiverPhone,
-      totalPrice: deliveryData.totalPrice,
-    });
+    const res = await axios.post(
+      `${SERVER_URL_ORDER_CONTROLLER_WITH_DELIVERY}`,
+      {
+        userId: user.id,
+        delivery: deliveryData.delivery,
+        orderReceiver: deliveryData.orderReceiver,
+        receiverPhone: deliveryData.receiverPhone,
+        totalPrice: deliveryData.totalPrice,
+      }
+    );
 
     const productsOrderData = {
       OrderId: res.data.Order.id,
@@ -213,10 +275,13 @@ export const createOrderWithDelivery = async (
 
     //Delete previous unpaid products
     await axios.delete(
-      `/api/productsOrder/controller?OrderId=${res.data.Order.id}`
+      `${SERVER_URL_PRODUCTS_ORDER_CONTROLLER}?OrderId=${res.data.Order.id}`
     );
 
-    await axios.post(`/api/productsOrder/controller`, productsOrderData);
+    await axios.post(
+      `${SERVER_URL_PRODUCTS_ORDER_CONTROLLER}`,
+      productsOrderData
+    );
   } catch (error) {
     console.log(error);
   }
@@ -242,7 +307,10 @@ export const payOrderWithDelivery = async (user, orderProducts, order) => {
       items: productsPayment,
     };
 
-    const pay = await axios.post(`/api/payment/controller`, paymentData);
+    const pay = await axios.post(
+      `${SERVER_URL_PAYMENT_CONTROLLER}`,
+      paymentData
+    );
 
     return pay.data["init_point"];
   } catch (error) {
@@ -252,7 +320,9 @@ export const payOrderWithDelivery = async (user, orderProducts, order) => {
 
 export const cancelOrder = async (orderId, dispatch = false) => {
   try {
-    await axios.put("/api/order/controllerWithDelivery", { orderId });
+    await axios.put(`${SERVER_URL_ORDER_CONTROLLER_WITH_DELIVERY}`, {
+      orderId,
+    });
     if (dispatch) {
       isUserLogged(dispatch);
     }
@@ -263,7 +333,7 @@ export const cancelOrder = async (orderId, dispatch = false) => {
 
 export const payOrder = async (orderId, dispatch = false) => {
   try {
-    await axios.put("/api/order/controller", {
+    await axios.put(`${SERVER_URL_ORDER_CONTROLLER}`, {
       orderId,
       delivered: false,
       status: "Paid",
@@ -278,7 +348,7 @@ export const payOrder = async (orderId, dispatch = false) => {
 
 export const deliveredOrder = async (orderId, delivered) => {
   try {
-    await axios.put("/api/order/controller", { orderId, delivered });
+    await axios.put(`${SERVER_URL_ORDER_CONTROLLER}`, { orderId, delivered });
   } catch (error) {
     console.log(error);
   }
@@ -298,7 +368,7 @@ export const backToCreateProduct = (dispatch) => {
 
 export const createProduct = async (data) => {
   try {
-    const res = await axios.post("/api/products/controller", data);
+    const res = await axios.post(`${SERVER_URL_PRODUCTS_CONTROLLER}`, data);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -311,7 +381,7 @@ export const addCategoriesToProduct = async (categoriesList, productId) => {
       categoriesList,
       productId,
     };
-    await axios.post("/api/productsCategories/controller", body);
+    await axios.post(`${SERVER_URL_PRODUCTS_CATEGORIES_CONTROLLER}`, body);
   } catch (error) {
     console.log(error);
   }
@@ -328,7 +398,7 @@ export const addImagesToProduct = async (filesList, productId) => {
       imagesList,
       productId,
     };
-    await axios.post("/api/productsImages/controller", body);
+    await axios.post(`${SERVER_URL_PRODUCTS_IMAGES_CONTROLLER}`, body);
   } catch (error) {
     console.log(error);
   }
@@ -349,7 +419,7 @@ export const updateProduct = async (data) => {
       ...data,
       productId: data.id,
     };
-    const res = await axios.put("/api/products/controller", body);
+    const res = await axios.put(`${SERVER_URL_PRODUCTS_CONTROLLER}`, body);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -362,7 +432,10 @@ export const removeCategoriesToProduct = async (categoriesList, productId) => {
       productId,
       categoriesList,
     };
-    await axios.post(`/api/productsCategories/delete`, body);
+    await axios.post(
+      `${SERVER_URL_PRODUCTS_CATEGORIES_DELETE_CONTROLLER}`,
+      body
+    );
   } catch (error) {
     console.log(error);
   }
@@ -370,7 +443,9 @@ export const removeCategoriesToProduct = async (categoriesList, productId) => {
 
 export const removeImagesToProduct = async (idList) => {
   try {
-    await axios.post(`/api/productsImages/delete`, { idList });
+    await axios.post(`${SERVER_URL_PRODUCTS_IMAGES_DELETE_CONTROLLER}`, {
+      idList,
+    });
   } catch (error) {
     console.log(error.message);
   }
@@ -378,7 +453,9 @@ export const removeImagesToProduct = async (idList) => {
 
 export const deleteProduct = async (id) => {
   try {
-    const res = await axios.delete(`/api/products/controller?productId=${id}`);
+    const res = await axios.delete(
+      `${SERVER_URL_PRODUCTS_CONTROLLER}?productId=${id}`
+    );
     return res.data;
   } catch (error) {
     console.log(error);
@@ -395,7 +472,7 @@ export const backToCreateCategory = (dispatch) => {
 
 export const createCategory = async (data) => {
   try {
-    await axios.post("/api/categories/controller", data);
+    await axios.post(`${SERVER_URL_CATEGORIES_CONTROLLER}`, data);
   } catch (error) {
     console.log(error);
   }
@@ -403,7 +480,7 @@ export const createCategory = async (data) => {
 
 export const updateCategory = async (data) => {
   try {
-    await axios.put("/api/categories/controller", data);
+    await axios.put(`${SERVER_URL_CATEGORIES_CONTROLLER}`, data);
   } catch (error) {
     console.log(error);
   }
@@ -411,7 +488,7 @@ export const updateCategory = async (data) => {
 
 export const deleteCategory = async (id) => {
   try {
-    await axios.delete(`/api/categories/controller?id=${id}`);
+    await axios.delete(`${SERVER_URL_CATEGORIES_CONTROLLER}?id=${id}`);
   } catch (error) {
     console.log(error);
   }
@@ -424,7 +501,7 @@ export const openCart = (data, dispatch) => {
 export const getOrderProducts = async (OrderId) => {
   try {
     const res = await axios.get(
-      `/api/productsOrder/controller?OrderId=${OrderId}`
+      `${SERVER_URL_PRODUCTS_ORDER_CONTROLLER}?OrderId=${OrderId}`
     );
     return res.data;
   } catch (error) {
@@ -434,7 +511,7 @@ export const getOrderProducts = async (OrderId) => {
 
 export const createOrganization = async (data) => {
   try {
-    const res = await axios.post("/api/business/controller", data);
+    const res = await axios.post(`${SERVER_URL_BUSINESS_CONTROLLER}`, data);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -451,7 +528,7 @@ export const addImagesToOrganization = async (filesList, businessId) => {
       businessId,
     };
 
-    await axios.post("/api/businessImages/controller", body);
+    await axios.post(`${SERVER_URL_BUSINESS_IMAGES_CONTROLLER}`, body);
   } catch (error) {
     console.log(error);
   }
@@ -472,8 +549,8 @@ export const updateOrganization = async (data, businessId) => {
       ...data,
       businessId: businessId,
     };
-    console.log(body)
-    const res = await axios.put("/api/business/controller", body);
+    console.log(body);
+    const res = await axios.put(`${SERVER_URL_BUSINESS_CONTROLLER}`, body);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -482,7 +559,9 @@ export const updateOrganization = async (data, businessId) => {
 
 export const removeImagesToOrganization = async (idList) => {
   try {
-    await axios.post(`/api/businessImages/delete`, { idList });
+    await axios.post(`${SERVER_URL_BUSINESS_IMAGES_DELETE_CONTROLLER}`, {
+      idList,
+    });
   } catch (error) {
     console.log(error.message);
   }
