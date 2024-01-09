@@ -1,8 +1,9 @@
 import { MercadoPagoConfig, Payment, Preference } from "mercadopago";
 
+const ACCESSTOKEN = process.env.NEXT_PUBLIC_SERVER_ACCESS_TOKEN;
+
 export const client = new MercadoPagoConfig({
-  accessToken:
-    "TEST-3729247726791169-120318-c9b90bac13fa090a40e5aa05a8d72b98-660580763",
+  accessToken: `${ACCESSTOKEN}`,
   options: { timeout: 5000, idempotencyKey: "abc" },
 });
 
