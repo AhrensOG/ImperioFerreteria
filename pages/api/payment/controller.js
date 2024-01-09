@@ -1,5 +1,7 @@
 import { preference } from "@/payment/mp";
 
+const SERVER_URL_PAYMENT_NOTIFICATION =
+  process.env.NEXT_PUBLIC_SERVER_ENDPOINT_PAYMENT_NOTIFICATION_URL;
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
@@ -24,7 +26,7 @@ export default async function handler(req, res) {
             pending: '',
             failure: ''
           },
-          notification_url: "https://23c8-2803-9800-94c2-8ab6-b44e-593c-b2f1-c76.ngrok-free.app/api/payment/webhook",
+          notification_url: `${SERVER_URL_PAYMENT_NOTIFICATION}`,
         }
       })
       return res.status(200).send(response)
