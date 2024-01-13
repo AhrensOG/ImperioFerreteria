@@ -50,7 +50,7 @@ const OrderDropDown = ({ order }) => {
     }
 
     const initPoint = await payOrderWithDelivery(
-      state.user,
+      order.User,
       orderProducts,
       order.id
     );

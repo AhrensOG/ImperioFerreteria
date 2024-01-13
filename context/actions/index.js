@@ -239,7 +239,7 @@ export const createAndPayOrder = async (user, productsCart, dispatch) => {
       items: productsPayment,
     };
 
-    const pay = await axios.post(`/api/payment/controller`, paymentData);
+    const pay = await axios.post(`${SERVER_URL_PAYMENT_CONTROLLER}`, paymentData);
 
     return dispatch({
       type: "INIT_POINT",
