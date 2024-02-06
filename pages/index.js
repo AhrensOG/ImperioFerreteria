@@ -6,6 +6,7 @@ import Location from "@/components/location/Location";
 import LowerSection from "@/components/lowerSection/LowerSection";
 import Header from "@/components/navbar/Header";
 import HomeNavbar from "@/components/navbar/HomeNavbar";
+import SecondaryHomeNavbar from "@/components/navbar/SecondaryHomeNavbar";
 import Slider from "@/components/productsSlider/Slider";
 import { Context } from "@/context/GlobalContext";
 import { getOrganization } from "@/context/actions";
@@ -24,8 +25,9 @@ export default function Home() {
   }, []);
   return (
     <div className="2xl:flex 2xl:flex-col 2xl:items-center h-full">
+      <SecondaryHomeNavbar />
+      <Filters />
       <Header />
-      <HomeNavbar />
       <div className="">
         {!state?.organization?.id ? (
           <div className="flex flex-row items-center justify-center h-screen">
@@ -33,7 +35,6 @@ export default function Home() {
           </div>
         ) : (
           <div className="2xl:flex 2xl:flex-col 2xl:max-w-screen-xl">
-            <Filters />
             <Hero />
             <Slider />
             <Location />
