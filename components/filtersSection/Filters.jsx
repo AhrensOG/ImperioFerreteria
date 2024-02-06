@@ -23,8 +23,8 @@ const Filters = () => {
   };
 
   return (
-    <div className="w-full h-full py-4 relative">
-      <div className="flex flex-row sm:px-12 px-4 sm:gap-8 gap-4 items-center w-full h-full">
+    <div className="w-full py-4 relative bg-[#F1D98F]">
+      <div className="flex flex-row sm:px-12 px-4 sm:gap-8 gap-4 items-center justify-center xs:justify-start w-full">
         <Link href={"/products"}>
           <span
             onMouseEnter={() => displayList(listProducts, setListProducts)}
@@ -48,7 +48,7 @@ const Filters = () => {
         >
           <span
             id="contact"
-            className="text-sm hidden sm:block sm:text-lg cursor-pointer text-[#e26928]"
+            className="text-sm sm:text-lg cursor-pointer text-[#e26928]"
           >
             Contáctanos
           </span>

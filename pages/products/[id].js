@@ -6,6 +6,7 @@ import { deleteProductDetail, getOneProduct } from "@/context/actions";
 import { useRouter } from "next/router";
 import Footer from "@/components/footer/Footer";
 import Loader from "@/components/loader/Loader";
+import SecondaryHomeNavbar from "@/components/navbar/SecondaryHomeNavbar";
 
 const ProductDetail = () => {
     const router = useRouter();
@@ -23,7 +24,7 @@ const ProductDetail = () => {
     return (
         <div className="h-full flex flex-col justify-between">
             <div>
-                <HomeNavbar />
+                <SecondaryHomeNavbar />
                 <div className=" mx-[20px] md:flex justify-center">
                     {state?.product?.title ? (
                         <Detail
