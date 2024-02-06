@@ -1,6 +1,7 @@
 import Footer from '@/components/footer/Footer'
 import Header from '@/components/navbar/Header'
 import HomeNavbar from '@/components/navbar/HomeNavbar'
+import SecondaryHomeNavbar from '@/components/navbar/SecondaryHomeNavbar'
 import Profile from '@/components/profilePage/Profile'
 import PaymentSection from '@/components/profilePage/auxiliarComponents/cartSection/PaymentSection'
 import { Context } from '@/context/GlobalContext'
@@ -24,8 +25,8 @@ const ProfilePage = () => {
           ? <PaymentSection/>
           : <div className='hidden'></div>
         }
+        <SecondaryHomeNavbar />
         <Header />
-        <HomeNavbar />
         <div className='flex flex-row justify-center'>
           <Profile />
         </div>
